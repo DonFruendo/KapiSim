@@ -1,12 +1,16 @@
 package game;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 import Inventory.Inventory.Entry;
 import market.Offer;
@@ -30,8 +35,12 @@ public class GameGUI extends JFrame
 	private static final long serialVersionUID = 6L;
 	GameController gc;
 	JTabbedPane tabPane;
-	JScrollPane marketPane;
 	
+	JPanel headerPane;
+	JPanel profile;
+		JLabel kaps;
+	JTabbedPane production;
+	JScrollPane marketPane;
 	JScrollPane inventory;
 
 	public GameGUI(GameController gc)
@@ -41,18 +50,18 @@ public class GameGUI extends JFrame
 		
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BorderLayout());
 		
-		JPanel profile = new JPanel();
-		JLabel txt = new JLabel("Hallo");
-		profile.add(txt);
-		this.add(profile);
+		// ** Header **
+		loadHeader();
+		
+		// ** Profile **
+		loadProfile();
 		
 		tabPane = new JTabbedPane();
 		
 		// ** Production **
-		reloadProduction();
-		
+		loadProduction();
 		
 		// ** Inventory **
 		loadInventory();
@@ -60,13 +69,51 @@ public class GameGUI extends JFrame
 		// ** Market **
 		loadMarket();
 		
-		this.add(tabPane);
+		this.add(tabPane, BorderLayout.CENTER);
 		this.validate();
+		this.pack();
 	}
 	
+	public void loadHeader()
+	{
+		headerPane = new JPanel();
+		JLabel caption = new JLabel("KapiSim Alpha");
+		caption.setFont(new Font(caption.getFont().getFontName(), Font.ITALIC, 28));
+		headerPane.add(caption);
+		headerPane.setPreferredSize(new Dimension(800, 60));
+		this.add(headerPane, BorderLayout.PAGE_START);
+	}
+	
+	public void loadProfile()
+	{
+		profile = new JPanel();
+		BoxLayout layout = new BoxLayout(profile, BoxLayout.PAGE_AXIS);
+		JLabel txt = new JLabel("Name: " + gc.getPlayer().getName());
+		kaps = new JLabel("Kaps: " + gc.getPlayer().kaps);
+		profile.add(txt);
+		profile.add(kaps);
+		
+		
+		profile.setLayout(layout);
+		profile.setPreferredSize(new Dimension(150, 600));
+		this.add(profile, BorderLayout.LINE_START);
+	}
+	
+	public void reloadKaps()
+	{
+		kaps.setText("Kaps: " + gc.getPlayer().kaps);
+	}
+	
+	public void loadProduction()
+	{
+		production = new JTabbedPane();
+		reloadProduction();
+		tabPane.add("Production", production);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void reloadProduction()
 	{
-		JTabbedPane production = new JTabbedPane();
 		for(final ProductionBuilding pb : gc.getPlayer().productionBuildings)
 		{
 			JPanel building = new JPanel();
@@ -89,7 +136,6 @@ public class GameGUI extends JFrame
 			
 			production.add(pb.getClass().getSimpleName(),building);
 		}
-		tabPane.add("Production", production);
 	}
 
 	public void loadInventory()
@@ -129,6 +175,8 @@ public class GameGUI extends JFrame
 
 			public void focusLost(FocusEvent arg0) {}
 		});
+		
+		reloadKaps();
 	}
 	
 	public void loadMarket()
