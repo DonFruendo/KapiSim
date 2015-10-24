@@ -13,10 +13,12 @@ public abstract class ProductionBuilding implements IProductionBuilding
 	Player owner;
 	int m2;
 	int worker;
+	final ArrayList<ProductType> possible;
 	
 	public ProductionBuilding(Player owner)
 	{
 		this.owner = owner;
+		this.possible = new ArrayList<ProductType>();
 	}
 	
 	double getProductionCost(ProductType product)
@@ -48,9 +50,6 @@ public abstract class ProductionBuilding implements IProductionBuilding
 		}
 		return 0.00;
 	}
-
-	abstract public ArrayList<ProductType> getPossibleTypes();
-	abstract boolean productionIsPossible(ProductType p);
 	
 	public void produce(ProductType p, int quality, int quantity)
 	{
@@ -98,5 +97,15 @@ public abstract class ProductionBuilding implements IProductionBuilding
 				System.out.println(owner + " has not enough kaps to produce " + p);
 			}
 		}
+	}
+
+	boolean productionIsPossible(ProductType p)
+	{
+		return possible.contains(p);
+	}
+	
+	public ArrayList<ProductType> getPossibleTypes()
+	{
+		return possible;
 	}
 }
