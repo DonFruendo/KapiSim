@@ -2,7 +2,6 @@ package game;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
-
 import Inventory.Inventory.Entry;
 import market.Offer;
 import market.ProductType;
@@ -32,7 +29,7 @@ public class GameGUI extends JFrame
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7L;
+	private static final long serialVersionUID = 1000L;
 	GameController gc;
 	JTabbedPane tabPane;
 	
@@ -47,7 +44,7 @@ public class GameGUI extends JFrame
 
 	public GameGUI(GameController gc)
 	{
-		super("KapiSim v0.0.6a");
+		super("KapiSim v0.1.0a");
 		this.gc = gc;
 		
 		this.setSize(800, 600);
