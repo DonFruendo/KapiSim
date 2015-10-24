@@ -32,13 +32,15 @@ public class GameGUI extends JFrame
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6L;
+	private static final long serialVersionUID = 7L;
 	GameController gc;
 	JTabbedPane tabPane;
 	
 	JPanel headerPane;
+	JPanel leftPane;
 	JPanel profile;
 		JLabel kaps;
+	JPanel buttons;
 	JTabbedPane production;
 	JScrollPane marketPane;
 	JScrollPane inventory;
@@ -51,12 +53,23 @@ public class GameGUI extends JFrame
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
+		leftPane = new JPanel();
+		leftPane.setPreferredSize(new Dimension(150, 600));
+		this.add(leftPane, BorderLayout.LINE_START);
 		
 		// ** Header **
 		loadHeader();
 		
 		// ** Profile **
 		loadProfile();
+		
+		//Spacing
+		JPanel p = new JPanel();
+		p.setPreferredSize(new Dimension(1,70));
+		leftPane.add(p);
+		
+		// ** Interaction Buttons
+		loadButtons();
 		
 		tabPane = new JTabbedPane();
 		
@@ -88,20 +101,43 @@ public class GameGUI extends JFrame
 	{
 		profile = new JPanel();
 		BoxLayout layout = new BoxLayout(profile, BoxLayout.PAGE_AXIS);
+		
+		JLabel prof = new JLabel("Profile");
+		prof.setFont(new Font(prof.getFont().getFontName(), Font.ITALIC, 18));
 		JLabel txt = new JLabel("Name: " + gc.getPlayer().getName());
 		kaps = new JLabel("Kaps: " + gc.getPlayer().kaps);
+		
+		profile.add(prof);
 		profile.add(txt);
 		profile.add(kaps);
 		
 		
 		profile.setLayout(layout);
-		profile.setPreferredSize(new Dimension(150, 600));
-		this.add(profile, BorderLayout.LINE_START);
+		//profile.setPreferredSize(new Dimension(150, 100));
+		leftPane.add(profile);//, BorderLayout.PAGE_START);
+	}
+	
+	public void reloadProfile()
+	{
+		reloadKaps();
 	}
 	
 	public void reloadKaps()
 	{
 		kaps.setText("Kaps: " + gc.getPlayer().kaps);
+	}
+	
+	public void loadButtons()
+	{
+		buttons = new JPanel();
+		BoxLayout layout = new BoxLayout(buttons, BoxLayout.PAGE_AXIS);
+		
+		JButton bt = new JButton("useless BUTTON");
+		buttons.add(bt);
+		
+		buttons.setLayout(layout);
+		//buttons.setPreferredSize(new Dimension(150, 450));
+		leftPane.add(buttons);//, BorderLayout.PAGE_END);
 	}
 	
 	public void loadProduction()
