@@ -1,7 +1,5 @@
 package production;
 
-import market.ProductType;
-
 public interface IProductionBuilding
 {
 	int m2 = 0;

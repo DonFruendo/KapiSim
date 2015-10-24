@@ -30,7 +30,7 @@ public enum ProductType
 	Kakao		(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 15)}),
 	Weintraube	(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 20)}),
 	Zuckerrohr	(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 50)}),
-	Kautschuck	(Type.Food, new Dp[]{new Dp(Saatgut, 2), new Dp(Wasser, 21)}),
+	Kautschuk	(Type.Food, new Dp[]{new Dp(Saatgut, 2), new Dp(Wasser, 21)}),
 	
 	// Backwaren
 	Mehl		(Type.Food, new Dp[]{new Dp(Getreide, 10), new Dp(Wasser, 10)}),
@@ -44,7 +44,7 @@ public enum ProductType
 	
 	// Eis
 	Bananeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Banane, 2)}),
-	Organeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Orange, 2)}),
+	Orangeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Orange, 2)}),
 	Erdbeereis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Erdbeere, 2)}),
 	Kaffeeeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kaffeebohne, 2)}),
 	Schokoeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kakao, 2)}),

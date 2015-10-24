@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+@SuppressWarnings("serial")
 public class TableModel extends AbstractTableModel {
 	Market market;
 	String[] columns = {"Anzahl",
