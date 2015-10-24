@@ -44,7 +44,7 @@ public enum ProductType
 	
 	// Eis
 	Bananeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Banane, 2)}),
-	Organeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Orange, 2)}),
+	Orangeneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Orange, 2)}),
 	Erdbeereis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Erdbeere, 2)}),
 	Kaffeeeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kaffeebohne, 2)}),
 	Schokoeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kakao, 2)}),
