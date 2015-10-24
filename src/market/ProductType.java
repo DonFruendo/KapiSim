@@ -30,7 +30,7 @@ public enum ProductType
 	Kakao		(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 15)}),
 	Weintraube	(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 20)}),
 	Zuckerrohr	(Type.Food, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 50)}),
-	Kautschuck	(Type.Food, new Dp[]{new Dp(Saatgut, 2), new Dp(Wasser, 21)}),
+	Kautschuk	(Type.Food, new Dp[]{new Dp(Saatgut, 2), new Dp(Wasser, 21)}),
 	
 	// Backwaren
 	Mehl		(Type.Food, new Dp[]{new Dp(Getreide, 10), new Dp(Wasser, 10)}),
