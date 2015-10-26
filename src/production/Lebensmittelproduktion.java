@@ -1,11 +1,12 @@
 package production;
 
+import controller.PlayerController;
+import controller.ProductionBuildingController;
 import market.ProductType;
-import game.Player;
 
-public class Lebensmittelproduktion extends ProductionBuilding {
+public class Lebensmittelproduktion extends ProductionBuildingController {
 
-	public Lebensmittelproduktion(Player owner) {
+	public Lebensmittelproduktion(PlayerController owner) {
 		super(owner);
 		possible.add(ProductType.Bonbon);
 		possible.add(ProductType.Brot);
