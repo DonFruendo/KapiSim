@@ -1,9 +1,9 @@
 package production;
 
-import game.Player;
+import Inventory.Player;
 import market.ProductType;
 
-public class Quelle extends ProductionBuilding 
+public class Quelle extends ProductionBuildingController 
 {
 	public Quelle(Player owner)
 	{

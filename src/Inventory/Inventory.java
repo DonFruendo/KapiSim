@@ -14,6 +14,11 @@ public class Inventory
 		inv = new ArrayList<Entry>();
 	}
 	
+	public Inventory(Inventory another)
+	{
+		this.inv = another.inv;
+	}
+	
 	public ArrayList<Entry> getWholeInventory()
 	{
 		return inv;
@@ -128,5 +133,10 @@ public class Inventory
 		{
 			return quantity;
 		}
+	}
+	
+	public Inventory getCopy()
+	{
+		return new Inventory(this);
 	}
 }

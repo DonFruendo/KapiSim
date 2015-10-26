@@ -1,6 +1,5 @@
 package market;
 
-import game.Player;
 import game.Product;
 
 public class Offer
@@ -10,37 +9,34 @@ public class Offer
 	int id;
 	int quantity;
 	int quality;
-	double cost;
-	double total;
+	int cost;
+	int total;
 	
-	Player offerer;
-	Player receiver = null;
+	int offerer;
+	int receiver = -1;
 	ProductType product;
 	
 	
-	public Offer(Player offerer, ProductType product, int quantity, int quality, double cost)
+	public Offer(int offererID, ProductType product, int quantity, int quality, int cost)
 	{
 		this.quantity = quantity;
 		this.quality = quality;
 		this.cost = cost;
-		this.offerer = offerer;
+		this.offerer = offererID;
 		this.product = product;
 		this.total = quantity * cost;
 		this.id = nextid;
 		nextid++;
 	}
 	
-	public Offer(Player offerer, Product product, int quantity, double cost)
+	public Offer(int offererId, Product product, int quantity, int cost)
 	{
-		this(offerer, product.type, quantity, product.quality, cost);
+		this(offererId, product.type, quantity, product.quality, cost);
 	}
 	
 	public Product getProduct()
 	{
-		Product p = new Product();
-		p.type = product;
-		p.quality = quality;
-		return p;
+		return new Product(product, quality);
 	}
 	
 	public boolean equals(Object obj)
@@ -53,8 +49,9 @@ public class Offer
 		{
 			Offer o = (Offer) obj;
 			return (   (o.offerer  == offerer)
+					&& (o.receiver == receiver)
 					&& (o.product  == product)
-					&& (o.cost     == cost)
+					&& (o.cost	   == cost)
 					&& (o.quality  == quality)
 					&& (o.quantity == quantity));
 		}
@@ -72,19 +69,19 @@ public class Offer
 		return quality;
 	}
 
-	public double getCost() {
+	public int getCost() {
 		return cost;
 	}
 
-	public double getTotal() {
+	public int getTotal() {
 		return total;
 	}
 
-	public Player getOfferer() {
+	public int getOffererID() {
 		return offerer;
 	}
 
-	public Player getReceiver() {
+	public int getReceiverID() {
 		return receiver;
 	}
 	

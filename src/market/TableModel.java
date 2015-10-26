@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import controller.MarketController;
+
 @SuppressWarnings("serial")
 public class TableModel extends AbstractTableModel {
-	Market market;
+	MarketController market;
 	String[] columns = {"Anzahl",
 			"Produkt",
 			"Firma",
@@ -17,7 +19,7 @@ public class TableModel extends AbstractTableModel {
 	ArrayList<Offer> offers;
 	Object[][] data;
 	
-	public TableModel(Market market)
+	public TableModel(MarketController market)
 	{
 		this.market = market;
 		offers = market.getAllOffers();

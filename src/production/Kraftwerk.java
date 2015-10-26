@@ -1,9 +1,9 @@
 package production;
 
-import game.Player;
+import Inventory.Player;
 import market.ProductType;
 
-public class Kraftwerk extends ProductionBuilding
+public class Kraftwerk extends ProductionBuildingController
 {
 	public Kraftwerk(Player owner)
 	{

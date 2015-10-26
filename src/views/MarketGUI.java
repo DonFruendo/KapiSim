@@ -1,4 +1,4 @@
-package market;
+package views;
 
 import java.util.ArrayList;
 
@@ -6,21 +6,28 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import controller.GameController;
+import controller.MarketController;
+import market.Offer;
+import market.ProductType;
+
 public class MarketGUI
 {
-	Market market;
+	MarketController market;
+	GameController gc;
 	
-	public MarketGUI(Market market)
+	public MarketGUI(MarketController market, GameController gc)
 	{
 		this.market = market;
+		this.gc = gc;
 	}
 	
 	public void display()
 	{
-		System.out.println("T  Product");
+		gc.Debug("T  Product");
 		for(ProductType p: ProductType.values())
 		{
-			System.out.println(p.getTier() + "  " + p);
+			gc.Debug(p.getTier() + "  " + p);
 		}
 		
 		
@@ -40,12 +47,12 @@ public class MarketGUI
 			Offer o = offers.get(i);
 			Object[] d = new Object[]
 				{
-					o.quantity,
-					o.product,
-					o.offerer,
-					o.quality,
-					o.cost,
-					o.total
+					o.getQuantity(),
+					o.getProduct(),
+					gc.getPlayer(o.getOffererID()),
+					o.getQuality(),
+					o.getCost(),
+					o.getTotal()
 				};
 			data[i] = d;
 		}

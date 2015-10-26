@@ -1,9 +1,9 @@
 package production;
 
+import Inventory.Player;
 import market.ProductType;
-import game.Player;
 
-public class Getraenkefabrik extends ProductionBuilding {
+public class Getraenkefabrik extends ProductionBuildingController {
 
 	public Getraenkefabrik(Player owner) {
 		super(owner);

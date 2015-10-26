@@ -1,4 +1,4 @@
-package game;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -19,10 +21,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import controller.GameController;
 import Inventory.Inventory.Entry;
 import market.Offer;
 import market.ProductType;
-import production.ProductionBuilding;
+import production.ProductionBuildingController;
 
 public class GameGUI extends JFrame
 {
@@ -42,10 +46,10 @@ public class GameGUI extends JFrame
 	JScrollPane marketPane;
 	JScrollPane inventory;
 
-	public GameGUI(GameController gc)
+	public GameGUI()
 	{
 		super("KapiSim v0.1.0a");
-		this.gc = gc;
+		this.gc = GameController.getGameController();
 		
 		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,7 +106,8 @@ public class GameGUI extends JFrame
 		JLabel prof = new JLabel("Profile");
 		prof.setFont(new Font(prof.getFont().getFontName(), Font.ITALIC, 18));
 		JLabel txt = new JLabel("Name: " + gc.getPlayer().getName());
-		kaps = new JLabel("Kaps: " + gc.getPlayer().kaps);
+		kaps = new JLabel();
+		reloadKaps();
 		
 		profile.add(prof);
 		profile.add(txt);
@@ -121,7 +126,7 @@ public class GameGUI extends JFrame
 	
 	public void reloadKaps()
 	{
-		kaps.setText("Kaps: " + gc.getPlayer().kaps);
+		kaps.setText("Kaps: " + (gc.getPlayer().getKaps() / 100.));
 	}
 	
 	public void loadButtons()
@@ -130,6 +135,13 @@ public class GameGUI extends JFrame
 		BoxLayout layout = new BoxLayout(buttons, BoxLayout.PAGE_AXIS);
 		
 		JButton bt = new JButton("useless BUTTON");
+		bt.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent arg0) {
+				PlaceOfferGUI poGUI = new PlaceOfferGUI();
+			}
+			
+		});
 		buttons.add(bt);
 		
 		buttons.setLayout(layout);
@@ -147,19 +159,27 @@ public class GameGUI extends JFrame
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void reloadProduction()
 	{
-		for(final ProductionBuilding pb : gc.getPlayer().productionBuildings)
+		for(final ProductionBuildingController pb : gc.getPlayer().productionBuildings)
 		{
 			JPanel building = new JPanel();
+			final JComboBox<ProductType> cbProduction = new JComboBox(pb.getPossibleTypes().toArray());
 			JButton btProduce = new JButton("produce");
 			final JTextField edProduction = new JTextField(10);
-			final JComboBox<ProductType> cbProduction = new JComboBox(pb.getPossibleTypes().toArray());
+			edProduction.addKeyListener(new KeyListener(){
+				public void keyPressed(KeyEvent arg0) {}
+
+				public void keyReleased(KeyEvent arg0) {
+					if(arg0.getKeyCode() == 10)
+					{
+						pressProductionButton(pb, edProduction, cbProduction);
+					}
+				}
+
+				public void keyTyped(KeyEvent arg0) {}
+			});
 			btProduce.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					System.out.println("YAY");
-					ProductType pt = cbProduction.getItemAt(cbProduction.getSelectedIndex());
-					int quantity = Integer.parseInt(edProduction.getText());
-					pb.produce(pt, 0, quantity);
-					reloadInventory();
+					pressProductionButton(pb, edProduction, cbProduction);
 				}
 			});
 			building.add(cbProduction);
@@ -186,7 +206,7 @@ public class GameGUI extends JFrame
 				"Produkt",
 				"Qualität"
 		};
-		ArrayList<Entry> entries = gc.getPlayer().inventory.getWholeInventory();
+		ArrayList<Entry> entries = gc.getPlayer().getWholeInventory();
 		Object[][] data = new Object[entries.size()][];
 		for(int i = 0; i < entries.size(); i++)
 		{
@@ -239,7 +259,7 @@ public class GameGUI extends JFrame
 				{
 					o.getQuantity(),
 					o.getProduct(),
-					o.getOfferer(),
+					gc.getPlayer(o.getOffererID()),
 					o.getQuality(),
 					o.getCost(),
 					o.getTotal()
@@ -252,5 +272,16 @@ public class GameGUI extends JFrame
 		marketPane.getViewport().add(table);
 		table.setFillsViewportHeight(true);
 		tabPane.add("Market", marketPane);
+	}
+
+	private void pressProductionButton(final ProductionBuildingController pb,
+			final JTextField edProduction,
+			final JComboBox<ProductType> cbProduction) {
+		gc.Debug("YAY");
+		ProductType pt = cbProduction.getItemAt(cbProduction.getSelectedIndex());
+		int quantity = Integer.parseInt(edProduction.getText());
+		edProduction.setText("");
+		pb.produce(pt, 0, quantity);
+		reloadInventory();
 	}
 }
