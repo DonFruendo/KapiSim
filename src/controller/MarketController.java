@@ -3,14 +3,13 @@ package controller;
 import java.util.ArrayList;
 
 import market.Offer;
-import Inventory.Player;
 
 public class MarketController
 {
 	ArrayList<Offer> allOffers;
 	GameController gc;
 	
-	public MarketController(GameController gc)
+	public MarketController()
 	{
 		allOffers = new ArrayList<Offer>();
 		this.gc = GameController.getGameController();
@@ -18,7 +17,7 @@ public class MarketController
 	
 	public void placeOffer(Offer offer)
 	{
-		Player offerer = gc.getPlayer(offer.getOffererID());
+		PlayerController offerer = gc.getPlayer(offer.getOffererID());
 		if(!offerer.validateStock(offer.getProduct(), offer.getQuantity()))
 		{
 			gc.message("Not enough " + offer.getProduct() + " in stock of " + offerer);
@@ -40,7 +39,7 @@ public class MarketController
 		}
 	}
 	
-	public void takeOffer(Player player, int offerid)
+	public void takeOffer(PlayerController player, int offerid)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -52,7 +51,7 @@ public class MarketController
 		}
 	}
 	
-	public void takeOffer(Player player, Offer offer)
+	public void takeOffer(PlayerController player, Offer offer)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -64,7 +63,7 @@ public class MarketController
 		}
 	}
 	
-	private void processOffer(Player player, Offer o)
+	private void processOffer(PlayerController player, Offer o)
 	{
 		int playerID = player.getID();
 		if(o.getReceiverID() == -1 || o.getReceiverID() == playerID)

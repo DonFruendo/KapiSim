@@ -1,13 +1,14 @@
-package Inventory;
+package controller;
 
 import game.Product;
 
 import java.util.ArrayList;
 
+import Inventory.Inventory;
 import Inventory.Inventory.Entry;
 import production.ProductionBuildingController;
 
-public class Player
+public class PlayerController
 {
 	private static String[] allNames = {"Perry", "Hugo", "Fritz", "Aaron", "Herbert", "Eliza"};
 	private String name;
@@ -16,7 +17,7 @@ public class Player
 	private int kaps;
 	public ArrayList<ProductionBuildingController> productionBuildings;
 	
-	public Player(int id, int kapital)
+	public PlayerController(int id, int kapital)
 	{
 		this.id = id;
 		this.kaps = kapital;

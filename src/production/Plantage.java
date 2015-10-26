@@ -1,11 +1,11 @@
 package production;
 
-import Inventory.Player;
+import controller.PlayerController;
 import market.ProductType;
 
 public class Plantage extends ProductionBuildingController {
 
-	public Plantage(Player owner) {
+	public Plantage(PlayerController owner) {
 		super(owner);
 		possible.add(ProductType.Saatgut);
 		// possible.add(ProductType.Baumwolle);

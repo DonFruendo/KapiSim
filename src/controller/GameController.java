@@ -1,18 +1,23 @@
 package controller;
 
-import Inventory.Player;
 import production.*;
 
 public class GameController
 {
 	private static GameController gameController;
-	MarketController market;
-	Player p;
+	private MarketController market;
+	PlayerController p;
+	
+	LogState debugMode = LogState.Debug;
 	
 	private GameController()
 	{
-		market = new MarketController(this);
-		p = new Player(11, 100000);
+	}
+	
+	public void startGame()
+	{
+		market = new MarketController();
+		p = new PlayerController(11, 100000);
 		Kraftwerk k1 = new Kraftwerk(p);
 		Quelle q1 = new Quelle(p);
 		Plantage p1 = new Plantage(p);
@@ -31,7 +36,6 @@ public class GameController
 		p.productionBuildings.add(g1);
 		p.productionBuildings.add(f1);
 		p.productionBuildings.add(e1);
-		
 	}
 	
 	// ** Console interaction **
@@ -42,17 +46,20 @@ public class GameController
 	
 	public void Log(String message)
 	{
-		System.out.println("> " + message);
+		if(LogState.Log.show(debugMode))
+			System.out.println("> " + message);
 	}
 	
 	public void Debug(String message)
 	{
-		System.out.println(">> " + message);
+		if(LogState.Debug.show(debugMode))
+			System.out.println(">> " + message);
 	}
 	
 	public void Error(String message)
 	{
-		System.out.println("Error: " + message);
+		if(LogState.Error.show(debugMode))
+			System.out.println("Error: " + message);
 	}
 	// ** Console Interaction end **
 	
@@ -61,12 +68,12 @@ public class GameController
 		return market;
 	}
 	
-	public Player getPlayer()
+	public PlayerController getPlayer()
 	{
 		return p;
 	}
 	
-	public Player getPlayer(int ID)
+	public PlayerController getPlayer(int ID)
 	{
 		return null;
 	}
@@ -78,5 +85,25 @@ public class GameController
 			gameController = new GameController();
 		}
 		return gameController;
+	}
+	
+	
+	static enum LogState
+	{
+		Error	(0),
+		Log		(1),
+		Debug	(2);
+		
+		int value;
+		
+		LogState(int value)
+		{
+			this.value = value;
+		}
+		
+		public boolean show(LogState logState)
+		{
+			return (this.value <= logState.value);
+		}
 	}
 }

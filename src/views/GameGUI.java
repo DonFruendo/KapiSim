@@ -5,28 +5,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import controller.GameController;
-import Inventory.Inventory.Entry;
-import market.Offer;
-import market.ProductType;
-import production.ProductionBuildingController;
 
 public class GameGUI extends JFrame
 {
@@ -39,12 +24,11 @@ public class GameGUI extends JFrame
 	
 	JPanel headerPane;
 	JPanel leftPane;
-	JPanel profile;
-		JLabel kaps;
+	ProfileView profile;
 	JPanel buttons;
-	JTabbedPane production;
-	JScrollPane marketPane;
-	JScrollPane inventory;
+	ProductionView production;
+	MarketView marketPane;
+	InventoryView inventory;
 
 	public GameGUI()
 	{
@@ -100,33 +84,18 @@ public class GameGUI extends JFrame
 	
 	public void loadProfile()
 	{
-		profile = new JPanel();
-		BoxLayout layout = new BoxLayout(profile, BoxLayout.PAGE_AXIS);
-		
-		JLabel prof = new JLabel("Profile");
-		prof.setFont(new Font(prof.getFont().getFontName(), Font.ITALIC, 18));
-		JLabel txt = new JLabel("Name: " + gc.getPlayer().getName());
-		kaps = new JLabel();
-		reloadKaps();
-		
-		profile.add(prof);
-		profile.add(txt);
-		profile.add(kaps);
-		
-		
-		profile.setLayout(layout);
-		//profile.setPreferredSize(new Dimension(150, 100));
+		profile = new ProfileView(this);
 		leftPane.add(profile);//, BorderLayout.PAGE_START);
 	}
 	
 	public void reloadProfile()
 	{
-		reloadKaps();
+		profile.reloadProfile();
 	}
 	
 	public void reloadKaps()
 	{
-		kaps.setText("Kaps: " + (gc.getPlayer().getKaps() / 100.));
+		profile.reloadKaps();
 	}
 	
 	public void loadButtons()
@@ -138,7 +107,7 @@ public class GameGUI extends JFrame
 		bt.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
-				PlaceOfferGUI poGUI = new PlaceOfferGUI();
+				new PlaceOfferGUI();
 			}
 			
 		});
@@ -151,137 +120,37 @@ public class GameGUI extends JFrame
 	
 	public void loadProduction()
 	{
-		production = new JTabbedPane();
+		production = new ProductionView(this);
 		reloadProduction();
 		tabPane.add("Production", production);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void reloadProduction()
 	{
-		for(final ProductionBuildingController pb : gc.getPlayer().productionBuildings)
-		{
-			JPanel building = new JPanel();
-			final JComboBox<ProductType> cbProduction = new JComboBox(pb.getPossibleTypes().toArray());
-			JButton btProduce = new JButton("produce");
-			final JTextField edProduction = new JTextField(10);
-			edProduction.addKeyListener(new KeyListener(){
-				public void keyPressed(KeyEvent arg0) {}
-
-				public void keyReleased(KeyEvent arg0) {
-					if(arg0.getKeyCode() == 10)
-					{
-						pressProductionButton(pb, edProduction, cbProduction);
-					}
-				}
-
-				public void keyTyped(KeyEvent arg0) {}
-			});
-			btProduce.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					pressProductionButton(pb, edProduction, cbProduction);
-				}
-			});
-			building.add(cbProduction);
-			building.add(edProduction);
-			building.add(btProduce);
-			//btProduce.getRootPane().setDefaultButton(btProduce);
-			
-			production.add(pb.getClass().getSimpleName(),building);
-		}
+		production.reloadProduction();
 	}
 
 	public void loadInventory()
 	{
-		inventory = new JScrollPane();
+		inventory = new InventoryView(this);
 		reloadInventory();
-		inventory.validate();
 		tabPane.add("Inventory", inventory);
 	}
 	
 	public void reloadInventory()
 	{
-		String[] columnNames = {
-				"Anzahl",
-				"Produkt",
-				"Qualität"
-		};
-		ArrayList<Entry> entries = gc.getPlayer().getWholeInventory();
-		Object[][] data = new Object[entries.size()][];
-		for(int i = 0; i < entries.size(); i++)
-		{
-			Entry e = entries.get(i);
-			Object[] d = new Object[]
-				{
-					e.getQuantity(),
-					e.getProductType(),
-					e.getQuality()
-				};
-			data[i] = d;
-		}
-		JTable inventoryTable = new JTable(data, columnNames);
-		inventory.getViewport().add(inventoryTable);
-		inventory.addFocusListener(new FocusListener(){
-			public void focusGained(FocusEvent arg0) {
-				reloadInventory();
-			}
-
-			public void focusLost(FocusEvent arg0) {}
-		});
-		
-		reloadKaps();
+		inventory.reloadInventory();
 	}
 	
 	public void loadMarket()
 	{
-		marketPane = new JScrollPane();
+		marketPane = new MarketView(this);
 		reloadMarket();
 		tabPane.add("Market", marketPane);
 	}
 	
 	public void reloadMarket()
 	{
-		ArrayList<Offer> offers = gc.getMarket().getAllOffers();
-		
-		String[] columns = {"Anzahl",
-				"Produkt",
-				"Firma",
-				"Quali",
-				"Preis",
-				"Gesamt"};
-		
-		Object[][] data = new Object[offers.size()][];
-		
-		for(int i = 0; i < offers.size(); i++)
-		{
-			Offer o = offers.get(i);
-			Object[] d = new Object[]
-				{
-					o.getQuantity(),
-					o.getProduct(),
-					gc.getPlayer(o.getOffererID()),
-					o.getQuality(),
-					o.getCost(),
-					o.getTotal()
-				};
-			data[i] = d;
-		}
-		
-		
-		JTable table = new JTable(data, columns);
-		marketPane.getViewport().add(table);
-		table.setFillsViewportHeight(true);
-		tabPane.add("Market", marketPane);
-	}
-
-	private void pressProductionButton(final ProductionBuildingController pb,
-			final JTextField edProduction,
-			final JComboBox<ProductType> cbProduction) {
-		gc.Debug("YAY");
-		ProductType pt = cbProduction.getItemAt(cbProduction.getSelectedIndex());
-		int quantity = Integer.parseInt(edProduction.getText());
-		edProduction.setText("");
-		pb.produce(pt, 0, quantity);
-		reloadInventory();
+		marketPane.reloadMarket();
 	}
 }

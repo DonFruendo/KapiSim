@@ -1,11 +1,11 @@
 package production;
 
-import Inventory.Player;
+import controller.PlayerController;
 import market.ProductType;
 
 public class Quelle extends ProductionBuildingController 
 {
-	public Quelle(Player owner)
+	public Quelle(PlayerController owner)
 	{
 		super(owner);
 		possible.add(ProductType.Wasser);

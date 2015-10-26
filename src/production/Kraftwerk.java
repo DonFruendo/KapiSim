@@ -1,11 +1,11 @@
 package production;
 
-import Inventory.Player;
+import controller.PlayerController;
 import market.ProductType;
 
 public class Kraftwerk extends ProductionBuildingController
 {
-	public Kraftwerk(Player owner)
+	public Kraftwerk(PlayerController owner)
 	{
 		super(owner);
 		possible.add(ProductType.Strom);

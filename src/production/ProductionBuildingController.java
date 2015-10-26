@@ -3,7 +3,7 @@ package production;
 import java.util.ArrayList;
 
 import controller.GameController;
-import Inventory.Player;
+import controller.PlayerController;
 import Inventory.Inventory.Entry;
 import game.Product;
 import market.ProductType;
@@ -11,13 +11,13 @@ import market.ProductType.Dp;
 
 public abstract class ProductionBuildingController implements IProductionBuilding
 {
-	Player owner;
+	PlayerController owner;
 	int m2;
 	int worker;
 	final ArrayList<ProductType> possible;
 	final GameController gc;
 	
-	public ProductionBuildingController(Player owner)
+	public ProductionBuildingController(PlayerController owner)
 	{
 		this.owner = owner;
 		this.possible = new ArrayList<ProductType>();
