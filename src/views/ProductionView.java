@@ -12,8 +12,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import market.ProductType;
-import production.ProductionBuildingController;
 import controller.GameController;
+import controller.ProductionBuildingController;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductionView extends JTabbedPane {

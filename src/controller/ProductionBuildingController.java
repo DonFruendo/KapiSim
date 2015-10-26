@@ -1,9 +1,8 @@
-package production;
+package controller;
 
 import java.util.ArrayList;
 
-import controller.GameController;
-import controller.PlayerController;
+import production.IProductionBuilding;
 import Inventory.Inventory.Entry;
 import game.Product;
 import market.ProductType;
@@ -14,7 +13,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	PlayerController owner;
 	int m2;
 	int worker;
-	final ArrayList<ProductType> possible;
+	protected final ArrayList<ProductType> possible;
 	final GameController gc;
 	
 	public ProductionBuildingController(PlayerController owner)
@@ -159,7 +158,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 					else
 					{
 						entries.add(new Entry(tmP, tmQ));
-						gc.message(owner + " has " + tmQ + " " + tmP + " or even more!");
+						gc.Debug(owner + " has " + tmQ + " " + tmP + " or even more!");
 					}
 				}
 				
@@ -168,6 +167,9 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 					owner.pay(kapsNeeded);
 					owner.removeFromInventory(entries);
 					owner.addToInventory(product, quantity);
+					if(entries.size() > 0)
+						gc.message(entries + " wurden aus dem Lager entnommen");
+					gc.message(product + " wurde " + quantity + " mal hergestellt (" + kapsNeeded/100. + " Kaps)");
 					gc.Debug(product + " " + quantity);
 					gc.Debug(owner.getInventory().toString());
 				}

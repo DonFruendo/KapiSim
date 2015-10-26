@@ -3,10 +3,6 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,21 +21,27 @@ public class GameGUI extends JFrame
 	JPanel headerPane;
 	JPanel leftPane;
 	ProfileView profile;
-	JPanel buttons;
+	MenuView menu;
 	ProductionView production;
 	MarketView marketPane;
 	InventoryView inventory;
+	ConsoleView console;
+	
+	JPanel bottomPane;
 
 	public GameGUI()
 	{
 		super("KapiSim v0.1.0a");
 		this.gc = GameController.getGameController();
-		
-		this.setSize(800, 600);
+	}
+	
+	public void start()
+	{
+		this.setSize(800, 400);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		leftPane = new JPanel();
-		leftPane.setPreferredSize(new Dimension(150, 600));
+		leftPane.setPreferredSize(new Dimension(150, 0));
 		this.add(leftPane, BorderLayout.LINE_START);
 		
 		// ** Header **
@@ -53,8 +55,8 @@ public class GameGUI extends JFrame
 		p.setPreferredSize(new Dimension(1,70));
 		leftPane.add(p);
 		
-		// ** Interaction Buttons
-		loadButtons();
+		// ** Menu **
+		loadMenu();
 		
 		tabPane = new JTabbedPane();
 		
@@ -68,8 +70,17 @@ public class GameGUI extends JFrame
 		loadMarket();
 		
 		this.add(tabPane, BorderLayout.CENTER);
+		
+		bottomPane = new JPanel();
+		
+		// ** Console **
+		loadConsole();
+		
+		this.add(bottomPane, BorderLayout.PAGE_END);
+		
 		this.validate();
 		this.pack();
+		this.setVisible(true);
 	}
 	
 	public void loadHeader()
@@ -98,24 +109,11 @@ public class GameGUI extends JFrame
 		profile.reloadKaps();
 	}
 	
-	public void loadButtons()
+	public void loadMenu()
 	{
-		buttons = new JPanel();
-		BoxLayout layout = new BoxLayout(buttons, BoxLayout.PAGE_AXIS);
-		
-		JButton bt = new JButton("useless BUTTON");
-		bt.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent arg0) {
-				new PlaceOfferGUI();
-			}
-			
-		});
-		buttons.add(bt);
-		
-		buttons.setLayout(layout);
-		//buttons.setPreferredSize(new Dimension(150, 450));
-		leftPane.add(buttons);//, BorderLayout.PAGE_END);
+		menu = new MenuView();
+		menu.loadMenu();
+		leftPane.add(menu);//, BorderLayout.PAGE_END);
 	}
 	
 	public void loadProduction()
@@ -152,5 +150,18 @@ public class GameGUI extends JFrame
 	public void reloadMarket()
 	{
 		marketPane.reloadMarket();
+	}
+	
+	public void loadConsole()
+	{
+		console = new ConsoleView();
+		console.loadConsole();
+		bottomPane.add(console);
+	}
+	
+	public void addToConsole(String message)
+	{
+		console.addToConsole(message);
+		bottomPane.validate();
 	}
 }

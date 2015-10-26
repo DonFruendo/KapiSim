@@ -1,6 +1,7 @@
 package controller;
 
 import production.*;
+import views.GameGUI;
 
 public class GameController
 {
@@ -8,7 +9,9 @@ public class GameController
 	private MarketController market;
 	PlayerController p;
 	
-	LogState debugMode = LogState.Debug;
+	GameGUI gui;
+	
+	LogState debugMode = LogState.Idle;
 	
 	private GameController()
 	{
@@ -36,30 +39,47 @@ public class GameController
 		p.productionBuildings.add(g1);
 		p.productionBuildings.add(f1);
 		p.productionBuildings.add(e1);
+		
+		
+		gui = new GameGUI();
+		gui.start();
 	}
 	
 	// ** Console interaction **
 	public void message(String message)
 	{
-		System.out.println(message);
+		if(LogState.Idle.show(debugMode))
+		{
+			gui.addToConsole(message);
+			System.out.println(message);
+		}
 	}
 	
 	public void Log(String message)
 	{
 		if(LogState.Log.show(debugMode))
+		{
+			gui.addToConsole(message);
 			System.out.println("> " + message);
+		}
 	}
 	
 	public void Debug(String message)
 	{
 		if(LogState.Debug.show(debugMode))
+		{
+			gui.addToConsole(message);
 			System.out.println(">> " + message);
+		}
 	}
 	
 	public void Error(String message)
 	{
 		if(LogState.Error.show(debugMode))
+		{
+			gui.addToConsole(message);
 			System.out.println("Error: " + message);
+		}
 	}
 	// ** Console Interaction end **
 	
@@ -88,11 +108,15 @@ public class GameController
 	}
 	
 	
+	
+	
+	
 	static enum LogState
 	{
-		Error	(0),
-		Log		(1),
-		Debug	(2);
+		Idle	(0),
+		Error	(1),
+		Log		(2),
+		Debug	(3);
 		
 		int value;
 		

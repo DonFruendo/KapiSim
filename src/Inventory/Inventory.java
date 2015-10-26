@@ -116,7 +116,7 @@ public class Inventory
 		
 		public String toString()
 		{
-			return "[" + product + "|" + quantity + "]";
+			return "[" + quantity + "x " + product + "]";
 		}
 		
 		public ProductType getProductType()

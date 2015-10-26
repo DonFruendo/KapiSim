@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import Inventory.Inventory;
 import Inventory.Inventory.Entry;
-import production.ProductionBuildingController;
 
 public class PlayerController
 {
@@ -16,6 +15,7 @@ public class PlayerController
 	private Inventory inventory;
 	private int kaps;
 	public ArrayList<ProductionBuildingController> productionBuildings;
+	GameController gc;
 	
 	public PlayerController(int id, int kapital)
 	{
@@ -25,6 +25,7 @@ public class PlayerController
 		this.name = allNames[r];
 		inventory = new Inventory();
 		productionBuildings = new ArrayList<ProductionBuildingController>();
+		this.gc = GameController.getGameController();
 	}
 	
 	public int getID()
@@ -50,12 +51,12 @@ public class PlayerController
 	
 	public void pay(int kapital)
 	{
-		// TODO
+		kaps -= kapital;
 	}
 	
 	public void getPaid(int kapital)
 	{
-		// TODO
+		kaps += kapital;
 	}
 	
 	public String toString()
