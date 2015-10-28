@@ -6,13 +6,23 @@ import market.Offer;
 
 public class MarketController
 {
+	private static MarketController market;
 	ArrayList<Offer> allOffers;
 	GameController gc;
 	
-	public MarketController()
+	private MarketController()
 	{
 		allOffers = new ArrayList<Offer>();
 		this.gc = GameController.getGameController();
+	}
+	
+	public static MarketController getMarket()
+	{
+		if(market == null)
+		{
+			market = new MarketController();
+		}
+		return market;
 	}
 	
 	public void placeOffer(Offer offer)
