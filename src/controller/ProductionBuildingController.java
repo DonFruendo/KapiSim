@@ -23,7 +23,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 		this.gc = GameController.getGameController();
 	}
 	
-	int getProductionCost(ProductType product)
+	public int getProductionCost(ProductType product)
 	{
 		// TODO Preise ergänzen
 		switch(product)
