@@ -4,14 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import market.ProductType;
+import market.ProductType.Dp;
 import controller.GameController;
 import controller.ProductionBuildingController;
 
@@ -31,19 +35,23 @@ public class ProductionView extends JTabbedPane {
 	
 	public void reloadProduction()
 	{
-		for(final ProductionBuildingController pb : gc.getPlayer().productionBuildings)
+		for(final ProductionBuildingController prodBuilding : gc.getPlayer().productionBuildings)
 		{
-			JPanel building = new JPanel();
-			final JComboBox<ProductType> cbProduction = new JComboBox(pb.getPossibleTypes().toArray());
+			JPanel buildingPanel = new JPanel();
+			JPanel buildingPanelTop = new JPanel();
+			JPanel buildingPanelBottom = new JPanel();
+			
+			final JComboBox<ProductType> cbProduction = new JComboBox(prodBuilding.getPossibleTypes().toArray());
 			JButton btProduce = new JButton("produce");
 			final JTextField edProduction = new JTextField(10);
+			
 			edProduction.addKeyListener(new KeyListener(){
 				public void keyPressed(KeyEvent arg0) {}
 
 				public void keyReleased(KeyEvent arg0) {
 					if(arg0.getKeyCode() == 10)
 					{
-						pressProductionButton(pb, edProduction, cbProduction);
+						pressProductionButton(prodBuilding, edProduction, cbProduction);
 					}
 				}
 				
@@ -51,15 +59,40 @@ public class ProductionView extends JTabbedPane {
 			});
 			btProduce.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					pressProductionButton(pb, edProduction, cbProduction);
+					pressProductionButton(prodBuilding, edProduction, cbProduction);
 				}
 			});
-			building.add(cbProduction);
-			building.add(edProduction);
-			building.add(btProduce);
-			//btProduce.getRootPane().setDefaultButton(btProduce);
 			
-			this.add(pb.getClass().getSimpleName(),building);
+			// Table
+			String[] columnNames = {"Produkt", "Braucht", "Kostet"};
+			Object[][] data = new Object[prodBuilding.getPossibleTypes().size()][];
+			for(int i = 0; i < prodBuilding.getPossibleTypes().size(); i++)
+			{
+				ProductType possibleType = prodBuilding.getPossibleTypes().get(i);
+				ArrayList<ProductType> dependencies = new ArrayList<ProductType>();
+				for(Dp dependency : possibleType.getDependencies())
+				{
+					dependencies.add(dependency.getType());
+				}
+				Object[] row = new Object[]{
+					possibleType,
+					dependencies,
+					prodBuilding.getProductionCost(possibleType)
+				};
+				data[i] = row;
+			}
+			JTable dependencyTable = new JTable(data, columnNames);
+			
+			buildingPanelTop.add(cbProduction);
+			buildingPanelTop.add(edProduction);
+			buildingPanelTop.add(btProduce);
+			buildingPanelBottom.add(dependencyTable);
+			
+			buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.PAGE_AXIS));
+			buildingPanel.add(buildingPanelTop);
+			buildingPanel.add(buildingPanelBottom);
+			
+			this.add(prodBuilding.getClass().getSimpleName(),buildingPanel);
 		}
 	}
 	
