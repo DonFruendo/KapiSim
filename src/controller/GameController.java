@@ -3,101 +3,73 @@ package controller;
 import production.*;
 import views.GameGUI;
 
+/**
+ * The GameController class contains methods to control the game.
+ * It manages all metadata and secures a stable functionality throughout the game. 
+ * 
+ * @author DonFruendo
+ *
+ */
+
 public class GameController
 {
+	// ** Attributes **
+	/**
+	 * The only gameController available
+	 * <p>
+	 * Since there can only be one GameController at a time, the static gameController property 
+	 * is declared in the style of a singleton-object.
+	 * <p>
+	 * See also:<br>
+	 * {@link #getGameController()}
+	 */
 	private static GameController gameController;
+	/**
+	 * The market
+	 * <p>
+	 * This variable holds the reference to the marketController
+	 */
 	private MarketController market;
-	PlayerController p;
+	/**
+	 * The player
+	 * <p>
+	 * Currently just holding the reference to the only player-object
+	 * but should be changed soon to reference the active player.
+	 * <br>
+	 * Perhaps deleting it soon to get rid of this rigid declaration..
+	 */
+	PlayerController player;
 	
+	/**
+	 * GameGUI
+	 * <p>
+	 * The gui variable holds the reference to the windows, which is visible to the player.
+	 * <p>
+	 * See also:<br>
+	 * {@link GameGUI} 
+	 */
 	GameGUI gui;
 	
-	LogState debugMode = LogState.Idle;
+	/**
+	 * DebugMode
+	 * <p>
+	 * Declares how deep the console-outputs go. If there is a debug note and the level is set to "JustErrors",
+	 * the message will not be printed.
+	 */
+	LogState debugMode = LogState.Log;
 	
-	private GameController()
-	{
-	}
+	// ** Construction **
+	/**
+	 * The constructor is private due to the concept of singleton-objects.
+	 * <p>
+	 * A new GameController is created, if and only if there is no GameController-object already existing.
+	 */
+	private GameController(){}
 	
-	public void startGame()
-	{
-		market = new MarketController();
-		p = new PlayerController(11, 100000);
-		Kraftwerk k1 = new Kraftwerk(p);
-		Quelle q1 = new Quelle(p);
-		Plantage p1 = new Plantage(p);
-		Obstplantage o1 = new Obstplantage(p);
-		Viehzucht  v1 = new Viehzucht(p);
-		Lebensmittelproduktion l1 = new Lebensmittelproduktion(p);
-		Getraenkefabrik g1 = new Getraenkefabrik(p);
-		Fleischerei f1 = new Fleischerei(p);
-		Eismanufaktur e1 = new Eismanufaktur(p);
-		p.productionBuildings.add(k1);
-		p.productionBuildings.add(q1);
-		p.productionBuildings.add(o1);
-		p.productionBuildings.add(v1);
-		p.productionBuildings.add(p1);
-		p.productionBuildings.add(l1);
-		p.productionBuildings.add(g1);
-		p.productionBuildings.add(f1);
-		p.productionBuildings.add(e1);
-		
-		
-		gui = new GameGUI();
-		gui.start();
-	}
-	
-	// ** Console interaction **
-	public void message(String message)
-	{
-		if(LogState.Idle.show(debugMode))
-		{
-			gui.addToConsole(message);
-			System.out.println(message);
-		}
-	}
-	
-	public void Log(String message)
-	{
-		if(LogState.Log.show(debugMode))
-		{
-			gui.addToConsole(message);
-			System.out.println("> " + message);
-		}
-	}
-	
-	public void Debug(String message)
-	{
-		if(LogState.Debug.show(debugMode))
-		{
-			gui.addToConsole(message);
-			System.out.println(">> " + message);
-		}
-	}
-	
-	public void Error(String message)
-	{
-		if(LogState.Error.show(debugMode))
-		{
-			gui.addToConsole(message);
-			System.out.println("Error: " + message);
-		}
-	}
-	// ** Console Interaction end **
-	
-	public MarketController getMarket()
-	{
-		return market;
-	}
-	
-	public PlayerController getPlayer()
-	{
-		return p;
-	}
-	
-	public PlayerController getPlayer(int ID)
-	{
-		return null;
-	}
-	
+	/**
+	 * Creates a new GameController if there is none. Otherwise just returns the existing GameController
+	 * @return {@link #gameController}
+	 */
 	public static GameController getGameController()
 	{
 		if(gameController == null)
@@ -108,26 +80,156 @@ public class GameController
 	}
 	
 	
+	// ** Methods **
+	/**
+	 * Start the game
+	 * <p>
+	 * Should be called to start the game, obviously.
+	 */
+	public void startGame()
+	{
+		market = MarketController.getMarket();
+		player = new PlayerController(11, 100000);
+		Kraftwerk k1 = new Kraftwerk(player);
+		Quelle q1 = new Quelle(player);
+		Plantage p1 = new Plantage(player);
+		Obstplantage o1 = new Obstplantage(player);
+		Viehzucht  v1 = new Viehzucht(player);
+		Lebensmittelproduktion l1 = new Lebensmittelproduktion(player);
+		Getraenkefabrik g1 = new Getraenkefabrik(player);
+		Fleischerei f1 = new Fleischerei(player);
+		Eismanufaktur e1 = new Eismanufaktur(player);
+		player.productionBuildings.add(k1);
+		player.productionBuildings.add(q1);
+		player.productionBuildings.add(o1);
+		player.productionBuildings.add(v1);
+		player.productionBuildings.add(p1);
+		player.productionBuildings.add(l1);
+		player.productionBuildings.add(g1);
+		player.productionBuildings.add(f1);
+		player.productionBuildings.add(e1);
+		
+		
+		gui = new GameGUI();
+		gui.start();
+	}
+	
+	// ** Console interaction **
+	/**
+	 * Debug prints the message, if the {@link #debugMode} is Debug or higher.
+	 * @param message String to be printed
+	 */
+	public void Debug(String message)
+	{
+		if(LogState.Debug.show(debugMode))
+		{
+			gui.addToConsole(message);
+			System.out.println("Debug > " + message);
+		}
+	}
+	
+	/**
+	 * Message prints the message, if the {@link #debugMode} is Log or higher.
+	 * @param message String to be printed
+	 */
+	public void message(String message)
+	{
+		if(LogState.Log.show(debugMode))
+		{
+			gui.addToConsole(message);
+			System.out.println(message);
+		}
+	}
+	
+	/**
+	 * Warning prints the message, if the {@link #debugMode} is Warnings or higher.
+	 * @param message String to be printed
+	 */
+	public void Warning(String message)
+	{
+		if(LogState.Warnings.show(debugMode))
+		{
+			gui.addToConsole(message);
+			System.out.println("Warning > " + message);
+		}
+	}
+	
+	/**
+	 * Error prints the message, if the {@link #debugMode} is Errors or higher.
+	 * @param message String to be printed
+	 */
+	public void Error(String message)
+	{
+		if(LogState.Errors.show(debugMode))
+		{
+			gui.addToConsole(message);
+			System.out.println("ERROR > " + message);
+		}
+	}
+	// ** Console Interaction end **
+	
+	/**
+	 * 
+	 * @return {@link #market}
+	 */
+	public MarketController getMarket()
+	{
+		return market;
+	}
+	
+	/**
+	 * @return {@link #player}
+	 */
+	public PlayerController getPlayer()
+	{
+		return player;
+	}
+	
+	/**
+	 * Finds the player with the given ID and returns it
+	 * @param ID ID to search by
+	 * @return Player with given ID
+	 */
+	public PlayerController getPlayer(int ID)
+	{
+		// TODO
+		return player;
+	}
 	
 	
 	
+	
+	/** LogState
+	 * <p>
+	 * The LogState enum declares the importancy of a message. If there is a message with priority "Warning" while
+	 * the console outputs everything except "Debug"-messages, it will output. Since the states are ordered this way,
+	 * they include every level before themselves. If the console outputs "Warnings", it will also output "Errors".
+	 * 
+	 * @author DonFruendo
+	 *
+	 */
 	static enum LogState
 	{
-		Idle	(0),
-		Error	(1),
-		Log		(2),
-		Debug	(3);
+		Errors,
+		Warnings,
+		Log,
+		Debug;
 		
-		int value;
-		
-		LogState(int value)
-		{
-			this.value = value;
-		}
-		
+		/**
+		 * Decides if the state is ok to show.
+		 * <p>
+		 * To call this properly, try something like this:
+		 * <br>
+		 * {@code if(Logstate.Warnings.show(currentLogLevel))}
+		 * <br>
+		 * Where currentLogLevel should be the current level, you would like to output.
+		 * 
+		 * @param logState LogLevel, you wish to output
+		 * @return true, if {@code logState.ordinal} is greater or equal to {@code this.ordinal}
+		 */
 		public boolean show(LogState logState)
 		{
-			return (this.value <= logState.value);
+			return (this.ordinal() <= logState.ordinal());
 		}
 	}
 }
