@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ public class ProductionView extends JTabbedPane {
 	{
 		for(final ProductionBuildingController prodBuilding : gc.getPlayer().productionBuildings)
 		{
+			// ** main Panels **
 			JPanel buildingPanel = new JPanel();
 			JPanel buildingPanelTop = new JPanel();
 			JPanel buildingPanelBottom = new JPanel();
@@ -51,12 +53,13 @@ public class ProductionView extends JTabbedPane {
 			final JButton btProduce = new JButton("produce");
 			
 			// ** Label Quantity **
-			final JLabel labelQuantity = new JLabel("0.0 kaps"); 
+			final JLabel labelCost = new JLabel("0.0 kaps"); 
 			
 			// ** TextField anzahl **
 			final JTextField textFieldAnzahl = new JTextField(10);
 			
 			// ** DependencyTable **
+			JTable dependencyTable;
 			String[] columnNames = {"Produkt", "Braucht", "Kostet"};
 			Object[][] data = new Object[prodBuilding.getPossibleTypes().size()][];
 			for(int i = 0; i < prodBuilding.getPossibleTypes().size(); i++)
@@ -70,20 +73,15 @@ public class ProductionView extends JTabbedPane {
 				Object[] row = new Object[]{
 					possibleType,
 					dependencies,
-					ProductionBuildingController.getProductionCost(possibleType) / 100.
+					prodBuilding.getProductionCost(possibleType) / 100.
 				};
 				data[i] = row;
 			}
-			JTable dependencyTable = new JTable(data, columnNames);
-			TableColumn column = null;
-			for (int i = 0; i < dependencyTable.getColumnCount(); i++) {
-			    column = dependencyTable.getColumnModel().getColumn(i);
-			    if (i == 2) {
-			        column.setPreferredWidth(500);
-			    } else {
-			        column.setPreferredWidth(2000);
-			    }
-			}
+			dependencyTable = new JTable(data, columnNames);
+			
+			// ** Container **
+			JScrollPane dependencyTableContainer = new JScrollPane(dependencyTable);
+			dependencyTable.setFillsViewportHeight(true);
 			
 			// ** ActionListeners **
 			btProduce.addActionListener(new ActionListener(){
@@ -100,7 +98,7 @@ public class ProductionView extends JTabbedPane {
 					{
 						pressProductionButton(prodBuilding, textFieldAnzahl, cbProduction);
 					}
-					updateQuantity(textFieldAnzahl, labelQuantity, cbProduction);
+					updateCost(prodBuilding, textFieldAnzahl, labelCost, cbProduction);
 				}
 				
 				public void keyTyped(KeyEvent arg0)
@@ -109,21 +107,30 @@ public class ProductionView extends JTabbedPane {
 			});
 			
 			
-			// ** Container **
-			JScrollPane dependencyTableContainer = new JScrollPane(dependencyTable);
-			dependencyTable.setFillsViewportHeight(true);
+			// ** Resize **
+			dependencyTableContainer.setPreferredSize(new Dimension(500, 300));
+			buildingPanelTop.setPreferredSize(new Dimension(500, 50));
+			TableColumn column = null;
+			for (int i = 0; i < dependencyTable.getColumnCount(); i++) {
+			    column = dependencyTable.getColumnModel().getColumn(i);
+			    if (i == 2) {
+			        column.setPreferredWidth(500);
+			    } else {
+			        column.setPreferredWidth(2000);
+			    }
+			}
 			
 			
 			// ** AddToPanel **
-			buildingPanelTop.add(cbProduction);
-			buildingPanelTop.add(textFieldAnzahl);
-			buildingPanelTop.add(btProduce);
-			buildingPanelTop.add(labelQuantity);
-			buildingPanelBottom.add(dependencyTableContainer);
-			
 			buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.PAGE_AXIS));
 			buildingPanel.add(buildingPanelTop);
 			buildingPanel.add(buildingPanelBottom);
+			
+			buildingPanelTop.add(cbProduction);
+			buildingPanelTop.add(textFieldAnzahl);
+			buildingPanelTop.add(btProduce);
+			buildingPanelTop.add(labelCost);
+			buildingPanelBottom.add(dependencyTableContainer);
 			
 			this.add(prodBuilding.getClass().getSimpleName(),buildingPanel);
 		}
@@ -140,7 +147,10 @@ public class ProductionView extends JTabbedPane {
 		parent.reloadInventory();
 	}
 	
-	private void updateQuantity(JTextField textfield, JLabel labelQuantity, JComboBox<ProductType> cbProduction)
+	private void updateCost(ProductionBuildingController prodBuilding,
+			JTextField textfield, 
+			JLabel labelCost, 
+			JComboBox<ProductType> cbProduction)
 	{
 		long quantity = 0;
 		try {
@@ -148,8 +158,8 @@ public class ProductionView extends JTabbedPane {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		int cost = ProductionBuildingController.getProductionCost(cbProduction.getItemAt(cbProduction.getSelectedIndex()));
+		int cost = prodBuilding.getProductionCost(cbProduction.getItemAt(cbProduction.getSelectedIndex()));
 		
-		labelQuantity.setText((quantity * cost) / 100. + " kaps");
+		labelCost.setText((quantity * cost) / 100. + " kaps");
 	}
 }

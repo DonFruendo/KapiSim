@@ -8,14 +8,14 @@ public class Lebensmittelproduktion extends ProductionBuildingController {
 
 	public Lebensmittelproduktion(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Bonbon);
-		possible.add(ProductType.Brot);
-		possible.add(ProductType.Broetchen);
-		possible.add(ProductType.Kaffeepulver);
-		possible.add(ProductType.Kakaopulver);
-		possible.add(ProductType.Mehl);
-		possible.add(ProductType.Schokoriegel);
-		possible.add(ProductType.Zucker);
+		addPossible(ProductType.Bonbon,			0);
+		addPossible(ProductType.Brot,			0);
+		addPossible(ProductType.Broetchen,		0);
+		addPossible(ProductType.Kaffeepulver,	0);
+		addPossible(ProductType.Kakaopulver,	0);
+		addPossible(ProductType.Mehl,			0);
+		addPossible(ProductType.Schokoriegel,	0);
+		addPossible(ProductType.Zucker,			0);
 	}
 
 }
