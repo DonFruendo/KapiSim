@@ -57,7 +57,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	 * @param product - {@link market.ProductType}
 	 * @return cost
 	 */
-	int getProductionCost(ProductType product)
+	public int getProductionCost(ProductType product)
 	{
 		// TODO Preise ergänzen
 		switch(product)
