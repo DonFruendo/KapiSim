@@ -10,6 +10,6 @@ public class Quelle extends ProductionBuildingController
 	{
 		super(owner);
 		possible.add(ProductType.Wasser);
-		possible.add(ProductType.Öl);
+		possible.add(ProductType.Oel);
 	}
 }
