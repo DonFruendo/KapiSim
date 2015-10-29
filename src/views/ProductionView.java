@@ -65,10 +65,10 @@ public class ProductionView extends JTabbedPane {
 			for(int i = 0; i < prodBuilding.getPossibleTypes().size(); i++)
 			{
 				ProductType possibleType = prodBuilding.getPossibleTypes().get(i);
-				ArrayList<ProductType> dependencies = new ArrayList<ProductType>();
+				ArrayList<String> dependencies = new ArrayList<String>();
 				for(Dp dependency : possibleType.getDependencies())
 				{
-					dependencies.add(dependency.getType());
+					dependencies.add(dependency.toString());
 				}
 				Object[] row = new Object[]{
 					possibleType,

@@ -161,5 +161,10 @@ public enum ProductType
 		{
 			return value;
 		}
+		
+		public String toString()
+		{
+			return value + "x " + product;
+		}
 	}
 }
