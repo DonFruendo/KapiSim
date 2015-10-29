@@ -8,14 +8,42 @@ import game.Product;
 import market.ProductType;
 import market.ProductType.Dp;
 
+/**
+ * Superclass for every ProductionBuilding
+ * <p>
+ * Implements whole functionality of every ProductionBuilding. The subclasses only need to define, 
+ * which {@link market.ProductType}s they are able to produce.
+ * @author DonFruendo
+ *
+ */
 public abstract class ProductionBuildingController implements IProductionBuilding
 {
+	/**
+	 * References the player, which owns this Building
+	 */
 	PlayerController owner;
-	int m2;
+	/**
+	 * Defines the area, covered by that building
+	 */
+	int area;
+	/**
+	 * Defines the number of workers currently employed by that building
+	 */
 	int worker;
+	/**
+	 * Contains all {@link market.ProductType}s, that building is able to produce.
+	 */
 	protected final ArrayList<ProductType> possible;
+	/**
+	 * References the GameController
+	 */
 	final GameController gc;
 	
+	/**
+	 * The Constructor
+	 * initialises all attributes
+	 * @param owner
+	 */
 	public ProductionBuildingController(PlayerController owner)
 	{
 		this.owner = owner;
@@ -23,6 +51,12 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 		this.gc = GameController.getGameController();
 	}
 	
+	/**
+	 * Returns the cost of production of one Element of {@code product}
+	 * 
+	 * @param product - {@link market.ProductType}
+	 * @return cost
+	 */
 	int getProductionCost(ProductType product)
 	{
 		// TODO Preise ergänzen
@@ -130,11 +164,24 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 		return 000;
 	}
 	
-	public void produce(ProductType p, int quality, int quantity)
+	/**
+	 * Produces an new Product
+	 * See: {@link #produce(Product, int)}
+	 * @param pType
+	 * @param quality
+	 * @param quantity
+	 */
+	public void produce(ProductType pType, int quality, int quantity)
 	{
-		produce(new Product(p, quality), quantity);
+		produce(new Product(pType, quality), quantity);
 	}
 	
+	/**
+	 * Produces a new Product
+	 * times the quantity
+	 * @param product
+	 * @param quantity
+	 */
 	public void produce(Product product, int quantity)
 	{
 		if(productionIsPossible(product.type))
@@ -181,11 +228,19 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 		}
 	}
 
-	boolean productionIsPossible(ProductType p)
+	/**
+	 * 
+	 * @param pType
+	 * @return if this building supports production of {@code pType}
+	 */
+	boolean productionIsPossible(ProductType pType)
 	{
-		return possible.contains(p);
+		return possible.contains(pType);
 	}
 	
+	/**
+	 * @return all possible {@link market.ProductType}s, that can be produced in this building
+	 */
 	public ArrayList<ProductType> getPossibleTypes()
 	{
 		return possible;
