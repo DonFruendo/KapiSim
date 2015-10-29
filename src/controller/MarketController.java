@@ -4,18 +4,45 @@ import java.util.ArrayList;
 
 import market.Offer;
 
+/**
+ * The MarketController holds methods to control market behaviour.
+ * There is only one MarketController at a time, so there will be no secret marketregions or something similar.
+ * @author DonFruendo
+ *
+ */
 public class MarketController
 {
+	/**
+	 * The market itself
+	 */
 	private static MarketController market;
+	/**
+	 * Contains every offer currently active.
+	 * This also includes private offers!
+	 */
 	ArrayList<Offer> allOffers;
-	GameController gc;
+	/**
+	 * A reference to the GameController
+	 */
+	final GameController gc;
 	
+	/**
+	 * The constructor
+	 * It is private due to the behaviour of the singleton-objects. It can only be called from inside the class.
+	 * 
+	 * See also:
+	 * {@link #getMarket()}
+	 */
 	private MarketController()
 	{
 		allOffers = new ArrayList<Offer>();
 		this.gc = GameController.getGameController();
 	}
 	
+	/**
+	 * Creates a new market if and only if there is none. Returns it afterwards.
+	 * @return {@link #market}
+	 */
 	public static MarketController getMarket()
 	{
 		if(market == null)
@@ -25,6 +52,11 @@ public class MarketController
 		return market;
 	}
 	
+	/**
+	 * Register an offer.
+	 * Place an offer in the market. This also contains private offers!
+	 * @param offer - offer to be placed
+	 */
 	public void placeOffer(Offer offer)
 	{
 		PlayerController offerer = gc.getPlayer(offer.getOffererID());
@@ -49,6 +81,12 @@ public class MarketController
 		}
 	}
 	
+	/**
+	 * Take an offer from the market
+	 * Search offer by ID and try to send it to the player.
+	 * @param player - the player, who wants to receive the offer
+	 * @param offerid - the ID of the offer
+	 */
 	public void takeOffer(PlayerController player, int offerid)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
@@ -61,6 +99,12 @@ public class MarketController
 		}
 	}
 	
+	/**
+	 * Take an offer from the market
+	 * Search by content of the offer. Note, that you can search without knowing the ID of the original offer.
+	 * @param player - the player, who wants to receive the offer
+	 * @param offer - the offer
+	 */
 	public void takeOffer(PlayerController player, Offer offer)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
@@ -73,21 +117,27 @@ public class MarketController
 		}
 	}
 	
-	private void processOffer(PlayerController player, Offer o)
+	/**
+	 * Try to give the offer to the player
+	 * If the player mets all conditions to take the offer, the offer will now be processed
+	 * @param player - the player, who wants to receive the offer
+	 * @param offer - the ID of the offer
+	 */
+	private void processOffer(PlayerController player, Offer offer)
 	{
 		int playerID = player.getID();
-		if(o.getReceiverID() == -1 || o.getReceiverID() == playerID)
+		if(offer.getReceiverID() == -1 || offer.getReceiverID() == playerID)
 		{
-			if(player.hasKapital(o.getTotal()))
+			if(player.hasKapital(offer.getTotal()))
 			{
-				player.addToInventory(o.getProduct(), o.getQuantity());
-				player.pay(o.getTotal());
-				gc.getPlayer(o.getOffererID()).getPaid(o.getTotal());
-				allOffers.remove(o);
+				player.addToInventory(offer.getProduct(), offer.getQuantity());
+				player.pay(offer.getTotal());
+				gc.getPlayer(offer.getOffererID()).getPaid(offer.getTotal());
+				allOffers.remove(offer);
 			}
 			else
 			{
-				gc.message(player + " has not enough kaps. " + o.getTotal() + " needed");
+				gc.message(player + " has not enough kaps. " + offer.getTotal() + " needed");
 			}
 		}
 		else
@@ -96,6 +146,10 @@ public class MarketController
 		}
 	}
 	
+	/**
+	 * Returns a list of every offer currently in the market
+	 * @return list of all offers
+	 */
 	public ArrayList<Offer> getAllOffers()
 	{
 		return allOffers;
