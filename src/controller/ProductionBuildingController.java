@@ -57,7 +57,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	 * @param product - {@link market.ProductType}
 	 * @return cost
 	 */
-	public int getProductionCost(ProductType product)
+	static public int getProductionCost(ProductType product)
 	{
 		// TODO Preise ergänzen
 		switch(product)
@@ -90,7 +90,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 			break;
 		case Brot:
 			break;
-		case Brötchen:
+		case Broetchen:
 			break;
 		case Ei:
 			break;
@@ -156,7 +156,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 			break;
 		case Zuckerrohr:
 			break;
-		case Öl:
+		case Oel:
 			break;
 		default:
 			break;

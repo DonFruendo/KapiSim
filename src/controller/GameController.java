@@ -56,7 +56,7 @@ public class GameController
 	 * Declares how deep the console-outputs go. If there is a debug note and the level is set to "JustErrors",
 	 * the message will not be printed.
 	 */
-	LogState debugMode = LogState.Log;
+	LogState debugMode = LogState.Debug;
 	
 	// ** Construction **
 	/**

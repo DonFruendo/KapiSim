@@ -9,7 +9,7 @@ public enum ProductType
 	Strom	(Type.Grundstoff, new Dp[]{}),
 	Wasser	(Type.Grundstoff, new Dp[]{new Dp(Strom, 0.1)}),
 	Saatgut	(Type.Grundstoff, new Dp[]{new Dp(Wasser, 1)}),
-	Holz	(Type.Grundstoff, new Dp[]{new Dp(Strom, 50), new Dp(Wasser, 50), new Dp(Saatgut, 1)}),
+	Holz	(Type.Grundstoff, new Dp[]{new Dp(Saatgut, 1), new Dp(Wasser, 50), new Dp(Strom, 50)}),
 	Steine	(Type.Grundstoff, new Dp[]{new Dp(Strom, 5), new Dp(Wasser, 1)}),
 	//Stahl	(Type.Grundstoff) --> verschoben
 	
@@ -50,17 +50,17 @@ public enum ProductType
 	Schokoeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kakao, 2)}),
 	Zitroneneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Zitrone, 2)}),
 	
-	//Getränke
-	KapiCola	(Type.Food, new Dp[]{new Dp(Wasser, 1), new Dp(Zucker, 0.4), new Dp(Kaffeebohne, 0.1)}),
+	//Getraenke
+	KapiCola	(Type.Food, new Dp[]{new Dp(Zucker, 0.4), new Dp(Wasser, 1), new Dp(Kaffeebohne, 0.1)}),
 	Apfelsaft	(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Apfel, 1)}),
 	Orangensaft	(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Orange, 1)}),
 	
-	// Süßigkeiten
+	// Suessigkeiten
 	Bonbon		(Type.Food, new Dp[]{new Dp(Zucker, 0.7), new Dp(Wasser, 0.1)}),
 	Schokoriegel(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Kakao, 0.2)}),
 	
 	// Brot
-	Brötchen	(Type.Food, new Dp[]{new Dp(Mehl, 0.1), new Dp(Wasser, 1)}),
+	Broetchen	(Type.Food, new Dp[]{new Dp(Mehl, 0.1), new Dp(Wasser, 1)}),
 	Brot		(Type.Food, new Dp[]{new Dp(Mehl, 0.25), new Dp(Wasser, 1)}),
 	
 	// Tiere
@@ -79,14 +79,14 @@ public enum ProductType
 	Wurst		(Type.Food, new Dp[]{new Dp(Strom, 50), new Dp(Schweinefleisch, 0.5)}),
 	Hackfleisch	(Type.Food, new Dp[]{new Dp(Strom, 50), new Dp(Rindfleisch, 0.5)}),
 	
-	/* Noch zu ergänzen:
+	/* Noch zu ergaenzen:
 	 * Bier
 	 * Flaschenkakao
 	 * Wein
 	 */
 	
 	// ** NonFood **
-	Öl 	(Type.Nonfood, new Dp[]{new Dp(Strom, 100)});
+	Oel 	(Type.Nonfood, new Dp[]{new Dp(Strom, 100)});
 	
 	
 	
