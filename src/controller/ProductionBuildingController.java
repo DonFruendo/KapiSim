@@ -90,7 +90,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 			break;
 		case Brot:
 			break;
-		case Broetchen:
+		case Brötchen:
 			break;
 		case Ei:
 			break;
@@ -156,7 +156,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 			break;
 		case Zuckerrohr:
 			break;
-		case Oel:
+		case Öl:
 			break;
 		default:
 			break;

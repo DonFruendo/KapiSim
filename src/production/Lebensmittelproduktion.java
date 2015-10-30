@@ -10,7 +10,7 @@ public class Lebensmittelproduktion extends ProductionBuildingController {
 		super(owner);
 		possible.add(ProductType.Bonbon);
 		possible.add(ProductType.Brot);
-		possible.add(ProductType.Broetchen);
+		possible.add(ProductType.Brötchen);
 		possible.add(ProductType.Kaffeepulver);
 		possible.add(ProductType.Kakaopulver);
 		possible.add(ProductType.Mehl);

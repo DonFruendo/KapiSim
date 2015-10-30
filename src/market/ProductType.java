@@ -50,17 +50,17 @@ public enum ProductType
 	Schokoeis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Kakao, 2)}),
 	Zitroneneis	(Type.Food, new Dp[]{new Dp(Milch, 1), new Dp(Zitrone, 2)}),
 	
-	//Getraenke
+	//Getränke
 	KapiCola	(Type.Food, new Dp[]{new Dp(Wasser, 1), new Dp(Zucker, 0.4), new Dp(Kaffeebohne, 0.1)}),
 	Apfelsaft	(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Apfel, 1)}),
 	Orangensaft	(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Orange, 1)}),
 	
-	// Suessigkeiten
+	// Süßigkeiten
 	Bonbon		(Type.Food, new Dp[]{new Dp(Zucker, 0.7), new Dp(Wasser, 0.1)}),
 	Schokoriegel(Type.Food, new Dp[]{new Dp(Zucker, 0.5), new Dp(Kakao, 0.2)}),
 	
 	// Brot
-	Broetchen	(Type.Food, new Dp[]{new Dp(Mehl, 0.1), new Dp(Wasser, 1)}),
+	Brötchen	(Type.Food, new Dp[]{new Dp(Mehl, 0.1), new Dp(Wasser, 1)}),
 	Brot		(Type.Food, new Dp[]{new Dp(Mehl, 0.25), new Dp(Wasser, 1)}),
 	
 	// Tiere
@@ -86,7 +86,7 @@ public enum ProductType
 	 */
 	
 	// ** NonFood **
-	Oel 	(Type.Nonfood, new Dp[]{new Dp(Strom, 100)});
+	Öl 	(Type.Nonfood, new Dp[]{new Dp(Strom, 100)});
 	
 	
 	
