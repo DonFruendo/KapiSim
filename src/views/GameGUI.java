@@ -14,7 +14,7 @@ public class GameGUI extends JFrame
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 2000L;
 	GameController gc;
 	JTabbedPane tabPane;
 	
@@ -31,7 +31,7 @@ public class GameGUI extends JFrame
 
 	public GameGUI()
 	{
-		super("KapiSim v0.1.0a");
+		super("KapiSim v0.2.0a");
 		this.gc = GameController.getGameController();
 	}
 	
