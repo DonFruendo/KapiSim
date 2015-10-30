@@ -8,12 +8,12 @@ public class Eismanufaktur extends ProductionBuildingController {
 
 	public Eismanufaktur(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Schokoeis);
-		possible.add(ProductType.Erdbeereis);
-		possible.add(ProductType.Zitroneneis);
-		possible.add(ProductType.Orangeneis);
-		possible.add(ProductType.Bananeneis);
-		possible.add(ProductType.Kaffeeeis);
+		addPossible(ProductType.Schokoeis,	15);
+		addPossible(ProductType.Erdbeereis,	15);
+		addPossible(ProductType.Zitroneneis,15);
+		addPossible(ProductType.Orangeneis,	15);
+		addPossible(ProductType.Bananeneis,	15);
+		addPossible(ProductType.Kaffeeeis,	15);
 	}
 
 }

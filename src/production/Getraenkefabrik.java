@@ -8,12 +8,12 @@ public class Getraenkefabrik extends ProductionBuildingController {
 
 	public Getraenkefabrik(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Apfelsaft);
-		//possible.add(ProductType.Bier);
-		possible.add(ProductType.KapiCola);
-		//possible.add(ProductType.Flaschenkakao);
-		possible.add(ProductType.Orangensaft);
-		//possible.add(ProductType.Wein);
+		addPossible(ProductType.Apfelsaft,		0);
+		//addPossible(ProductType.Bier,			0);
+		addPossible(ProductType.KapiCola,		0);
+		//addPossible(ProductType.Flaschenkakao,	0);
+		addPossible(ProductType.Orangensaft,	0);
+		//addPossible(ProductType.Wein,			0);
 	}
 
 }

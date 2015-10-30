@@ -8,12 +8,12 @@ public class Fleischerei extends ProductionBuildingController {
 
 	public Fleischerei(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Hackfleisch);
-		possible.add(ProductType.Lammfleisch);
-		possible.add(ProductType.Rindfleisch);
-		possible.add(ProductType.Schweinefleisch);
-		possible.add(ProductType.Tierfutter);
-		possible.add(ProductType.Wurst);
+		addPossible(ProductType.Hackfleisch,	0);
+		addPossible(ProductType.Lammfleisch,	0);
+		addPossible(ProductType.Rindfleisch,	0);
+		addPossible(ProductType.Schweinefleisch,0);
+		addPossible(ProductType.Tierfutter,		0);
+		addPossible(ProductType.Wurst,			0);
 	}
 
 }

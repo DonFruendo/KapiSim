@@ -8,13 +8,13 @@ public class Obstplantage extends ProductionBuildingController {
 
 	public Obstplantage(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Apfel);
-		possible.add(ProductType.Banane);
-		possible.add(ProductType.Birne);
-		possible.add(ProductType.Erdbeere);
-		possible.add(ProductType.Orange);
-		possible.add(ProductType.Weintraube);
-		possible.add(ProductType.Zitrone);
+		addPossible(ProductType.Apfel,		5);
+		addPossible(ProductType.Banane,		5);
+		addPossible(ProductType.Birne,		5);
+		addPossible(ProductType.Erdbeere,	5);
+		addPossible(ProductType.Orange,		5);
+		addPossible(ProductType.Weintraube,	5);
+		addPossible(ProductType.Zitrone,	5);
 	}
 
 }

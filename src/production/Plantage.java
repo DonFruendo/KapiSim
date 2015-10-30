@@ -8,15 +8,15 @@ public class Plantage extends ProductionBuildingController {
 
 	public Plantage(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Saatgut);
-		// possible.add(ProductType.Baumwolle);
-		possible.add(ProductType.Getreide);
-		possible.add(ProductType.Holz);
-		possible.add(ProductType.Kaffeebohne);
-		possible.add(ProductType.Kakao);
-		possible.add(ProductType.Kartoffel);
-		possible.add(ProductType.Kautschuk);
-		possible.add(ProductType.Zuckerrohr);
+		addPossible(ProductType.Saatgut,	  1);
+		//addPossible(ProductType.Baumwolle,	 90);
+		addPossible(ProductType.Holz,	   1032);
+		addPossible(ProductType.Getreide,	  9);
+		addPossible(ProductType.Kaffeebohne,135);
+		addPossible(ProductType.Kakao,		  9);
+		addPossible(ProductType.Kartoffel,	 14);
+		addPossible(ProductType.Kautschuk,	450);
+		addPossible(ProductType.Zuckerrohr,	 14);
 	}
 
 }

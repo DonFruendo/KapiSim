@@ -8,13 +8,13 @@ public class Viehzucht extends ProductionBuildingController {
 
 	public Viehzucht(PlayerController owner) {
 		super(owner);
-		possible.add(ProductType.Ei);
-		possible.add(ProductType.Huhn);
-		possible.add(ProductType.Lamm);
-		possible.add(ProductType.Milch);
-		possible.add(ProductType.Rind);
-		possible.add(ProductType.Schwein);
-		//possible.add(ProductType.Wolle);
+		addPossible(ProductType.Ei,		  5);
+		addPossible(ProductType.Huhn,	  9);
+		addPossible(ProductType.Lamm,	405);
+		addPossible(ProductType.Milch,	  5);
+		addPossible(ProductType.Rind,	225);
+		addPossible(ProductType.Schwein,225);
+		//addPossible(ProductType.Wolle,  3);
 	}
 
 }

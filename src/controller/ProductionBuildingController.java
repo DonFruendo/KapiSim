@@ -34,6 +34,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	 * Contains all {@link market.ProductType}s, that building is able to produce.
 	 */
 	protected final ArrayList<ProductType> possible;
+	protected final ArrayList<Integer> cost;
 	/**
 	 * References the GameController
 	 */
@@ -48,7 +49,26 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	{
 		this.owner = owner;
 		this.possible = new ArrayList<ProductType>();
+		this.cost = new ArrayList<Integer>();
 		this.gc = GameController.getGameController();
+	}
+	
+	protected void addPossible(ProductType product, int cost)
+	{
+		this.possible.add(product);
+		this.cost.add(cost);
+	}
+	
+	int getPositionOf(ProductType product)
+	{
+		for(int i = 0; i < possible.size(); i++)
+		{
+			if(possible.get(i) == product)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**
@@ -59,109 +79,7 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	 */
 	public int getProductionCost(ProductType product)
 	{
-		// TODO Preise ergänzen
-		switch(product)
-		{
-		case Apfel:
-			break;
-		case Banane:
-			break;
-		case Bananeneis:
-			break;
-		case Getreide:
-			break;
-		case Holz:
-			break;
-		case Milch:
-			break;
-		case Saatgut:
-			break;
-		case Steine:
-			return 180;
-		case Strom:
-			return 003;
-		case Wasser:
-			return 002;
-		case Apfelsaft:
-			break;
-		case Birne:
-			break;
-		case Bonbon:
-			break;
-		case Brot:
-			break;
-		case Brötchen:
-			break;
-		case Ei:
-			break;
-		case Erdbeere:
-			break;
-		case Erdbeereis:
-			break;
-		case Hackfleisch:
-			break;
-		case Huhn:
-			break;
-		case Kaffeebohne:
-			break;
-		case Kaffeeeis:
-			break;
-		case Kaffeepulver:
-			break;
-		case Kakao:
-			break;
-		case Kakaopulver:
-			break;
-		case KapiCola:
-			break;
-		case Kartoffel:
-			break;
-		case Kautschuk:
-			break;
-		case Lamm:
-			break;
-		case Lammfleisch:
-			break;
-		case Mehl:
-			break;
-		case Orange:
-			break;
-		case Orangeneis:
-			break;
-		case Orangensaft:
-			break;
-		case Rind:
-			break;
-		case Rindfleisch:
-			break;
-		case Schokoeis:
-			break;
-		case Schokoriegel:
-			break;
-		case Schwein:
-			break;
-		case Schweinefleisch:
-			break;
-		case Tierfutter:
-			break;
-		case Weintraube:
-			break;
-		case Wurst:
-			break;
-		case Zitrone:
-			break;
-		case Zitroneneis:
-			break;
-		case Zucker:
-			break;
-		case Zuckerrohr:
-			break;
-		case Öl:
-			break;
-		default:
-			break;
-		}
-		return 000;
+		return cost.get(getPositionOf(product));
 	}
 	
 	/**

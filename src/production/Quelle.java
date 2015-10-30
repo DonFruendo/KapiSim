@@ -9,7 +9,7 @@ public class Quelle extends ProductionBuildingController
 	public Quelle(PlayerController owner)
 	{
 		super(owner);
-		possible.add(ProductType.Wasser);
-		possible.add(ProductType.Öl);
+		addPossible(ProductType.Wasser,	  2);
+		addPossible(ProductType.Oel,	948);
 	}
 }
