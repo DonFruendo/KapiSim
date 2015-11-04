@@ -1,5 +1,8 @@
 package controller;
 
+import interfaces.controller.Market;
+import interfaces.controller.Player;
+
 import java.util.ArrayList;
 
 import market.Offer;
@@ -10,7 +13,7 @@ import market.Offer;
  * @author DonFruendo
  *
  */
-public class MarketController
+public class MarketController implements Market
 {
 	/**
 	 * The market itself
@@ -87,7 +90,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offerid - the ID of the offer
 	 */
-	public void takeOffer(PlayerController player, int offerid)
+	public void takeOffer(Player player, int offerid)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -105,7 +108,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offer - the offer
 	 */
-	public void takeOffer(PlayerController player, Offer offer)
+	public void takeOffer(Player player, Offer offer)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -123,7 +126,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offer - the ID of the offer
 	 */
-	private void processOffer(PlayerController player, Offer offer)
+	private void processOffer(Player player, Offer offer)
 	{
 		int playerID = player.getID();
 		if(offer.getReceiverID() == -1 || offer.getReceiverID() == playerID)

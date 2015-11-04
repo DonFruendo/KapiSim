@@ -1,5 +1,7 @@
 package views;
 
+import interfaces.controller.ProductionBuilding;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +23,6 @@ import javax.swing.table.TableColumn;
 import market.ProductType;
 import market.ProductType.Dp;
 import controller.GameController;
-import controller.ProductionBuildingController;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductionView extends JTabbedPane {
@@ -39,7 +40,7 @@ public class ProductionView extends JTabbedPane {
 	
 	public void reloadProduction()
 	{
-		for(final ProductionBuildingController prodBuilding : gc.getPlayer().productionBuildings)
+		for(final ProductionBuilding prodBuilding : gc.getPlayer().productionBuildings)
 		{
 			// ** main Panels **
 			JPanel buildingPanel = new JPanel();
@@ -136,7 +137,7 @@ public class ProductionView extends JTabbedPane {
 		}
 	}
 	
-	private void pressProductionButton(final ProductionBuildingController pb,
+	private void pressProductionButton(final ProductionBuilding pb,
 			final JTextField textFieldAnzahl,
 			final JComboBox<ProductType> cbProduction) {
 		gc.Debug("YAY");
@@ -147,7 +148,7 @@ public class ProductionView extends JTabbedPane {
 		parent.reloadInventory();
 	}
 	
-	private void updateCost(ProductionBuildingController prodBuilding,
+	private void updateCost(ProductionBuilding prodBuilding,
 			JTextField textfield, 
 			JLabel labelCost, 
 			JComboBox<ProductType> cbProduction)

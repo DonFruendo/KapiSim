@@ -1,8 +1,9 @@
 package controller;
 
+import interfaces.controller.ProductionBuilding;
+
 import java.util.ArrayList;
 
-import production.IProductionBuilding;
 import Inventory.Inventory.Entry;
 import game.Product;
 import market.ProductType;
@@ -16,7 +17,7 @@ import market.ProductType.Dp;
  * @author DonFruendo
  *
  */
-public abstract class ProductionBuildingController implements IProductionBuilding
+public abstract class ProductionBuildingController implements ProductionBuilding
 {
 	/**
 	 * References the player, which owns this Building

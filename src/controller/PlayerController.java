@@ -1,6 +1,8 @@
 package controller;
 
 import game.Product;
+import interfaces.controller.Player;
+import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ import Inventory.Inventory.Entry;
  * @author DonFruendo
  *
  */
-public class PlayerController
+public class PlayerController implements Player
 {
 	/**
 	 * Currently used to give the player a random name
@@ -44,7 +46,7 @@ public class PlayerController
 	/**
 	 * List contains every building, the player posseses
 	 */
-	public ArrayList<ProductionBuildingController> productionBuildings;
+	public ArrayList<ProductionBuilding> productionBuildings;
 	/**
 	 * Reference to the GameController
 	 */
@@ -63,7 +65,7 @@ public class PlayerController
 		int r = (int)(Math.random() * allNames.length);
 		this.name = allNames[r];
 		inventory = new Inventory();
-		productionBuildings = new ArrayList<ProductionBuildingController>();
+		productionBuildings = new ArrayList<ProductionBuilding>();
 		this.gc = GameController.getGameController();
 	}
 	
