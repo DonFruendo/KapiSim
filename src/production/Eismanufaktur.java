@@ -1,13 +1,13 @@
 package production;
 
-import controller.PlayerController;
+import interfaces.controller.Player;
 import controller.ProductionBuildingController;
 import market.ProductType;
 
 public class Eismanufaktur extends ProductionBuildingController {
 
-	public Eismanufaktur(PlayerController owner) {
-		super(owner);
+	public Eismanufaktur(Player player) {
+		super(player);
 		addPossible(ProductType.Schokoeis,	15);
 		addPossible(ProductType.Erdbeereis,	15);
 		addPossible(ProductType.Zitroneneis,15);

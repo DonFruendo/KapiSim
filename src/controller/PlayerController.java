@@ -182,4 +182,9 @@ public class PlayerController implements Player
 	public void removeFromInventory(Product product, int quantity) {
 		inventory.removeFromInventory(product, quantity);
 	}
+
+	public void addProductionBuilding(ProductionBuilding productionBuilding)
+	{		
+		productionBuildings.add(productionBuilding);
+	}
 }

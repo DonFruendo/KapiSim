@@ -1,13 +1,13 @@
 package production;
 
-import controller.PlayerController;
+import interfaces.controller.Player;
 import controller.ProductionBuildingController;
 import market.ProductType;
 
 public class Lebensmittelproduktion extends ProductionBuildingController {
 
-	public Lebensmittelproduktion(PlayerController owner) {
-		super(owner);
+	public Lebensmittelproduktion(Player player) {
+		super(player);
 		addPossible(ProductType.Bonbon,			0);
 		addPossible(ProductType.Brot,			0);
 		addPossible(ProductType.Broetchen,		0);

@@ -62,7 +62,7 @@ public class MarketController implements Market
 	 */
 	public void placeOffer(Offer offer)
 	{
-		PlayerController offerer = gc.getPlayer(offer.getOffererID());
+		Player offerer = gc.getPlayer(offer.getOffererID());
 		if(!offerer.validateStock(offer.getProduct(), offer.getQuantity()))
 		{
 			gc.message("Not enough " + offer.getProduct() + " in stock of " + offerer);

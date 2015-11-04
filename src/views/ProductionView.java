@@ -40,7 +40,7 @@ public class ProductionView extends JTabbedPane {
 	
 	public void reloadProduction()
 	{
-		for(final ProductionBuilding prodBuilding : gc.getPlayer().productionBuildings)
+		for(final ProductionBuilding prodBuilding : gc.getPlayer().getProductionBuildings())
 		{
 			// ** main Panels **
 			JPanel buildingPanel = new JPanel();

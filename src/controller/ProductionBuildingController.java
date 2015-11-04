@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.controller.Player;
 import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 	/**
 	 * References the player, which owns this Building
 	 */
-	PlayerController owner;
+	Player owner;
 	/**
 	 * Defines the area, covered by that building
 	 */
@@ -46,7 +47,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 	 * initialises all attributes
 	 * @param owner
 	 */
-	public ProductionBuildingController(PlayerController owner)
+	public ProductionBuildingController(Player owner)
 	{
 		this.owner = owner;
 		this.possible = new ArrayList<ProductType>();

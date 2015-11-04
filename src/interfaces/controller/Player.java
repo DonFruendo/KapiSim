@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import Inventory.Inventory;
 import Inventory.Inventory.Entry;
+import java.util.ArrayList;
 
 public interface Player
 {
@@ -15,9 +16,12 @@ public interface Player
 	public int getKaps();
 	public void pay(int kapital);
 	public void getPaid(int kapital);
-	
+	public void addProductionBuilding(ProductionBuilding productionBuilding);
+	public ArrayList<ProductionBuilding> getProductionBuildings();
 	
 	public String toString();
+	
+	// ** Inventory **
 	public ArrayList<Entry> getWholeInventory();
 	public boolean validateStock(Product tmP, int tmQ);
 	public void removeFromInventory(ArrayList<Entry> entries);
