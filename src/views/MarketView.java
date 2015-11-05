@@ -11,9 +11,9 @@ import market.Offer;
 public class MarketView extends JScrollPane {
 	private static final long serialVersionUID = 4090992372218060311L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	
-	public MarketView(GameGUI parent)
+	public MarketView(GameViewGUI parent)
 	{
 		this.parent = parent;
 		this.validate();

@@ -35,7 +35,7 @@ public class MarketController extends Market
 	 * It is private due to the behaviour of the singleton-objects. It can only be called from inside the class.
 	 * 
 	 * See also:
-	 * {@link #getMarket()}
+	 * {@link #getController()}
 	 */
 	private MarketController()
 	{
@@ -47,7 +47,7 @@ public class MarketController extends Market
 	 * Creates a new market if and only if there is none. Returns it afterwards.
 	 * @return {@link #market}
 	 */
-	public static MarketController getMarket()
+	public static MarketController getController()
 	{
 		if(market == null)
 		{

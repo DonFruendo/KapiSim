@@ -29,10 +29,10 @@ import market.ProductType.Dp;
 public class ProductionView extends JTabbedPane {
 	private static final long serialVersionUID = -6160980084989311357L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	Game gc;
 
-	public ProductionView(GameGUI parent)
+	public ProductionView(GameViewGUI parent)
 	{
 		super();
 		this.parent = parent;

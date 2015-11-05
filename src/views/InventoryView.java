@@ -11,9 +11,9 @@ import Inventory.Inventory.Entry;
 public class InventoryView extends JScrollPane {
 	private static final long serialVersionUID = 6460959134763195104L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	
-	public InventoryView(GameGUI parent)
+	public InventoryView(GameViewGUI parent)
 	{
 		this.parent  = parent;
 		this.validate();

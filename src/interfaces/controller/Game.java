@@ -4,6 +4,8 @@ import controller.GameController;
 
 public abstract class Game
 {
+	public static final long serialVersionAPI = 1L;
+	
 	public static Game getController()
 	{
 		return GameController.getController();

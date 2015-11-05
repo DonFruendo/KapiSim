@@ -7,6 +7,8 @@ import market.Offer;
 
 public abstract class Market
 {
+	public static final long serialVersionAPI = 1L;
+	
 	public static Market getController()
 	{
 		return MarketController.getController();

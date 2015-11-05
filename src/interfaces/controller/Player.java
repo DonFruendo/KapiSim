@@ -9,6 +9,8 @@ import Inventory.Inventory.Entry;
 
 public interface Player
 {
+	public static final long serialVersionAPI = 1L;
+	
 	public String getName();
 	public int getID();
 	public boolean hasKapital(int kapital);

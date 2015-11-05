@@ -11,10 +11,10 @@ import controller.GameController;
 public class ProfileView extends JPanel {
 	private static final long serialVersionUID = -1866964111398088456L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	JLabel kaps;
 	
-	public ProfileView(GameGUI parent)
+	public ProfileView(GameViewGUI parent)
 	{
 		this.parent = parent;
 		BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);

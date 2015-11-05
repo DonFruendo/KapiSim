@@ -1,8 +1,8 @@
 package controller;
 
 import interfaces.controller.*;
+import interfaces.views.GameGUI;
 import production.*;
-import views.GameGUI;
 
 /**
  * The GameController class contains methods to control the game.
@@ -47,7 +47,7 @@ public class GameController extends Game
 	 * The gui variable holds the reference to the windows, which is visible to the player.
 	 * <p>
 	 * See also:<br>
-	 * {@link GameGUI} 
+	 * {@link GameViewGUI} 
 	 */
 	GameGUI gui;
 	
@@ -89,7 +89,7 @@ public class GameController extends Game
 	 */
 	public void startGame()
 	{
-		market = MarketController.getMarket();
+		market = Market.getController();
 		player = new PlayerController(11, 100000);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
@@ -111,7 +111,7 @@ public class GameController extends Game
 		player.addProductionBuilding(e1);
 		
 		
-		gui = new GameGUI();
+		gui = GameGUI.create();
 		gui.start();
 	}
 	
