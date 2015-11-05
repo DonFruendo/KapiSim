@@ -1,5 +1,9 @@
 package views;
 
+import interfaces.controller.ProductionBuilding;
+import interfaces.controller.Game;
+//import controller.GameController;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,26 +24,24 @@ import javax.swing.table.TableColumn;
 
 import market.ProductType;
 import market.ProductType.Dp;
-import controller.GameController;
-import controller.ProductionBuildingController;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductionView extends JTabbedPane {
 	private static final long serialVersionUID = -6160980084989311357L;
 	
-	GameGUI parent;
-	GameController gc;
+	GameViewGUI parent;
+	Game gc;
 
-	public ProductionView(GameGUI parent)
+	public ProductionView(GameViewGUI parent)
 	{
 		super();
 		this.parent = parent;
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	public void reloadProduction()
 	{
-		for(final ProductionBuildingController prodBuilding : gc.getPlayer().productionBuildings)
+		for(final ProductionBuilding prodBuilding : gc.getPlayer().getProductionBuildings())
 		{
 			// ** main Panels **
 			JPanel buildingPanel = new JPanel();
@@ -136,7 +138,7 @@ public class ProductionView extends JTabbedPane {
 		}
 	}
 	
-	private void pressProductionButton(final ProductionBuildingController pb,
+	private void pressProductionButton(final ProductionBuilding pb,
 			final JTextField textFieldAnzahl,
 			final JComboBox<ProductType> cbProduction) {
 		gc.Debug("YAY");
@@ -147,7 +149,7 @@ public class ProductionView extends JTabbedPane {
 		parent.reloadInventory();
 	}
 	
-	private void updateCost(ProductionBuildingController prodBuilding,
+	private void updateCost(ProductionBuilding prodBuilding,
 			JTextField textfield, 
 			JLabel labelCost, 
 			JComboBox<ProductType> cbProduction)

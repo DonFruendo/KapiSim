@@ -11,16 +11,16 @@ import market.Offer;
 public class MarketView extends JScrollPane {
 	private static final long serialVersionUID = 4090992372218060311L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	
-	public MarketView(GameGUI parent)
+	public MarketView(GameViewGUI parent)
 	{
 		this.parent = parent;
 		this.validate();
 	}
 	
 	public void reloadMarket() {
-		ArrayList<Offer> offers = GameController.getGameController().getMarket().getAllOffers();
+		ArrayList<Offer> offers = GameController.getController().getMarket().getAllOffers();
 		
 		String[] columns = {"Anzahl",
 				"Produkt",
@@ -38,7 +38,7 @@ public class MarketView extends JScrollPane {
 				{
 					o.getQuantity(),
 					o.getProduct(),
-					GameController.getGameController().getPlayer(o.getOffererID()),
+					GameController.getController().getPlayer(o.getOffererID()),
 					o.getQuality(),
 					o.getCost(),
 					o.getTotal()

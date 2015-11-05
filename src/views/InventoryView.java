@@ -11,9 +11,9 @@ import Inventory.Inventory.Entry;
 public class InventoryView extends JScrollPane {
 	private static final long serialVersionUID = 6460959134763195104L;
 	
-	GameGUI parent;
+	GameViewGUI parent;
 	
-	public InventoryView(GameGUI parent)
+	public InventoryView(GameViewGUI parent)
 	{
 		this.parent  = parent;
 		this.validate();
@@ -25,7 +25,7 @@ public class InventoryView extends JScrollPane {
 				"Produkt",
 				"Qualität"
 		};
-		ArrayList<Entry> entries = GameController.getGameController().getPlayer().getWholeInventory();
+		ArrayList<Entry> entries = GameController.getController().getPlayer().getWholeInventory();
 		Object[][] data = new Object[entries.size()][];
 		
 		for(int i = 0; i < entries.size(); i++)

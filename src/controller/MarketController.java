@@ -1,5 +1,9 @@
 package controller;
 
+import interfaces.controller.Game;
+import interfaces.controller.Market;
+import interfaces.controller.Player;
+
 import java.util.ArrayList;
 
 import market.Offer;
@@ -10,7 +14,7 @@ import market.Offer;
  * @author DonFruendo
  *
  */
-public class MarketController
+public class MarketController extends Market
 {
 	/**
 	 * The market itself
@@ -24,26 +28,26 @@ public class MarketController
 	/**
 	 * A reference to the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The constructor
 	 * It is private due to the behaviour of the singleton-objects. It can only be called from inside the class.
 	 * 
 	 * See also:
-	 * {@link #getMarket()}
+	 * {@link #getController()}
 	 */
 	private MarketController()
 	{
 		allOffers = new ArrayList<Offer>();
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	/**
 	 * Creates a new market if and only if there is none. Returns it afterwards.
 	 * @return {@link #market}
 	 */
-	public static MarketController getMarket()
+	public static MarketController getController()
 	{
 		if(market == null)
 		{
@@ -59,7 +63,7 @@ public class MarketController
 	 */
 	public void placeOffer(Offer offer)
 	{
-		PlayerController offerer = gc.getPlayer(offer.getOffererID());
+		Player offerer = gc.getPlayer(offer.getOffererID());
 		if(!offerer.validateStock(offer.getProduct(), offer.getQuantity()))
 		{
 			gc.message("Not enough " + offer.getProduct() + " in stock of " + offerer);
@@ -87,7 +91,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offerid - the ID of the offer
 	 */
-	public void takeOffer(PlayerController player, int offerid)
+	public void takeOffer(Player player, int offerid)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -105,7 +109,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offer - the offer
 	 */
-	public void takeOffer(PlayerController player, Offer offer)
+	public void takeOffer(Player player, Offer offer)
 	{
 		for(int i = allOffers.size()-1; i >= 0; i--)
 		{
@@ -123,7 +127,7 @@ public class MarketController
 	 * @param player - the player, who wants to receive the offer
 	 * @param offer - the ID of the offer
 	 */
-	private void processOffer(PlayerController player, Offer offer)
+	private void processOffer(Player player, Offer offer)
 	{
 		int playerID = player.getID();
 		if(offer.getReceiverID() == -1 || offer.getReceiverID() == playerID)

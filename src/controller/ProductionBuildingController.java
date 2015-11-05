@@ -1,8 +1,11 @@
 package controller;
 
+import interfaces.controller.Game;
+import interfaces.controller.Player;
+import interfaces.controller.ProductionBuilding;
+
 import java.util.ArrayList;
 
-import production.IProductionBuilding;
 import Inventory.Inventory.Entry;
 import game.Product;
 import market.ProductType;
@@ -16,12 +19,12 @@ import market.ProductType.Dp;
  * @author DonFruendo
  *
  */
-public abstract class ProductionBuildingController implements IProductionBuilding
+public abstract class ProductionBuildingController implements ProductionBuilding
 {
 	/**
 	 * References the player, which owns this Building
 	 */
-	PlayerController owner;
+	Player owner;
 	/**
 	 * Defines the area, covered by that building
 	 */
@@ -38,19 +41,19 @@ public abstract class ProductionBuildingController implements IProductionBuildin
 	/**
 	 * References the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The Constructor
 	 * initialises all attributes
 	 * @param owner
 	 */
-	public ProductionBuildingController(PlayerController owner)
+	public ProductionBuildingController(Player owner)
 	{
 		this.owner = owner;
 		this.possible = new ArrayList<ProductType>();
 		this.cost = new ArrayList<Integer>();
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	protected void addPossible(ProductType product, int cost)

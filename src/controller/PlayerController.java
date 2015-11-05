@@ -1,6 +1,9 @@
 package controller;
 
 import game.Product;
+import interfaces.controller.Game;
+import interfaces.controller.Player;
+import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
 
@@ -15,7 +18,7 @@ import Inventory.Inventory.Entry;
  * @author DonFruendo
  *
  */
-public class PlayerController
+public class PlayerController implements Player
 {
 	/**
 	 * Currently used to give the player a random name
@@ -44,11 +47,11 @@ public class PlayerController
 	/**
 	 * List contains every building, the player posseses
 	 */
-	public ArrayList<ProductionBuildingController> productionBuildings;
+	public ArrayList<ProductionBuilding> productionBuildings;
 	/**
 	 * Reference to the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The Constructor
@@ -63,8 +66,8 @@ public class PlayerController
 		int r = (int)(Math.random() * allNames.length);
 		this.name = allNames[r];
 		inventory = new Inventory();
-		productionBuildings = new ArrayList<ProductionBuildingController>();
-		this.gc = GameController.getGameController();
+		productionBuildings = new ArrayList<ProductionBuilding>();
+		this.gc = Game.getController();
 	}
 	
 	/**
@@ -179,5 +182,16 @@ public class PlayerController
 	 */
 	public void removeFromInventory(Product product, int quantity) {
 		inventory.removeFromInventory(product, quantity);
+	}
+
+	public void addProductionBuilding(ProductionBuilding productionBuilding)
+	{		
+		productionBuildings.add(productionBuilding);
+	}
+
+	public ArrayList<ProductionBuilding> getProductionBuildings()
+	{
+		// TODO
+		return productionBuildings;
 	}
 }

@@ -1,7 +1,8 @@
 package controller;
 
+import interfaces.controller.*;
+import interfaces.views.GameGUI;
 import production.*;
-import views.GameGUI;
 
 /**
  * The GameController class contains methods to control the game.
@@ -11,7 +12,7 @@ import views.GameGUI;
  *
  */
 
-public class GameController
+public class GameController extends Game
 {
 	// ** Attributes **
 	/**
@@ -21,15 +22,15 @@ public class GameController
 	 * is declared in the style of a singleton-object.
 	 * <p>
 	 * See also:<br>
-	 * {@link #getGameController()}
+	 * {@link #getController()}
 	 */
-	private static GameController gameController;
+	private static Game gameController = new GameController();
 	/**
 	 * The market
 	 * <p>
 	 * This variable holds the reference to the marketController
 	 */
-	private MarketController market;
+	private Market market;
 	/**
 	 * The player
 	 * <p>
@@ -38,7 +39,7 @@ public class GameController
 	 * <br>
 	 * Perhaps deleting it soon to get rid of this rigid declaration..
 	 */
-	PlayerController player;
+	Player player;
 	
 	/**
 	 * GameGUI
@@ -46,7 +47,7 @@ public class GameController
 	 * The gui variable holds the reference to the windows, which is visible to the player.
 	 * <p>
 	 * See also:<br>
-	 * {@link GameGUI} 
+	 * {@link GameViewGUI} 
 	 */
 	GameGUI gui;
 	
@@ -70,7 +71,7 @@ public class GameController
 	 * Creates a new GameController if there is none. Otherwise just returns the existing GameController
 	 * @return {@link #gameController}
 	 */
-	public static GameController getGameController()
+	public static Game getController()
 	{
 		if(gameController == null)
 		{
@@ -88,7 +89,7 @@ public class GameController
 	 */
 	public void startGame()
 	{
-		market = MarketController.getMarket();
+		market = Market.getController();
 		player = new PlayerController(11, 100000);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
@@ -99,18 +100,18 @@ public class GameController
 		Getraenkefabrik g1 = new Getraenkefabrik(player);
 		Fleischerei f1 = new Fleischerei(player);
 		Eismanufaktur e1 = new Eismanufaktur(player);
-		player.productionBuildings.add(k1);
-		player.productionBuildings.add(q1);
-		player.productionBuildings.add(o1);
-		player.productionBuildings.add(v1);
-		player.productionBuildings.add(p1);
-		player.productionBuildings.add(l1);
-		player.productionBuildings.add(g1);
-		player.productionBuildings.add(f1);
-		player.productionBuildings.add(e1);
+		player.addProductionBuilding(k1);
+		player.addProductionBuilding(q1);
+		player.addProductionBuilding(o1);
+		player.addProductionBuilding(v1);
+		player.addProductionBuilding(p1);
+		player.addProductionBuilding(l1);
+		player.addProductionBuilding(g1);
+		player.addProductionBuilding(f1);
+		player.addProductionBuilding(e1);
 		
 		
-		gui = new GameGUI();
+		gui = GameGUI.create();
 		gui.start();
 	}
 	
@@ -172,7 +173,7 @@ public class GameController
 	 * 
 	 * @return {@link #market}
 	 */
-	public MarketController getMarket()
+	public Market getMarket()
 	{
 		return market;
 	}
@@ -180,7 +181,7 @@ public class GameController
 	/**
 	 * @return {@link #player}
 	 */
-	public PlayerController getPlayer()
+	public Player getPlayer()
 	{
 		return player;
 	}
@@ -190,7 +191,7 @@ public class GameController
 	 * @param ID ID to search by
 	 * @return Player with given ID
 	 */
-	public PlayerController getPlayer(int ID)
+	public Player getPlayer(int ID)
 	{
 		// TODO
 		return player;

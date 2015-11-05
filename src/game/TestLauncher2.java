@@ -1,12 +1,12 @@
 package game;
 
-import controller.GameController;
+import interfaces.controller.Game;
 
 public class TestLauncher2 {
 
 	public static void main(String[] args)
 	{
-		GameController gc = GameController.getGameController();
+		Game gc = Game.getController();
 		gc.startGame();
 		
 	}
