@@ -1,13 +1,19 @@
 package interfaces.controller;
 
-public interface Game
+import controller.GameController;
+
+public abstract class Game
 {
-	public void startGame();
-	public void Debug(String message);
-	public void message(String message);
-	public void Warning(String message);
-	public void Error(String message);
-	public Market getMarket();
-	public Player getPlayer();
-	public Player getPlayer(int ID);
+	public static Game getController()
+	{
+		return GameController.getController();
+	}
+	public abstract void startGame();
+	public abstract void Debug(String message);
+	public abstract void message(String message);
+	public abstract void Warning(String message);
+	public abstract void Error(String message);
+	public abstract Market getMarket();
+	public abstract Player getPlayer();
+	public abstract Player getPlayer(int ID);
 }

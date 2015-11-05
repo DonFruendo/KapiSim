@@ -25,7 +25,7 @@ public class InventoryView extends JScrollPane {
 				"Produkt",
 				"Qualität"
 		};
-		ArrayList<Entry> entries = GameController.getGameController().getPlayer().getWholeInventory();
+		ArrayList<Entry> entries = GameController.getController().getPlayer().getWholeInventory();
 		Object[][] data = new Object[entries.size()][];
 		
 		for(int i = 0; i < entries.size(); i++)

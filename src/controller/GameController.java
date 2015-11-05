@@ -12,7 +12,7 @@ import views.GameGUI;
  *
  */
 
-public class GameController implements Game
+public class GameController extends Game
 {
 	// ** Attributes **
 	/**
@@ -22,9 +22,9 @@ public class GameController implements Game
 	 * is declared in the style of a singleton-object.
 	 * <p>
 	 * See also:<br>
-	 * {@link #getGameController()}
+	 * {@link #getController()}
 	 */
-	private static GameController gameController;
+	private static Game gameController = new GameController();
 	/**
 	 * The market
 	 * <p>
@@ -71,7 +71,7 @@ public class GameController implements Game
 	 * Creates a new GameController if there is none. Otherwise just returns the existing GameController
 	 * @return {@link #gameController}
 	 */
-	public static GameController getGameController()
+	public static Game getController()
 	{
 		if(gameController == null)
 		{

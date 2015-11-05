@@ -1,6 +1,7 @@
 package controller;
 
 import game.Product;
+import interfaces.controller.Game;
 import interfaces.controller.Player;
 import interfaces.controller.ProductionBuilding;
 
@@ -50,7 +51,7 @@ public class PlayerController implements Player
 	/**
 	 * Reference to the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The Constructor
@@ -66,7 +67,7 @@ public class PlayerController implements Player
 		this.name = allNames[r];
 		inventory = new Inventory();
 		productionBuildings = new ArrayList<ProductionBuilding>();
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	/**
@@ -186,5 +187,11 @@ public class PlayerController implements Player
 	public void addProductionBuilding(ProductionBuilding productionBuilding)
 	{		
 		productionBuildings.add(productionBuilding);
+	}
+
+	public ArrayList<ProductionBuilding> getProductionBuildings()
+	{
+		// TODO
+		return productionBuildings;
 	}
 }

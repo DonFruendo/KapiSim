@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.controller.Game;
 import interfaces.controller.Market;
 import interfaces.controller.Player;
 
@@ -13,7 +14,7 @@ import market.Offer;
  * @author DonFruendo
  *
  */
-public class MarketController implements Market
+public class MarketController extends Market
 {
 	/**
 	 * The market itself
@@ -27,7 +28,7 @@ public class MarketController implements Market
 	/**
 	 * A reference to the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The constructor
@@ -39,7 +40,7 @@ public class MarketController implements Market
 	private MarketController()
 	{
 		allOffers = new ArrayList<Offer>();
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	/**

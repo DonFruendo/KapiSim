@@ -1,12 +1,16 @@
 package views;
 
+import interfaces.controller.Game;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import controller.GameController;
 
 public class GameGUI extends JFrame
@@ -15,7 +19,7 @@ public class GameGUI extends JFrame
 	 * 
 	 */
 	private static final long serialVersionUID = 2000L;
-	GameController gc;
+	Game gc;
 	JTabbedPane tabPane;
 	
 	JPanel headerPane;
@@ -32,7 +36,7 @@ public class GameGUI extends JFrame
 	public GameGUI()
 	{
 		super("KapiSim v0.2.0a");
-		this.gc = GameController.getGameController();
+		this.gc = GameController.getController();
 	}
 	
 	public void start()

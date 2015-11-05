@@ -1,6 +1,8 @@
 package views;
 
 import interfaces.controller.ProductionBuilding;
+import interfaces.controller.Game;
+//import controller.GameController;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -22,20 +24,19 @@ import javax.swing.table.TableColumn;
 
 import market.ProductType;
 import market.ProductType.Dp;
-import controller.GameController;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductionView extends JTabbedPane {
 	private static final long serialVersionUID = -6160980084989311357L;
 	
 	GameGUI parent;
-	GameController gc;
+	Game gc;
 
 	public ProductionView(GameGUI parent)
 	{
 		super();
 		this.parent = parent;
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	public void reloadProduction()

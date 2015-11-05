@@ -20,7 +20,7 @@ public class MarketView extends JScrollPane {
 	}
 	
 	public void reloadMarket() {
-		ArrayList<Offer> offers = GameController.getGameController().getMarket().getAllOffers();
+		ArrayList<Offer> offers = GameController.getController().getMarket().getAllOffers();
 		
 		String[] columns = {"Anzahl",
 				"Produkt",
@@ -38,7 +38,7 @@ public class MarketView extends JScrollPane {
 				{
 					o.getQuantity(),
 					o.getProduct(),
-					GameController.getGameController().getPlayer(o.getOffererID()),
+					GameController.getController().getPlayer(o.getOffererID()),
 					o.getQuality(),
 					o.getCost(),
 					o.getTotal()

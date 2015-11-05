@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.controller.Game;
 import interfaces.controller.Player;
 import interfaces.controller.ProductionBuilding;
 
@@ -40,7 +41,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 	/**
 	 * References the GameController
 	 */
-	final GameController gc;
+	final Game gc;
 	
 	/**
 	 * The Constructor
@@ -52,7 +53,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 		this.owner = owner;
 		this.possible = new ArrayList<ProductType>();
 		this.cost = new ArrayList<Integer>();
-		this.gc = GameController.getGameController();
+		this.gc = Game.getController();
 	}
 	
 	protected void addPossible(ProductType product, int cost)

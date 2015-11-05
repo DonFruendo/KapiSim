@@ -21,7 +21,7 @@ public class ProfileView extends JPanel {
 		
 		JLabel prof = new JLabel("Profile");
 		prof.setFont(new Font(prof.getFont().getFontName(), Font.ITALIC, 18));
-		JLabel txt = new JLabel("Name: " + GameController.getGameController().getPlayer().getName());
+		JLabel txt = new JLabel("Name: " + GameController.getController().getPlayer().getName());
 		kaps = new JLabel();
 		reloadKaps();
 		
@@ -36,7 +36,7 @@ public class ProfileView extends JPanel {
 	
 	public void reloadKaps()
 	{
-		kaps.setText("Kaps: " + (GameController.getGameController().getPlayer().getKaps() / 100.));
+		kaps.setText("Kaps: " + (GameController.getController().getPlayer().getKaps() / 100.));
 	}
 
 	public void reloadProfile()
