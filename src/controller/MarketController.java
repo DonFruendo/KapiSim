@@ -29,6 +29,10 @@ public class MarketController extends Market
 	 * A reference to the GameController
 	 */
 	final Game gc;
+	/**
+	 * Is true, if the players can interact with the market
+	 */
+	boolean isOpen;
 	
 	/**
 	 * The constructor
@@ -54,6 +58,22 @@ public class MarketController extends Market
 			market = new MarketController();
 		}
 		return market;
+	}
+	
+	/**
+	 * Opens the market and makes offerplacing possible
+	 */
+	public void openMarket()
+	{
+		isOpen = true;
+	}
+	
+	/**
+	 * Closes the market and makes offerplacing impossible
+	 */
+	public void closeMarket()
+	{
+		isOpen = false;
 	}
 	
 	/**

@@ -90,6 +90,7 @@ public class GameController extends Game
 	public void startGame()
 	{
 		market = Market.getController();
+		market.openMarket();
 		player = new PlayerController(11, 100000);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);

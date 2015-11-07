@@ -13,6 +13,8 @@ public abstract class Market
 	{
 		return MarketController.getController();
 	}
+	public abstract void openMarket();
+	public abstract void closeMarket();
 	public abstract void placeOffer(Offer offer);
 	public abstract void takeOffer(Player player, int offerid);
 	public abstract void takeOffer(Player player, Offer offer);
