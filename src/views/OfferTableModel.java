@@ -24,8 +24,9 @@ public class OfferTableModel extends AbstractTableModel {
 		columnNames = new String[]{
 				"Produkt",
 				//"Qualität",
-				"Anzahl",
+				"Auf Lager",
 				"verkaufen",
+				"Preis/Stk.",
 				"?"
 		};
 		ArrayList<Entry> entries = gc.getPlayer().getWholeInventory();
@@ -38,8 +39,9 @@ public class OfferTableModel extends AbstractTableModel {
 					entry.getProductType(),
 					//entry.getQuality(),
 					entry.getQuantity(),
-					0,
-					false
+					new Integer(0),
+					new Integer(0),
+					new Boolean(false)
 			};
 			
 			data[i] = row;
@@ -71,7 +73,7 @@ public class OfferTableModel extends AbstractTableModel {
 	
 	 public boolean isCellEditable(int row, int col)
 	 {
-		if (columnNames[col].equals("verkaufen") || columnNames[col].equals("?"))
+		if (columnNames[col].equals("verkaufen") || columnNames[col].equals("Preis/Stk.") || columnNames[col].equals("?"))
 		{
 			return true;
 		}

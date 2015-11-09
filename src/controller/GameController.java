@@ -39,7 +39,7 @@ public class GameController extends Game
 	 * <br>
 	 * Perhaps deleting it soon to get rid of this rigid declaration..
 	 */
-	Player player;
+	private Player player;
 	
 	/**
 	 * GameGUI
@@ -49,7 +49,7 @@ public class GameController extends Game
 	 * See also:<br>
 	 * {@link GameViewGUI} 
 	 */
-	GameGUI gui;
+	private GameGUI gui;
 	
 	/**
 	 * DebugMode
@@ -90,7 +90,6 @@ public class GameController extends Game
 	public void startGame()
 	{
 		market = Market.getController();
-		market.openMarket();
 		player = new PlayerController(11, 100000);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
@@ -114,6 +113,7 @@ public class GameController extends Game
 		
 		gui = GameGUI.create();
 		gui.start();
+		market.openMarket();
 	}
 	
 	// ** Console interaction **
@@ -196,6 +196,11 @@ public class GameController extends Game
 	{
 		// TODO
 		return player;
+	}
+	
+	public GameGUI getGameGUI()
+	{
+		return gui;
 	}
 	
 	

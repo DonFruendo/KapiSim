@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.MarketController;
 import market.Offer;
+import market.ProductType;
 
 public abstract class Market
 {
@@ -13,6 +14,12 @@ public abstract class Market
 	{
 		return MarketController.getController();
 	}
+	public static Offer createOffer(ProductType type, int quantity, int price)
+	{
+		Offer offer = new Offer(0, type, quantity, 0, price); // ID????
+		return offer;
+	}
+
 	public abstract void openMarket();
 	public abstract void closeMarket();
 	public abstract void placeOffer(Offer offer);

@@ -27,7 +27,7 @@ public class MarketView extends JScrollPane {
 				"Produkt",
 				"Firma",
 				"Quali",
-				"Preis",
+				"Preis/Stk.",
 				"Gesamt"};
 		
 		Object[][] data = new Object[offers.size()][];

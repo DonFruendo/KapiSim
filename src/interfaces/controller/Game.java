@@ -1,5 +1,6 @@
 package interfaces.controller;
 
+import interfaces.views.*;
 import controller.GameController;
 
 public abstract class Game
@@ -18,4 +19,5 @@ public abstract class Game
 	public abstract Market getMarket();
 	public abstract Player getPlayer();
 	public abstract Player getPlayer(int ID);
+	public abstract GameGUI getGameGUI();
 }

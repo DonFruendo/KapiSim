@@ -1,19 +1,23 @@
 package views;
 
-import interfaces.controller.Game;
+import interfaces.controller.Market;
 import interfaces.views.OfferGUI;
 
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import market.ProductType;
+
 public class PlaceOfferGUI extends OfferGUI {
 	private static final long serialVersionUID = OfferGUI.serialVersionUID;
-	private static final Game gc = Game.getController();
+	private static final Market market = Market.getController();
 	
 	private final JPanel mainPanel = new JPanel();
 	
@@ -23,18 +27,51 @@ public class PlaceOfferGUI extends OfferGUI {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
+		// Caption
 		JLabel headerCaption = new JLabel("Place new Offer");
 		
+		// Table
 		JScrollPane tableContainer = new JScrollPane();
-		JTable table = new JTable(new OfferTableModel());
+		final JTable table = new JTable(new OfferTableModel());
 		tableContainer.getViewport().add(table);
 		table.setFillsViewportHeight(true);
+		
+		//Buttonsssaaaa
+		JButton submit = new JButton("Submit");
+		submit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0)
+			{
+				pressSubmitButton(table);
+			}
+		});
 		
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		mainPanel.add(headerCaption);
 		mainPanel.add(tableContainer);
+		mainPanel.add(submit);
 		
 		this.add(mainPanel);
 		this.pack();
+	}
+	
+	private void pressSubmitButton(JTable table)
+	{
+		boolean check = false;
+		for(int i = 0; i < table.getRowCount(); i++)
+		{
+			if((Boolean)table.getValueAt(i, table.getColumnCount() -1))
+			{
+				market.placeOffer(Market.createOffer(
+						(ProductType)table.getValueAt(i, 0), 
+						(Integer)table.getValueAt(i, 2), 
+						(Integer)table.getValueAt(i, 3)
+						));
+				check = true;
+			}
+		}
+		if(check)
+		{
+			this.dispose();
+		}
 	}
 }
