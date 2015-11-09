@@ -9,5 +9,5 @@ public class TestLauncher2 {
 		Game gc = Game.getController();
 		gc.startGame();
 	}
-
+	
 }

@@ -1,10 +1,21 @@
 package views;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import interfaces.controller.Game;
+import interfaces.views.OfferGUI;
 
-public class PlaceOfferGUI extends JFrame {
-	private static final long serialVersionUID = 1L;
+import java.awt.FlowLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class PlaceOfferGUI extends OfferGUI {
+	private static final long serialVersionUID = OfferGUI.serialVersionUID;
+	private static final Game gc = Game.getController();
+	
+	private final JPanel mainPanel = new JPanel();
 	
 	public PlaceOfferGUI()
 	{
@@ -14,8 +25,16 @@ public class PlaceOfferGUI extends JFrame {
 		
 		JLabel headerCaption = new JLabel("Place new Offer");
 		
+		JScrollPane tableContainer = new JScrollPane();
+		JTable table = new JTable(new OfferTableModel());
+		tableContainer.getViewport().add(table);
+		table.setFillsViewportHeight(true);
 		
-		this.add(headerCaption);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		mainPanel.add(headerCaption);
+		mainPanel.add(tableContainer);
+		
+		this.add(mainPanel);
 		this.pack();
 	}
 }

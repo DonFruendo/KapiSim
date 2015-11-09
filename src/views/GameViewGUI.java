@@ -19,7 +19,7 @@ public class GameViewGUI extends GameGUI
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2000L;
+	private static final long serialVersionUID = GameGUI.serialVersionUID;
 	Game gc;
 	JTabbedPane tabPane;
 	

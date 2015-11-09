@@ -6,7 +6,7 @@ import views.GameViewGUI;
 
 public abstract class GameGUI extends JFrame
 {
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 	
 	
 	public static GameViewGUI create()

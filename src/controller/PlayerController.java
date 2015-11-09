@@ -7,6 +7,7 @@ import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
 
+import market.ProductType;
 import Inventory.Inventory;
 import Inventory.Inventory.Entry;
 
@@ -182,6 +183,11 @@ public class PlayerController implements Player
 	 */
 	public void removeFromInventory(Product product, int quantity) {
 		inventory.removeFromInventory(product, quantity);
+	}
+	
+	public ArrayList<ProductType> getAllProducts()
+	{
+		return inventory.getAllProducts();
 	}
 
 	public void addProductionBuilding(ProductionBuilding productionBuilding)

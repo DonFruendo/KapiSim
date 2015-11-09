@@ -100,7 +100,10 @@ public class ProductionView extends JTabbedPane {
 					{
 						pressProductionButton(prodBuilding, textFieldAnzahl, cbProduction);
 					}
-					updateCost(prodBuilding, textFieldAnzahl, labelCost, cbProduction);
+					else
+					{
+						updateCost(prodBuilding, textFieldAnzahl, labelCost, cbProduction);
+					}
 				}
 				
 				public void keyTyped(KeyEvent arg0)

@@ -4,6 +4,7 @@ import game.Product;
 
 import java.util.ArrayList;
 
+import market.ProductType;
 import Inventory.Inventory;
 import Inventory.Inventory.Entry;
 
@@ -29,4 +30,5 @@ public interface Player
 	public Inventory getInventory();
 	public void addToInventory(Product p, int quantity);
 	public void removeFromInventory(Product product, int quantity);
+	public ArrayList<ProductType> getAllProducts();
 }
