@@ -16,7 +16,7 @@ public abstract class Market
 	}
 	public static Offer createOffer(ProductType type, int quantity, int price)
 	{
-		Offer offer = new Offer(0, type, quantity, 0, price); // ID????
+		Offer offer = new Offer(Game.getController().getPlayer().getID(), type, quantity, 0, price); // ID????
 		return offer;
 	}
 
