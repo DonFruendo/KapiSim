@@ -127,7 +127,7 @@ public class PlayerController implements Player
 	
 	public String toString()
 	{
-		return "Player[" + id + "|" + kaps + "]";
+		return this.name + " [id=" + this.id + "]";
 	}
 
 	/**

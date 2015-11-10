@@ -39,8 +39,8 @@ public class OfferTableModel extends AbstractTableModel {
 					entry.getProductType(),
 					//entry.getQuality(),
 					entry.getQuantity(),
-					new Integer(1),
-					new Integer(1), // TODO
+					new Integer(0),
+					new Integer(0),
 					new Boolean(false)
 			};
 			
