@@ -8,6 +8,7 @@ import interfaces.views.GameGUI;
 import java.util.ArrayList;
 
 import market.Offer;
+import market.ProductType;
 
 /**
  * The MarketController holds methods to control market behaviour.
@@ -27,11 +28,15 @@ public class MarketController extends Market
 	 */
 	ArrayList<Offer> allOffers;
 	/**
+	 * Basic Products Ltd
+	 */
+	BasicProductsLtd basicProductsLtd = new BasicProductsLtd(0, 0);
+	/**
 	 * A reference to the GameController
 	 */
 	final Game gc;
 	/**
-	 * 
+	 * A reference to the GameGUI
 	 */
 	GameGUI gameGUI;
 	/**
@@ -73,6 +78,8 @@ public class MarketController extends Market
 	{
 		this.gameGUI = gc.getGameGUI();
 		isOpen = true;
+		gc.playerSignUp(basicProductsLtd);
+		basicProductsLtd.initMarketEntry();
 	}
 	
 	/**
@@ -168,6 +175,7 @@ public class MarketController extends Market
 				player.pay(offer.getTotal());
 				gc.getPlayer(offer.getOffererID()).getPaid(offer.getTotal());
 				allOffers.remove(offer);
+				gc.getPlayer(offer.getOffererID()).offerWasTaken(offer);
 			}
 			else
 			{

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import interfaces.controller.*;
 import interfaces.views.GameGUI;
 import production.*;
@@ -31,6 +33,8 @@ public class GameController extends Game
 	 * This variable holds the reference to the marketController
 	 */
 	private Market market;
+	
+	private ArrayList<Player> allPlayers = new ArrayList<Player>();
 	/**
 	 * The player
 	 * <p>
@@ -91,6 +95,7 @@ public class GameController extends Game
 	{
 		market = Market.getController();
 		player = new PlayerController(11, 100000);
+		allPlayers.add(player);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
 		Plantage p1 = new Plantage(player);
@@ -114,6 +119,12 @@ public class GameController extends Game
 		gui = GameGUI.create();
 		gui.start();
 		market.openMarket();
+	}
+	
+	// ** Player handling **
+	public void playerSignUp(Player player)
+	{
+		allPlayers.add(player);
 	}
 	
 	// ** Console interaction **
@@ -194,8 +205,12 @@ public class GameController extends Game
 	 */
 	public Player getPlayer(int ID)
 	{
-		// TODO
-		return player;
+		for(Player player : allPlayers)
+		{
+			if(player.getID() == ID)
+				return player;
+		}
+		return null;
 	}
 	
 	public GameGUI getGameGUI()

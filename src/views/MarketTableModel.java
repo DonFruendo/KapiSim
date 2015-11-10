@@ -3,6 +3,7 @@ package views;
 import game.Product;
 import interfaces.controller.Game;
 import interfaces.controller.Market;
+import interfaces.controller.Player;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -91,13 +92,13 @@ public class MarketTableModel extends AbstractTableModel {
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						Offer thatOffer = new Offer(
-								gc.getPlayer().getID(), 
+								((Player)(data[rowIndex][2])).getID(), 
 								((Product)(data[rowIndex][1])).type, 
 								(Integer)data[rowIndex][0], 
 								(Integer)data[rowIndex][3], 
 								(Integer)data[rowIndex][4]
 								);
-						market.takeOffer(gc.getPlayer(), thatOffer); // TODO ID????
+						market.takeOffer(gc.getPlayer(), thatOffer);
 						gc.Debug(thatOffer.toString());
 						
 					}
