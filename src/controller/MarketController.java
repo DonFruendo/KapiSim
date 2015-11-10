@@ -3,10 +3,12 @@ package controller;
 import interfaces.controller.Game;
 import interfaces.controller.Market;
 import interfaces.controller.Player;
+import interfaces.views.GameGUI;
 
 import java.util.ArrayList;
 
 import market.Offer;
+import market.ProductType;
 
 /**
  * The MarketController holds methods to control market behaviour.
@@ -26,9 +28,21 @@ public class MarketController extends Market
 	 */
 	ArrayList<Offer> allOffers;
 	/**
+	 * Basic Products Ltd
+	 */
+	BasicProductsLtd basicProductsLtd = new BasicProductsLtd(0, 0);
+	/**
 	 * A reference to the GameController
 	 */
 	final Game gc;
+	/**
+	 * A reference to the GameGUI
+	 */
+	GameGUI gameGUI;
+	/**
+	 * Is true, if the players can interact with the market
+	 */
+	boolean isOpen;
 	
 	/**
 	 * The constructor
@@ -41,6 +55,7 @@ public class MarketController extends Market
 	{
 		allOffers = new ArrayList<Offer>();
 		this.gc = Game.getController();
+		this.gameGUI = gc.getGameGUI();
 	}
 	
 	/**
@@ -54,6 +69,25 @@ public class MarketController extends Market
 			market = new MarketController();
 		}
 		return market;
+	}
+	
+	/**
+	 * Opens the market and makes offerplacing possible
+	 */
+	public void openMarket()
+	{
+		this.gameGUI = gc.getGameGUI();
+		isOpen = true;
+		gc.playerSignUp(basicProductsLtd);
+		basicProductsLtd.initMarketEntry();
+	}
+	
+	/**
+	 * Closes the market and makes offerplacing impossible
+	 */
+	public void closeMarket()
+	{
+		isOpen = false;
 	}
 	
 	/**
@@ -81,6 +115,9 @@ public class MarketController extends Market
 				// Marktgebühren
 				offerer.pay(fee);
 				allOffers.add(offer);
+				
+				gameGUI.reloadInventory();
+				gameGUI.reloadMarket();
 			}
 		}
 	}
@@ -138,6 +175,7 @@ public class MarketController extends Market
 				player.pay(offer.getTotal());
 				gc.getPlayer(offer.getOffererID()).getPaid(offer.getTotal());
 				allOffers.remove(offer);
+				gc.getPlayer(offer.getOffererID()).offerWasTaken(offer);
 			}
 			else
 			{

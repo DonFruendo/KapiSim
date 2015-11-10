@@ -95,6 +95,17 @@ public class Inventory
 		removeFromInventory(new Entry(product, quantity));
 	}
 	
+	public ArrayList<ProductType> getAllProducts()
+	{
+		// TODO Wenn Qualitaet ins Spiel kommt, sollte das hier geaendert werden..
+		ArrayList<ProductType> allProducts = new ArrayList<ProductType>();
+		for(Entry entry : inv)
+		{
+			allProducts.add(entry.getProductType());
+		}
+		return allProducts;
+	}
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 package interfaces.controller;
 
+import interfaces.views.*;
 import controller.GameController;
 
 public abstract class Game
@@ -11,6 +12,7 @@ public abstract class Game
 		return GameController.getController();
 	}
 	public abstract void startGame();
+	public abstract void playerSignUp(Player player);
 	public abstract void Debug(String message);
 	public abstract void message(String message);
 	public abstract void Warning(String message);
@@ -18,4 +20,5 @@ public abstract class Game
 	public abstract Market getMarket();
 	public abstract Player getPlayer();
 	public abstract Player getPlayer(int ID);
+	public abstract GameGUI getGameGUI();
 }

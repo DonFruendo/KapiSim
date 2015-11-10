@@ -7,6 +7,8 @@ import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
 
+import market.Offer;
+import market.ProductType;
 import Inventory.Inventory;
 import Inventory.Inventory.Entry;
 
@@ -27,23 +29,23 @@ public class PlayerController implements Player
 	/**
 	 * The name of the player-object
 	 */
-	private String name;
+	protected String name;
 	/** 
 	 * The unique playerID
 	 */
-	private int id;
+	protected int id;
 	/**
 	 * The inventory of the player
 	 * See also:
 	 * {@link Inventory}
 	 */
-	private Inventory inventory;
+	protected Inventory inventory;
 	/**
 	 * The current Kapital of the player.
 	 * <p>
 	 * The currency is saved in int-format to prevent loss of accuracy. To get the real amount of Kaps, divide by 100. 
 	 */
-	private int kaps;
+	protected int kaps;
 	/**
 	 * List contains every building, the player posseses
 	 */
@@ -51,7 +53,7 @@ public class PlayerController implements Player
 	/**
 	 * Reference to the GameController
 	 */
-	final Game gc;
+	protected final Game gc;
 	
 	/**
 	 * The Constructor
@@ -125,7 +127,7 @@ public class PlayerController implements Player
 	
 	public String toString()
 	{
-		return "Player[" + id + "|" + kaps + "]";
+		return this.name + " [id=" + this.id + "]";
 	}
 
 	/**
@@ -182,6 +184,17 @@ public class PlayerController implements Player
 	 */
 	public void removeFromInventory(Product product, int quantity) {
 		inventory.removeFromInventory(product, quantity);
+	}
+	
+	public void offerWasTaken(Offer offer)
+	{
+		gc.message(offer + " was taken");
+	}
+	
+	
+	public ArrayList<ProductType> getAllProducts()
+	{
+		return inventory.getAllProducts();
 	}
 
 	public void addProductionBuilding(ProductionBuilding productionBuilding)
