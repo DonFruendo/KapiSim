@@ -1,10 +1,12 @@
 package controller;
 
+import interfaces.controller.Game;
 import interfaces.controller.Market;
 
 import java.util.ArrayList;
 
 import game.Product;
+import language.Language;
 import market.Offer;
 import market.ProductType;
 import Inventory.Inventory;
@@ -13,12 +15,13 @@ import Inventory.Inventory.Entry;
 public class BasicProductsLtd extends PlayerController {
 
 	private static ArrayList<ProductType> grundstoffe;
+	private static final Language lang = Game.getController().getLanguagePack();
 	
 	private static final int quantity = 10;
 	
 	public BasicProductsLtd(int id, int kapital) {
 		super(0, quantity * 10000);
-		this.name = "Grundstoffe GmbH";
+		this.name = lang.basicProductsLtd;
 		grundstoffe = new ArrayList<ProductType>();
 		for(ProductType product : ProductType.values())
 		{

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import Inventory.Inventory.Entry;
 import game.Product;
+import language.Language;
 import market.ProductType;
 import market.ProductType.Dp;
 
@@ -21,6 +22,10 @@ import market.ProductType.Dp;
  */
 public abstract class ProductionBuildingController implements ProductionBuilding
 {
+	/**
+	 * LanguagePack
+	 */
+	protected static final Language lang = Game.getController().getLanguagePack();
 	/**
 	 * References the player, which owns this Building
 	 */
@@ -120,13 +125,13 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 					if(!owner.validateStock(tmP, tmQ))
 					{
 						check = false;
-						gc.message(owner + " is missing " + tmQ + " " + tmP);
+						gc.message(owner + " " + lang.is_missing +" " + tmQ + " " + tmP);
 						break;
 					}
 					else
 					{
 						entries.add(new Entry(tmP, tmQ));
-						gc.Debug(owner + " has " + tmQ + " " + tmP + " or even more!");
+						gc.Debug(owner + " has " + tmQ + " " + tmP + " or even more!"); // No language, due to debug
 					}
 				}
 				
@@ -136,7 +141,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 					owner.removeFromInventory(entries);
 					owner.addToInventory(product, quantity);
 					if(entries.size() > 0)
-						gc.message(entries + " wurden aus dem Lager entnommen");
+						gc.message(entries + " " + lang.has_been_removed_from_inventory);
 					gc.message(product + " wurde " + quantity + " mal hergestellt (" + kapsNeeded/100. + " Kaps)");
 					gc.Debug(product + " " + quantity);
 					gc.Debug(owner.getInventory().toString());
@@ -144,7 +149,7 @@ public abstract class ProductionBuildingController implements ProductionBuilding
 			}
 			else
 			{
-				gc.message(owner + " has not enough kaps to produce " + product);
+				gc.message(owner + " " + lang + " " + product);
 			}
 		}
 	}
