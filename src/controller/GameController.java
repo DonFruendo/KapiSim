@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import language.*;
 import interfaces.controller.*;
 import interfaces.views.GameGUI;
 import production.*;
@@ -54,6 +55,11 @@ public class GameController extends Game
 	 * {@link GameViewGUI} 
 	 */
 	private GameGUI gui;
+	
+	/**
+	 * LanguagePack
+	 */
+	Language language = new German();
 	
 	/**
 	 * DebugMode
@@ -216,6 +222,11 @@ public class GameController extends Game
 	public GameGUI getGameGUI()
 	{
 		return gui;
+	}
+	
+	public Language getLanguagePack()
+	{
+		return language;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package interfaces.controller;
 
+import language.Language;
 import interfaces.views.*;
 import controller.GameController;
 
@@ -21,4 +22,5 @@ public abstract class Game
 	public abstract Player getPlayer();
 	public abstract Player getPlayer(int ID);
 	public abstract GameGUI getGameGUI();
+	public abstract Language getLanguagePack();
 }

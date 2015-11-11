@@ -8,6 +8,7 @@ public class TestLauncher2 {
 	{
 		Game gc = Game.getController();
 		gc.startGame();
+		System.out.println(gc.getLanguagePack().KapiSim_Alpha);
 	}
 	
 }

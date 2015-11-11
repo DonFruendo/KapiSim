@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import language.Language;
 import controller.GameController;
 
 public class GameViewGUI extends GameGUI
@@ -21,6 +22,7 @@ public class GameViewGUI extends GameGUI
 	 */
 	private static final long serialVersionUID = GameGUI.serialVersionUID;
 	Game gc;
+	Language lang;
 	JTabbedPane tabPane;
 	
 	JPanel headerPane;
@@ -38,6 +40,7 @@ public class GameViewGUI extends GameGUI
 	{
 		super("KapiSim v0.2.0a");
 		this.gc = GameController.getController();
+		this.lang = gc.getLanguagePack();
 	}
 	
 	public void start()
@@ -91,7 +94,7 @@ public class GameViewGUI extends GameGUI
 	public void loadHeader()
 	{
 		headerPane = new JPanel();
-		JLabel caption = new JLabel("KapiSim Alpha");
+		JLabel caption = new JLabel(lang.KapiSim_Alpha); // TODO
 		caption.setFont(new Font(caption.getFont().getFontName(), Font.ITALIC, 28));
 		headerPane.add(caption);
 		headerPane.setPreferredSize(new Dimension(800, 60));
@@ -125,7 +128,7 @@ public class GameViewGUI extends GameGUI
 	{
 		production = new ProductionView(this);
 		reloadProduction();
-		tabPane.add("Production", production);
+		tabPane.add(lang.production, production);
 	}
 	
 	public void reloadProduction()
@@ -137,7 +140,7 @@ public class GameViewGUI extends GameGUI
 	{
 		inventory = new InventoryView(this);
 		reloadInventory();
-		tabPane.add("Inventory", inventory);
+		tabPane.add(lang.inventory, inventory);
 	}
 	
 	public void reloadInventory()
@@ -149,7 +152,7 @@ public class GameViewGUI extends GameGUI
 	{
 		marketPane = new MarketView(this);
 		reloadMarket();
-		tabPane.add("Market", marketPane);
+		tabPane.add(lang.market, marketPane);
 	}
 	
 	public void reloadMarket()
