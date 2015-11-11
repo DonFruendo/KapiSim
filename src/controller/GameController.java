@@ -59,7 +59,7 @@ public class GameController extends Game
 	/**
 	 * LanguagePack
 	 */
-	Language language = new German();
+	Language language = new DefaultLanguage();
 	
 	/**
 	 * DebugMode

@@ -2,7 +2,6 @@ package views;
 
 import interfaces.controller.ProductionBuilding;
 import interfaces.controller.Game;
-//import controller.GameController;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -22,13 +21,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
+import language.Language;
 import market.ProductType;
 import market.ProductType.Dp;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ProductionView extends JTabbedPane {
 	private static final long serialVersionUID = -6160980084989311357L;
-	
+	private static final Language lang = Game.getController().getLanguagePack();
 	GameViewGUI parent;
 	Game gc;
 
@@ -62,7 +62,7 @@ public class ProductionView extends JTabbedPane {
 			
 			// ** DependencyTable **
 			JTable dependencyTable;
-			String[] columnNames = {"Produkt", "Braucht", "Kostet"};
+			String[] columnNames = {lang.product, lang.needs, lang.costs};
 			Object[][] data = new Object[prodBuilding.getPossibleTypes().size()][];
 			for(int i = 0; i < prodBuilding.getPossibleTypes().size(); i++)
 			{
@@ -137,7 +137,7 @@ public class ProductionView extends JTabbedPane {
 			buildingPanelTop.add(labelCost);
 			buildingPanelBottom.add(dependencyTableContainer);
 			
-			this.add(prodBuilding.getClass().getSimpleName(),buildingPanel);
+			this.add(prodBuilding.getClass().getSimpleName(),buildingPanel);	// TODO LanguagePack??
 		}
 	}
 	
@@ -165,6 +165,6 @@ public class ProductionView extends JTabbedPane {
 		}
 		int cost = prodBuilding.getProductionCost(cbProduction.getItemAt(cbProduction.getSelectedIndex()));
 		
-		labelCost.setText((quantity * cost) / 100. + " kaps");
+		labelCost.setText((quantity * cost) / 100. + " " + lang.kaps);
 	}
 }

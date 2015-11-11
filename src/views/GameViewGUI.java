@@ -21,8 +21,8 @@ public class GameViewGUI extends GameGUI
 	 * 
 	 */
 	private static final long serialVersionUID = GameGUI.serialVersionUID;
+	private static final Language lang = Game.getController().getLanguagePack();
 	Game gc;
-	Language lang;
 	JTabbedPane tabPane;
 	
 	JPanel headerPane;
@@ -38,9 +38,8 @@ public class GameViewGUI extends GameGUI
 
 	public GameViewGUI()
 	{
-		super("KapiSim v0.2.0a");
+		super(lang.mainGUICaption);
 		this.gc = GameController.getController();
-		this.lang = gc.getLanguagePack();
 	}
 	
 	public void start()

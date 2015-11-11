@@ -8,7 +8,6 @@ import interfaces.views.GameGUI;
 import java.util.ArrayList;
 
 import market.Offer;
-import market.ProductType;
 
 /**
  * The MarketController holds methods to control market behaviour.
