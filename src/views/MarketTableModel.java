@@ -5,21 +5,15 @@ import interfaces.controller.Game;
 import interfaces.controller.Market;
 import interfaces.controller.Player;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 
+import language.Language;
 import market.Offer;
-import market.ProductType;
 
 public class MarketTableModel extends AbstractTableModel {
 
@@ -29,6 +23,7 @@ public class MarketTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private static final Game gc = Game.getController();
 	private static final Market market = Market.getController();
+	private static final Language lang = gc.getLanguagePack();
 	
 	private String[] columns;
 	private Object[][] data;
@@ -37,13 +32,13 @@ public class MarketTableModel extends AbstractTableModel {
 		ArrayList<Offer> offers = Game.getController().getMarket().getAllOffers();
 		
 		columns = new String[]{
-				"Anzahl",
-				"Produkt",
-				"Firma",
-				"Quali",
-				"Preis/Stk.",
-				"Gesamt",
-				"Kaufen"
+				lang.quantity,
+				lang.product,
+				lang.corporation,
+				lang.quality,
+				lang.price_per_unit,
+				lang.total,
+				lang.buy
 				};
 		
 		data = new Object[offers.size()][];
@@ -59,7 +54,7 @@ public class MarketTableModel extends AbstractTableModel {
 					o.getQuality(),
 					o.getCost(),
 					o.getTotal(),
-					new JButton("Kaufen")
+					new JButton(lang.buy)
 				};
 			data[i] = d;
 		}
@@ -104,7 +99,7 @@ public class MarketTableModel extends AbstractTableModel {
 					}
 				});
 			return buyButton;
-		default: return "Error";
+		default: return lang.error;
 		}
 	}
 

@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import language.*;
 import interfaces.controller.*;
 import interfaces.views.GameGUI;
 import production.*;
@@ -56,6 +57,11 @@ public class GameController extends Game
 	private GameGUI gui;
 	
 	/**
+	 * LanguagePack
+	 */
+	Language language = new DefaultLanguage();
+	
+	/**
 	 * DebugMode
 	 * <p>
 	 * Declares how deep the console-outputs go. If there is a debug note and the level is set to "JustErrors",
@@ -94,7 +100,7 @@ public class GameController extends Game
 	public void startGame()
 	{
 		market = Market.getController();
-		player = new PlayerController(11, 100000);
+		player = new PlayerController(1, 100000);
 		allPlayers.add(player);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
@@ -137,7 +143,7 @@ public class GameController extends Game
 		if(LogState.Debug.show(debugMode))
 		{
 			gui.addToConsole(message);
-			System.out.println("Debug > " + message);
+			System.out.println(language.log_Debug + " > " + message);
 		}
 	}
 	
@@ -163,7 +169,7 @@ public class GameController extends Game
 		if(LogState.Warnings.show(debugMode))
 		{
 			gui.addToConsole(message);
-			System.out.println("Warning > " + message);
+			System.out.println(language.log_Warning + " > " + message);
 		}
 	}
 	
@@ -176,7 +182,7 @@ public class GameController extends Game
 		if(LogState.Errors.show(debugMode))
 		{
 			gui.addToConsole(message);
-			System.out.println("ERROR > " + message);
+			System.out.println(language.log_Error + " > " + message);
 		}
 	}
 	// ** Console Interaction end **
@@ -216,6 +222,11 @@ public class GameController extends Game
 	public GameGUI getGameGUI()
 	{
 		return gui;
+	}
+	
+	public Language getLanguagePack()
+	{
+		return language;
 	}
 	
 	

@@ -1,19 +1,21 @@
 package views;
 
+import interfaces.controller.Game;
+
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.EventObject;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+
+import language.Language;
 
 public class MarketView extends JScrollPane {
 	private static final long serialVersionUID = 4090992372218060311L;
+	private static final Language lang = Game.getController().getLanguagePack();
 	
 	final GameViewGUI parent;
 	
@@ -26,7 +28,7 @@ public class MarketView extends JScrollPane {
 	public void reloadMarket() {
 		JTable table = new JTable(new MarketTableModel());
 		TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-		table.getColumn("Kaufen").setCellRenderer(buttonRenderer);
+		table.getColumn(lang.buy).setCellRenderer(buttonRenderer);
 		table.addMouseListener(new JTableButtonMouseListener(this, table));
 		this.getViewport().add(table);
 		//table.setFillsViewportHeight(true);

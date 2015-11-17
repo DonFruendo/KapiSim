@@ -7,8 +7,8 @@ import interfaces.views.GameGUI;
 
 import java.util.ArrayList;
 
+import language.Language;
 import market.Offer;
-import market.ProductType;
 
 /**
  * The MarketController holds methods to control market behaviour.
@@ -39,6 +39,10 @@ public class MarketController extends Market
 	 * A reference to the GameGUI
 	 */
 	GameGUI gameGUI;
+	/**
+	 * LanguagePack
+	 */
+	private static final Language lang = Game.getController().getLanguagePack();
 	/**
 	 * Is true, if the players can interact with the market
 	 */
@@ -100,19 +104,19 @@ public class MarketController extends Market
 		Player offerer = gc.getPlayer(offer.getOffererID());
 		if(!offerer.validateStock(offer.getProduct(), offer.getQuantity()))
 		{
-			gc.message("Not enough " + offer.getProduct() + " in stock of " + offerer);
+			gc.message(lang.not_enough + " " + offer.getProduct() + " " + lang.in_stock_of + " " + offerer);
 		}
 		else
 		{
 			int fee = (int)(offer.getTotal() / 10);
 			if(!(offerer.hasKapital(fee)))
 			{
-				gc.message("Not enough kaps to pay market fee. " + fee + " needed to offer this.");
+				gc.message(lang.not_enough + " " + lang.kaps + " " + lang.to_pay_market_fee + ". " + fee + " " + lang.needed_to_offer_this +".");
 			}
 			else
 			{
 				offerer.removeFromInventory(offer.getProduct(), offer.getQuantity());
-				// Marktgebühren
+				// Marktgebuehren
 				offerer.pay(fee);
 				allOffers.add(offer);
 				
@@ -179,12 +183,12 @@ public class MarketController extends Market
 			}
 			else
 			{
-				gc.message(player + " has not enough kaps. " + offer.getTotal() + " needed");
+				gc.message(player + lang.has_not_enough_kaps + ". " + offer.getTotal() + " " + lang.needed);
 			}
 		}
 		else
 		{
-			gc.message(player + " is not allowed to take this offer");
+			gc.message(player + " " + lang.is_not_allowed_to_take_this_offer);
 		}
 	}
 	

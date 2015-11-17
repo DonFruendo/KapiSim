@@ -1,11 +1,18 @@
 package views;
 
+
+import interfaces.controller.Game;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import language.Language;
+
 public class ConsoleView extends JPanel {
 	private static final long serialVersionUID = 7667002905207717251L;
+	@SuppressWarnings("unused")
+	private static final Language lang = Game.getController().getLanguagePack();
 	
 	JScrollPane mainPanel;
 	JTextArea console;

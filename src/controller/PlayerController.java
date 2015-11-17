@@ -7,6 +7,7 @@ import interfaces.controller.ProductionBuilding;
 
 import java.util.ArrayList;
 
+import language.Language;
 import market.Offer;
 import market.ProductType;
 import Inventory.Inventory;
@@ -26,6 +27,10 @@ public class PlayerController implements Player
 	 * Currently used to give the player a random name
 	 */
 	private static String[] allNames = {"Perry", "Hugo", "Fritz", "Aaron", "Herbert", "Eliza"};
+	/**
+	 * LanguagePack
+	 */
+	protected static final Language lang = Game.getController().getLanguagePack();
 	/**
 	 * The name of the player-object
 	 */
@@ -188,7 +193,7 @@ public class PlayerController implements Player
 	
 	public void offerWasTaken(Offer offer)
 	{
-		gc.message(offer + " was taken");
+		gc.message(offer + " " + lang.was_taken);
 	}
 	
 	

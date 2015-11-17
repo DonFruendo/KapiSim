@@ -1,5 +1,6 @@
 package views;
 
+import interfaces.controller.Game;
 import interfaces.controller.Market;
 import interfaces.views.OfferGUI;
 
@@ -13,22 +14,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import language.Language;
 import market.ProductType;
 
 public class PlaceOfferGUI extends OfferGUI {
 	private static final long serialVersionUID = OfferGUI.serialVersionUID;
 	private static final Market market = Market.getController();
-	
+	private static final Language lang = Game.getController().getLanguagePack();
 	private final JPanel mainPanel = new JPanel();
 	
 	public PlaceOfferGUI()
 	{
-		super("Offer");
+		super(lang.offer);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		// Caption
-		JLabel headerCaption = new JLabel("Place new Offer");
+		JLabel headerCaption = new JLabel(lang.place_New_Offer);
 		
 		// Table
 		JScrollPane tableContainer = new JScrollPane();
@@ -37,7 +39,7 @@ public class PlaceOfferGUI extends OfferGUI {
 		table.setFillsViewportHeight(true);
 		
 		//Buttonsssaaaa
-		JButton submit = new JButton("Submit");
+		JButton submit = new JButton(lang.submit);
 		submit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0)
 			{

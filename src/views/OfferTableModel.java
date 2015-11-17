@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import language.Language;
 import Inventory.Inventory.Entry;
 
 public class OfferTableModel extends AbstractTableModel {
@@ -14,6 +15,7 @@ public class OfferTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Game gc = Game.getController();
+	private static final Language lang = gc.getLanguagePack();
 	
 	private String[] columnNames;
 	private Object[][] data;
@@ -22,12 +24,12 @@ public class OfferTableModel extends AbstractTableModel {
 	{
 		
 		columnNames = new String[]{
-				"Produkt",
-				//"Qualität",
-				"Auf Lager",
-				"verkaufen",
-				"Preis/Stk.",
-				"?"
+				lang.product,
+				//lang.quality,
+				lang.in_Stock,
+				lang.sell,
+				lang.price_per_unit,
+				lang.questionmark
 		};
 		ArrayList<Entry> entries = gc.getPlayer().getWholeInventory();
 		data = new Object[entries.size()][];
@@ -73,7 +75,7 @@ public class OfferTableModel extends AbstractTableModel {
 	
 	 public boolean isCellEditable(int row, int col)
 	 {
-		if (columnNames[col].equals("verkaufen") || columnNames[col].equals("Preis/Stk.") || columnNames[col].equals("?"))
+		if (columnNames[col].equals(lang.sell) || columnNames[col].equals(lang.price_per_unit) || columnNames[col].equals(lang.questionmark))
 		{
 			return true;
 		}
