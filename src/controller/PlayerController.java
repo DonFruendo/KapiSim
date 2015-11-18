@@ -36,7 +36,7 @@ public class PlayerController implements Player
 	 * <p>
 	 * This variable holds the last ID, which was given to any player
 	 */
-	private static int lastID = 0;
+	private static int lastID = -1;
 	/**
 	 * The name of the player-object
 	 */

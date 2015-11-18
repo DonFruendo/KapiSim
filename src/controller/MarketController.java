@@ -76,6 +76,11 @@ public class MarketController extends Market
 		return market;
 	}
 	
+	void tick()
+	{
+		// TODO Update
+	}
+	
 	/**
 	 * Opens the market and makes offerplacing possible
 	 */

@@ -8,6 +8,8 @@ import interfaces.views.GameGUI;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ai.DefaultAI;
 import language.DefaultLanguage;
@@ -44,6 +46,8 @@ public class GameController extends Game
 	 * {@link #getController()}
 	 */
 	private static Game gameController = new GameController();
+	private GameTimerTask gameTimer = new GameTimerTask();
+	
 	/**
 	 * Defines the starting money
 	 */
@@ -149,13 +153,35 @@ public class GameController extends Game
 		gui.start();
 		market.openMarket();
 		
-		ArtificialIntelligenceNPC ai = new DefaultAI();
-		ai.bla();
+		for(int i = 0; i < 100; i++)
+		{
+			ArtificialIntelligenceNPC ai = new DefaultAI();
+			playerSignUp(ai);
+		}
+		Timer timer = new Timer();
+		GameTimerTask task = new GameTimerTask();
+		task.setUp();
+		timer.scheduleAtFixedRate(task, 0, 250);
+	}
+	
+	/**
+	 * Ticks the game
+	 * <p>
+	 * With every tick, the game progresses one step. All calculations are based on ticks.
+	 */
+	private void tick()
+	{
+		// TODO
 		for(Map.Entry<Integer,Player> entry : allPlayers.entrySet())
 		{
 			Player player = entry.getValue();
-			System.out.println(player.getID());
+			if(player instanceof ArtificialIntelligenceNPC)
+			{
+				ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
+				ai.bla();
+			}
 		}
+
 	}
 	
 	// ** Player handling **
@@ -303,6 +329,29 @@ public class GameController extends Game
 		public boolean show(LogState logState)
 		{
 			return (this.ordinal() <= logState.ordinal());
+		}
+	}
+	
+	static class GameTimerTask extends TimerTask
+	{
+		GameController gc;
+		MarketController mc;
+		
+		public GameTimerTask()
+		{
+			
+		}
+		
+		public void setUp()
+		{
+			gc = (GameController) getController();
+			mc = (MarketController) gc.getMarket();
+		}
+		
+		public void run()
+		{
+			gc.tick();
+			mc.tick();
 		}
 	}
 }

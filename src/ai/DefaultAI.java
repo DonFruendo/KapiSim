@@ -25,7 +25,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	
 	public void bla()
 	{
-		System.out.println(marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
+		System.out.println(getID() + "\t" + name + "\t" + marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
 	}
 
 	// ** Enums **
