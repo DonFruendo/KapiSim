@@ -1,11 +1,27 @@
 package controller;
 
-import java.util.ArrayList;
-
-import language.*;
-import interfaces.controller.*;
+import interfaces.controller.ArtificialIntelligenceNPC;
+import interfaces.controller.Game;
+import interfaces.controller.Market;
+import interfaces.controller.Player;
 import interfaces.views.GameGUI;
-import production.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import ai.DefaultAI;
+import language.DefaultLanguage;
+import language.Language;
+import production.Eismanufaktur;
+import production.Fleischerei;
+import production.Getraenkefabrik;
+import production.Kraftwerk;
+import production.Lebensmittelproduktion;
+import production.Obstplantage;
+import production.Plantage;
+import production.Quelle;
+import production.Viehzucht;
+import views.GameViewGUI;
 
 /**
  * The GameController class contains methods to control the game.
@@ -29,13 +45,19 @@ public class GameController extends Game
 	 */
 	private static Game gameController = new GameController();
 	/**
+	 * Defines the starting money
+	 */
+	private static int startingKaps = 100000;
+	/**
 	 * The market
 	 * <p>
 	 * This variable holds the reference to the marketController
 	 */
 	private Market market;
-	
-	private ArrayList<Player> allPlayers = new ArrayList<Player>();
+	/**
+	 * All the active players are mapped here
+	 */
+	private Map<Integer,Player> allPlayers = new HashMap<Integer,Player>();
 	/**
 	 * The player
 	 * <p>
@@ -100,8 +122,9 @@ public class GameController extends Game
 	public void startGame()
 	{
 		market = Market.getController();
-		player = new PlayerController(1, 100000);
-		allPlayers.add(player);
+		
+		player = new PlayerController();
+		this.playerSignUp(player);
 		Kraftwerk k1 = new Kraftwerk(player);
 		Quelle q1 = new Quelle(player);
 		Plantage p1 = new Plantage(player);
@@ -125,12 +148,28 @@ public class GameController extends Game
 		gui = GameGUI.create();
 		gui.start();
 		market.openMarket();
+		
+		ArtificialIntelligenceNPC ai = new DefaultAI();
+		ai.bla();
+		for(Map.Entry<Integer,Player> entry : allPlayers.entrySet())
+		{
+			Player player = entry.getValue();
+			System.out.println(player.getID());
+		}
 	}
 	
 	// ** Player handling **
 	public void playerSignUp(Player player)
 	{
-		allPlayers.add(player);
+		allPlayers.put(player.getID(), player);
+	}
+	
+	/**
+	 * Sets the starting money for every player
+	 */
+	public int getStartingKaps()
+	{
+		return startingKaps;
 	}
 	
 	// ** Console interaction **
@@ -211,8 +250,9 @@ public class GameController extends Game
 	 */
 	public Player getPlayer(int ID)
 	{
-		for(Player player : allPlayers)
+		for(Map.Entry<Integer,Player> entry : allPlayers.entrySet())
 		{
+			Player player = entry.getValue();
 			if(player.getID() == ID)
 				return player;
 		}

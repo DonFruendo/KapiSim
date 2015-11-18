@@ -13,6 +13,7 @@ public abstract class Game
 		return GameController.getController();
 	}
 	public abstract void startGame();
+	public abstract int getStartingKaps();
 	public abstract void playerSignUp(Player player);
 	public abstract void Debug(String message);
 	public abstract void message(String message);

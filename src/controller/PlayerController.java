@@ -32,13 +32,19 @@ public class PlayerController implements Player
 	 */
 	protected static final Language lang = Game.getController().getLanguagePack();
 	/**
+	 * The ID
+	 * <p>
+	 * This variable holds the last ID, which was given to any player
+	 */
+	private static int lastID = 0;
+	/**
 	 * The name of the player-object
 	 */
 	protected String name;
 	/** 
 	 * The unique playerID
 	 */
-	protected int id;
+	private int id;
 	/**
 	 * The inventory of the player
 	 * See also:
@@ -50,15 +56,15 @@ public class PlayerController implements Player
 	 * <p>
 	 * The currency is saved in int-format to prevent loss of accuracy. To get the real amount of Kaps, divide by 100. 
 	 */
-	protected int kaps;
+	private int kaps;
 	/**
 	 * List contains every building, the player posseses
 	 */
-	public ArrayList<ProductionBuilding> productionBuildings;
+	public ArrayList<ProductionBuilding> productionBuildings; // TODO public ist doof
 	/**
 	 * Reference to the GameController
 	 */
-	protected final Game gc;
+	protected final Game gc = Game.getController();
 	
 	/**
 	 * The Constructor
@@ -66,15 +72,14 @@ public class PlayerController implements Player
 	 * @param id - the ID, the player gets
 	 * @param kapital - the money he receives as a startup
 	 */
-	public PlayerController(int id, int kapital)
+	public PlayerController()
 	{
-		this.id = id;
-		this.kaps = kapital;
+		this.id = ++lastID;
 		int r = (int)(Math.random() * allNames.length);
 		this.name = allNames[r];
 		inventory = new Inventory();
 		productionBuildings = new ArrayList<ProductionBuilding>();
-		this.gc = Game.getController();
+		this.kaps = gc.getStartingKaps();
 	}
 	
 	/**

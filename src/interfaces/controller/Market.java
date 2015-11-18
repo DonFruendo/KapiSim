@@ -26,4 +26,5 @@ public abstract class Market
 	public abstract void takeOffer(Player player, int offerid);
 	public abstract void takeOffer(Player player, Offer offer);
 	public abstract ArrayList<Offer> getAllOffers();
+	public abstract ArrayList<Offer> getAllOffersOfType(ProductType product);
 }

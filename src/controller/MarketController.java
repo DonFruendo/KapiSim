@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import language.Language;
 import market.Offer;
+import market.ProductType;
 
 /**
  * The MarketController holds methods to control market behaviour.
@@ -30,7 +31,7 @@ public class MarketController extends Market
 	/**
 	 * Basic Products Ltd
 	 */
-	BasicProductsLtd basicProductsLtd = new BasicProductsLtd(0, 0);
+	BasicProductsLtd basicProductsLtd = new BasicProductsLtd();
 	/**
 	 * A reference to the GameController
 	 */
@@ -199,5 +200,18 @@ public class MarketController extends Market
 	public ArrayList<Offer> getAllOffers()
 	{
 		return allOffers;
+	}
+	
+	public ArrayList<Offer> getAllOffersOfType(ProductType product)
+	{
+		ArrayList<Offer> resultSet = new ArrayList<Offer>();
+		for(Offer offer : allOffers)
+		{
+			if(offer.getProduct().type == product)
+			{
+				resultSet.add(offer);
+			}
+		}
+		return resultSet;
 	}
 }

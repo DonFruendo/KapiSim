@@ -19,8 +19,8 @@ public class BasicProductsLtd extends PlayerController {
 	
 	private static final int quantity = 10;
 	
-	public BasicProductsLtd(int id, int kapital) {
-		super(0, quantity * 10000);
+	public BasicProductsLtd() {
+		super();
 		this.name = lang.basicProductsLtd;
 		grundstoffe = new ArrayList<ProductType>();
 		for(ProductType product : ProductType.values())
@@ -36,7 +36,7 @@ public class BasicProductsLtd extends PlayerController {
 		Market market = Market.getController();
 		for(ProductType product : grundstoffe)
 		{
-			market.placeOffer(new Offer(this.id, product, quantity, 0, cost(product)));
+			market.placeOffer(new Offer(this.getID(), product, quantity, 0, cost(product)));
 		}
 	}
 	
@@ -77,6 +77,6 @@ public class BasicProductsLtd extends PlayerController {
 	@Override
 	public void offerWasTaken(Offer offer)
 	{
-		Market.getController().placeOffer(new Offer(id, offer.getProduct(), quantity, 27)); // TODO
+		Market.getController().placeOffer(new Offer(this.getID(), offer.getProduct(), quantity, 27)); // TODO
 	}
 }
