@@ -63,7 +63,7 @@ public class PlaceOfferGUI extends OfferGUI {
 		{
 			if((Boolean)table.getValueAt(i, table.getColumnCount() -1))
 			{
-				market.placeOffer(Market.createOffer(
+				market.registerOffer(Market.createOffer(
 						(ProductType)table.getValueAt(i, 0), 
 						(Integer)table.getValueAt(i, 2), 
 						(Integer)table.getValueAt(i, 3)

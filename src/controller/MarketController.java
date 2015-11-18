@@ -6,6 +6,8 @@ import interfaces.controller.Player;
 import interfaces.views.GameGUI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import language.Language;
 import market.Offer;
@@ -23,11 +25,21 @@ public class MarketController extends Market
 	 * The market itself
 	 */
 	private static MarketController market;
+	private static int marketFee = 10;
 	/**
 	 * Contains every offer currently active.
 	 * This also includes private offers!
 	 */
-	ArrayList<Offer> allOffers;
+	ArrayList<Offer> allOffers = new ArrayList<Offer>();
+	/**
+	 * Contains every offer that should be processed next tick
+	 */
+	ArrayList<Offer> offersToBeProcessed = new ArrayList<Offer>();
+	Map<Offer, Player> offerProcessedIdMap = new HashMap<Offer, Player>();
+	/**
+	 * Contains every offer that should be placed next tick
+	 */
+	ArrayList<Offer> offersToBePlaced = new ArrayList<Offer>();
 	/**
 	 * Basic Products Ltd
 	 */
@@ -79,6 +91,18 @@ public class MarketController extends Market
 	void tick()
 	{
 		// TODO Update
+		// ** Process offers **
+		for(Offer offer : offersToBeProcessed)
+		{
+			Player player = offerProcessedIdMap.get(offer);
+			processOffer(player, offer);
+		}
+		
+		// ** Place offers **
+		for(Offer offer : offersToBePlaced)
+		{
+			placeOffer(offer);
+		}
 	}
 	
 	/**
@@ -105,7 +129,7 @@ public class MarketController extends Market
 	 * Place an offer in the market. This also contains private offers!
 	 * @param offer - offer to be placed
 	 */
-	public void placeOffer(Offer offer)
+	public void registerOffer(Offer offer)
 	{
 		Player offerer = gc.getPlayer(offer.getOffererID());
 		if(!offerer.validateStock(offer.getProduct(), offer.getQuantity()))
@@ -114,22 +138,28 @@ public class MarketController extends Market
 		}
 		else
 		{
-			int fee = (int)(offer.getTotal() / 10);
+			int fee = (int)(offer.getTotal() * marketFee / 100.);
 			if(!(offerer.hasKapital(fee)))
 			{
 				gc.message(lang.not_enough + " " + lang.kaps + " " + lang.to_pay_market_fee + ". " + fee + " " + lang.needed_to_offer_this +".");
 			}
 			else
 			{
-				offerer.removeFromInventory(offer.getProduct(), offer.getQuantity());
-				// Marktgebuehren
-				offerer.pay(fee);
-				allOffers.add(offer);
-				
-				gameGUI.reloadInventory();
-				gameGUI.reloadMarket();
+				offersToBePlaced.add(offer);
 			}
 		}
+	}
+	
+	private void placeOffer(Offer offer)
+	{
+		Player offerer = gc.getPlayer(offer.getOffererID());
+		offerer.removeFromInventory(offer.getProduct(), offer.getQuantity());
+		// Marktgebuehren
+		offerer.pay((int) (offer.getTotal() * (marketFee / 100.)));
+		allOffers.add(offer);
+		
+		gameGUI.reloadInventory();
+		gameGUI.reloadMarket();
 	}
 	
 	/**
@@ -145,7 +175,9 @@ public class MarketController extends Market
 			Offer offer = allOffers.get(i);
 			if(offer.getId() == offerid)
 			{
-				processOffer(player, offer);
+				//processOffer(player, offer);
+				offersToBeProcessed.add(offer);
+				offerProcessedIdMap.put(offer, player);
 			}
 		}
 	}
@@ -163,7 +195,9 @@ public class MarketController extends Market
 			Offer o = allOffers.get(i);
 			if(o.equals(offer))
 			{
-				processOffer(player, o);
+				//processOffer(player, o);
+				offersToBeProcessed.add(o);
+				offerProcessedIdMap.put(o, player);
 			}
 		}
 	}
