@@ -92,7 +92,7 @@ public class PopulationController
 				working = (Math.random() * 100) > unemploymentRatePercent;
 			}
 			
-			Consumer consumer = new Consumer(age, wealth, gender, working);
+			Consumer consumer = new Consumer(age, wealth, gender, working, false, 0, 0); // TODO ergaenzen!!
 			
 			allConsumers.add(consumer);
 		}
