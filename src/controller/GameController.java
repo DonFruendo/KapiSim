@@ -46,7 +46,6 @@ public class GameController extends Game
 	 * {@link #getController()}
 	 */
 	private static Game gameController = new GameController();
-	private GameTimerTask gameTimer = new GameTimerTask();
 	
 	/**
 	 * Defines the starting money
@@ -161,7 +160,7 @@ public class GameController extends Game
 		Timer timer = new Timer();
 		GameTimerTask task = new GameTimerTask();
 		task.setUp();
-		timer.scheduleAtFixedRate(task, 0, 250);
+		//timer.scheduleAtFixedRate(task, 0, 250); TODO muss aktiviert sein!
 	}
 	
 	/**
