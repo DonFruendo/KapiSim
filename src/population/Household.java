@@ -11,7 +11,7 @@ public class Household
 		familyMembers = new ArrayList<Consumer>();
 	}
 	
-	public void addToHouseHold(Consumer newFamiliyMember)
+	public void addToHousehold(Consumer newFamiliyMember)
 	{
 		familyMembers.add(newFamiliyMember);
 	}
