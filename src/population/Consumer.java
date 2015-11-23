@@ -12,7 +12,7 @@ public class Consumer
 	private boolean working;
 	private Household household = null;
 	
-	private ProductType randomProductType;
+	public ProductType randomProductType;
 	
 	public Consumer(int age, int wealth, boolean male, boolean working, int workingHoursPerWeek, int freeTimeUsagePerWeek)
 	{

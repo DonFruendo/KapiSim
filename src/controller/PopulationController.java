@@ -1,5 +1,7 @@
 package controller;
 
+import interfaces.controller.Population;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,8 +9,10 @@ import java.util.Map;
 import population.Consumer;
 import population.Household;
 
-public class PopulationController
+public class PopulationController extends Population
 {
+	private static PopulationController controller;
+	
 	ArrayList<Household> allHouseHolds = new ArrayList<Household>();
 	ArrayList<Consumer> allConsumers = new ArrayList<Consumer>();
 	Map<Integer, Integer> ageDistribution = new HashMap<Integer, Integer>();
@@ -32,7 +36,7 @@ public class PopulationController
 	int twoChildrenPerCouplePercentage = 50;
 	int moreThanTwoChildrenPerCouplePercentage = 10;
 	
-	public PopulationController()
+	private PopulationController()
 	{
 		int wholePopulation = 0;
 		for(int i = minAge; i <= maxAge; i += stepSize)
@@ -56,6 +60,15 @@ public class PopulationController
 		}
 		System.out.println("Gesamt: " + wholePopulation);
 		population = wholePopulation;
+	}
+	
+	public static PopulationController getController()
+	{
+		if(controller == null)
+		{
+			controller = new PopulationController();
+		}
+		return controller;
 	}
 	
 	public void populate()
@@ -222,5 +235,10 @@ public class PopulationController
 		System.out.println("There are " + population + " people in this population.");
 		System.out.println("Out of those " + canWork + " people that can work " + notWorking + "(" + (Math.round((notWorking / (population *1.)) * 10000.) / 100.) + "%) are unemployed.");
 		
+	}
+	
+	public ArrayList<Household> getHouseholds()
+	{
+		return allHouseHolds;
 	}
 }

@@ -1,8 +1,8 @@
 package game;
 
 import market.ProductType;
-import controller.PopulationController;
 import interfaces.controller.Game;
+import interfaces.controller.Population;
 
 public class TestLauncher2 {
 
@@ -11,7 +11,7 @@ public class TestLauncher2 {
 		Game gc = Game.getController();
 		gc.startGame();
 		
-		PopulationController pop = new PopulationController();
+		Population pop = Population.getController();
 		pop.populate();
 		pop.printPopulation();
 		

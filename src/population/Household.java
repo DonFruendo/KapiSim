@@ -2,6 +2,8 @@ package population;
 
 import java.util.ArrayList;
 
+import market.ProductType;
+
 public class Household
 {
 	ArrayList<Consumer> familyMembers;
@@ -25,5 +27,15 @@ public class Household
 	public int getAmountOfFamiliyMembers()
 	{
 		return familyMembers.size();
+	}
+	
+	public ArrayList<ProductType> getNeededProducts()
+	{
+		ArrayList<ProductType> products = new ArrayList<ProductType>();
+		for(Consumer consumer: familyMembers)
+		{
+			products.add(consumer.randomProductType);
+		}
+		return products;
 	}
 }
