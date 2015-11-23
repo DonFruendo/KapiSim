@@ -1,5 +1,7 @@
 package population;
 
+import market.ProductType;
+
 public class Consumer
 {
 	private int age;
@@ -10,6 +12,8 @@ public class Consumer
 	private boolean working;
 	private Household household = null;
 	
+	private ProductType randomProductType;
+	
 	public Consumer(int age, int wealth, boolean male, boolean working, int workingHoursPerWeek, int freeTimeUsagePerWeek)
 	{
 		this.age = age;
@@ -18,6 +22,8 @@ public class Consumer
 		this.working = working;
 		this.workingHoursPerWeek = workingHoursPerWeek;
 		this.freeTimeUsagePerWeek = freeTimeUsagePerWeek;
+		
+		randomProductType = ProductType.values()[(int) (Math.random() * ProductType.values().length)];
 	}
 	
 	
