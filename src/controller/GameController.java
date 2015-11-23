@@ -6,7 +6,11 @@ import interfaces.controller.Market;
 import interfaces.controller.Player;
 import interfaces.views.GameGUI;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -160,7 +164,7 @@ public class GameController extends Game
 		Timer timer = new Timer();
 		GameTimerTask task = new GameTimerTask();
 		task.setUp();
-		//timer.scheduleAtFixedRate(task, 0, 250); TODO muss aktiviert sein!
+		timer.scheduleAtFixedRate(task, 10000, 2500); //TODO muss aktiviert sein!
 	}
 	
 	/**
@@ -177,7 +181,7 @@ public class GameController extends Game
 			if(player instanceof ArtificialIntelligenceNPC)
 			{
 				ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
-				ai.bla();
+				ai.tick();
 			}
 		}
 
@@ -282,6 +286,11 @@ public class GameController extends Game
 				return player;
 		}
 		return null;
+	}
+	
+	public ArrayList<Player> getPlayers()
+	{
+		return new ArrayList<Player>(allPlayers.values());
 	}
 	
 	public GameGUI getGameGUI()

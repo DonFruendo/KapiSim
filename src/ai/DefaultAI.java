@@ -3,12 +3,15 @@ package ai;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import market.Offer;
 import market.ProductType;
 import interfaces.controller.ArtificialIntelligenceNPC;
+import interfaces.controller.GlobalMarketAnalyzer;
 import interfaces.controller.Market;
 
 public class DefaultAI extends ArtificialIntelligenceNPC
@@ -23,11 +26,33 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		marketAnalyzer = new MarketAnalyzer();
 	}
 	
-	public void bla()
+	public void tick()
 	{
 		System.out.println(getID() + "\t" + name + "\t" + marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
+		ProductType product = marketAnalyzer.getBestProductType();
+		productionOfficer.produce(product, 10); // TODO
+		
+		for(ProductType production : new ArrayList<ProductType>(productionOfficer.productionPlan.keySet()))
+		{
+			if(marketAnalyzer.getRentability(production) <= 0)
+			{
+				productionOfficer.dontProduce(production);
+			}
+		}
+	}
+	
+	@Override
+	public Map<ProductType, Integer> getProductionPlans()
+	{
+		return productionOfficer.getProductionPlans();
 	}
 
+	// ***********
+	// **  End  **
+	// **  of   **
+	// ** Class **
+	// ***********
+	
 	// ** Enums **
 	private static enum Character
 	{
@@ -58,15 +83,35 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	
 	private static class ProductionOfficer extends Employee
 	{
+		private Map<ProductType, Integer> productionPlan;
 		public ProductionOfficer()
 		{
 			super();
+			productionPlan = new HashMap<ProductType, Integer>();
+		}
+		
+		public void produce(ProductType product, int amountPerTick)
+		{
+			int amountAlready = (productionPlan.containsKey(product)) ? productionPlan.get(product) : 0;
+			productionPlan.put(product, amountAlready + amountPerTick);
+		}
+		
+		public void dontProduce(ProductType product)
+		{
+			productionPlan.remove(product);
+		}
+		
+		public Map<ProductType, Integer> getProductionPlans()
+		{
+			
+			return productionPlan;
 		}
 	}
 	
 	private static class MarketAnalyzer extends Employee
 	{
 		Market market = Market.getController();
+		GlobalMarketAnalyzer gma = GlobalMarketAnalyzer.getGlobalMarketAnalyzer();
 		
 		public MarketAnalyzer()
 		{
@@ -107,6 +152,27 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 				}
 				return -1;
 			}
+		}
+		
+		public ProductType getBestProductType() // bold saying
+		{
+			int maxGap = Integer.MIN_VALUE;
+			ProductType bestProduct = ProductType.values()[0];
+			for(ProductType product : ProductType.values())
+			{
+				int gap = getRentability(product);
+				if(gap > maxGap)
+				{
+					maxGap = gap;
+					bestProduct = product;
+				}
+			}
+			return bestProduct;
+		}
+		
+		public int getRentability(ProductType product)
+		{
+			return gma.getAmountAskedFor(product) - gma.getAmountProduced(product);
 		}
 	}
 }

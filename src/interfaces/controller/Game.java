@@ -1,5 +1,7 @@
 package interfaces.controller;
 
+import java.util.ArrayList;
+
 import language.Language;
 import interfaces.views.*;
 import controller.GameController;
@@ -22,6 +24,7 @@ public abstract class Game
 	public abstract Market getMarket();
 	public abstract Player getPlayer();
 	public abstract Player getPlayer(int ID);
+	public abstract ArrayList<Player> getPlayers();
 	public abstract GameGUI getGameGUI();
 	public abstract Language getLanguagePack();
 }

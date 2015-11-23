@@ -143,7 +143,10 @@ public class PopulationController extends Population
 				if((Math.random() * 100) > findSomeoneToLovePercentage)
 				{
 					household.addToHousehold(consumer);
-					household.addToHousehold(femaleAndManless.get((int) (Math.random() * femaleAndManless.size())));
+					if(femaleAndManless.size() > 0)
+					{
+						household.addToHousehold(femaleAndManless.get((int) (Math.random() * femaleAndManless.size())));
+					}
 				}
 				else
 				{
@@ -155,7 +158,10 @@ public class PopulationController extends Population
 				if((Math.random() * 100) > findSomeoneToLovePercentage)
 				{
 					household.addToHousehold(consumer);
-					household.addToHousehold(maleAndWifeless.get((int) (Math.random() * maleAndWifeless.size())));
+					if(maleAndWifeless.size() > 0)
+					{
+						household.addToHousehold(maleAndWifeless.get((int) (Math.random() * maleAndWifeless.size())));
+					}
 				}
 				else
 				{

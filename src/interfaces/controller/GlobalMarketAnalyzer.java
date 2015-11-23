@@ -5,10 +5,12 @@ import controller.GlobalMarketAnalyzerController;
 
 public abstract class GlobalMarketAnalyzer {
 
-	public GlobalMarketAnalyzer getGlobalMarketAnalyzer()
+	public static GlobalMarketAnalyzer getGlobalMarketAnalyzer()
 	{
 		return new GlobalMarketAnalyzerController();
 	}
 	
 	public abstract int getAmountAskedFor(ProductType product);
+	public abstract int getAmountProduced(ProductType product);
+	public abstract void signUp(Player player);
 }

@@ -1,5 +1,8 @@
 package interfaces.controller;
 
+import java.util.Map;
+
+import market.ProductType;
 import controller.PlayerController;
 
 public abstract class ArtificialIntelligenceNPC extends PlayerController
@@ -10,6 +13,6 @@ public abstract class ArtificialIntelligenceNPC extends PlayerController
 		super();
 	}
 	
-	public abstract void bla();
-	
+	public abstract void tick();
+	public abstract Map<ProductType, Integer> getProductionPlans();
 }
