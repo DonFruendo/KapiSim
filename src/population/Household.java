@@ -14,10 +14,16 @@ public class Household
 	public void addToHousehold(Consumer newFamiliyMember)
 	{
 		familyMembers.add(newFamiliyMember);
+		newFamiliyMember.setHousehold(this);
 	}
 	
 	public ArrayList<Consumer> getFamilyMembers()
 	{
 		return familyMembers;
+	}
+	
+	public int getAmountOfFamiliyMembers()
+	{
+		return familyMembers.size();
 	}
 }

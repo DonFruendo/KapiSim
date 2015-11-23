@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import population.Consumer;
+import population.Household;
 
 public class PopulationController
 {
+	ArrayList<Household> allHouseHolds = new ArrayList<Household>();
 	ArrayList<Consumer> allConsumers = new ArrayList<Consumer>();
 	Map<Integer, Integer> ageDistribution = new HashMap<Integer, Integer>();
 	int population;
@@ -21,7 +23,14 @@ public class PopulationController
 	
 	int minimumWorkingAge = 15;
 	int maximumWorkingAge = 65;
-	int unemploymentRatePercent = 8; 
+	int unemploymentRatePercent = 8;
+	
+	int findSomeoneToLovePercentage = 40;
+	int maximumChildAge = 18;
+	int noChildPerCouplePercentage;	// ??
+	int oneChildPerCouplePercentage = 30;
+	int twoChildrenPerCouplePercentage = 50;
+	int moreThanTwoChildrenPerCouplePercentage = 10;
 	
 	public PopulationController()
 	{
@@ -92,9 +101,94 @@ public class PopulationController
 				working = (Math.random() * 100) > unemploymentRatePercent;
 			}
 			
-			Consumer consumer = new Consumer(age, wealth, gender, working, false, 0, 0); // TODO ergaenzen!!
+			Consumer consumer = new Consumer(age, wealth, gender, working, 0, 0); // TODO ergaenzen!!
 			
 			allConsumers.add(consumer);
+		}
+		
+		// ** Houshold Creation **
+		ArrayList<Consumer> underageAndHomeless = new ArrayList<Consumer>();
+		ArrayList<Consumer> femaleAndManless = new ArrayList<Consumer>();
+		ArrayList<Consumer> maleAndWifeless = new ArrayList<Consumer>();
+		
+		for(Consumer consumer : allConsumers)
+		{
+			if(consumer.hasFamily())
+			{
+				break;
+			}
+			
+			if(consumer.getAge() < maximumChildAge)
+			{
+				underageAndHomeless.add(consumer);
+				break;
+			}
+			Household household = new Household();
+			
+			if(consumer.isMale())
+			{
+				if((Math.random() * 100) > findSomeoneToLovePercentage)
+				{
+					household.addToHousehold(consumer);
+					household.addToHousehold(femaleAndManless.get((int) (Math.random() * femaleAndManless.size())));
+				}
+				else
+				{
+					maleAndWifeless.add(consumer);
+				}
+			}
+			else
+			{
+				if((Math.random() * 100) > findSomeoneToLovePercentage)
+				{
+					household.addToHousehold(consumer);
+					household.addToHousehold(maleAndWifeless.get((int) (Math.random() * maleAndWifeless.size())));
+				}
+				else
+				{
+					femaleAndManless.add(consumer);
+				}
+			}
+			if(household.getAmountOfFamiliyMembers() != 0)
+			{
+				allHouseHolds.add(household);
+			}
+		}
+		
+		// Female households
+		for(Consumer consumer : femaleAndManless)
+		{
+			if(consumer.hasFamily())
+			{
+				break;
+			}
+			Household household = new Household();
+			household.addToHousehold(consumer);
+			allHouseHolds.add(household);
+		}
+		
+		// Male households
+		for(Consumer consumer : maleAndWifeless)
+		{
+			if(consumer.hasFamily())
+			{
+				break;
+			}
+			Household household = new Household();
+			household.addToHousehold(consumer);
+			allHouseHolds.add(household);
+		}
+		
+		
+		// Adoption
+		for(Consumer underagedHomeless : underageAndHomeless)
+		{
+			if(underagedHomeless.hasFamily())
+			{
+				break;
+			}
+			Household randomHousehold = allHouseHolds.get((int) (Math.random() * allHouseHolds.size()));
+			randomHousehold.addToHousehold(underagedHomeless);
 		}
 	}
 	
@@ -107,12 +201,12 @@ public class PopulationController
 		for(Consumer consumer : allConsumers)
 		{
 			System.out.println(consumer);
-			age += consumer.age;
-			wealth += consumer.wealth;
-			if(consumer.age >= minimumWorkingAge && consumer.age <= maximumWorkingAge)
+			age += consumer.getAge();
+			wealth += consumer.getWealth();
+			if(consumer.getAge() >= minimumWorkingAge && consumer.getAge() <= maximumWorkingAge)
 			{
 				canWork++;
-				if(consumer.working == false)
+				if(consumer.isWorking() == false)
 				{
 					notWorking++;
 				}
