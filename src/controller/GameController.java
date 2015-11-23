@@ -7,10 +7,7 @@ import interfaces.controller.Player;
 import interfaces.views.GameGUI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;

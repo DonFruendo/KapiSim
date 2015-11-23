@@ -28,10 +28,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	
 	public void tick()
 	{
-		System.out.println(getID() + "\t" + name + "\t" + marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
-		ProductType product = marketAnalyzer.getBestProductType();
-		productionOfficer.produce(product, 10); // TODO
-		
+		//System.out.println(getID() + "\t" + name + "\t" + marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
 		for(ProductType production : new ArrayList<ProductType>(productionOfficer.productionPlan.keySet()))
 		{
 			if(marketAnalyzer.getRentability(production) <= 0)
@@ -39,6 +36,11 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 				productionOfficer.dontProduce(production);
 			}
 		}
+		
+		ProductType product = marketAnalyzer.getBestProductType();
+		productionOfficer.produce(product, 10); // TODO
+		
+		System.out.println(this + " would like to produce " +productionOfficer.productionPlan);
 	}
 	
 	@Override
