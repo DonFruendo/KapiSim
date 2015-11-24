@@ -8,12 +8,12 @@ public class TestLauncher2 {
 
 	public static void main(String[] args)
 	{
-		Game gc = Game.getController();
-		gc.startGame();
-		
 		Population pop = Population.getController();
 		pop.populate();
-		pop.printPopulation();
+		//pop.printPopulation();
+		
+		Game gc = Game.getController();
+		gc.startGame();
 		
 		for(ProductType p: ProductType.values())
 		{

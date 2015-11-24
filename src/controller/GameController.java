@@ -161,7 +161,7 @@ public class GameController extends Game
 		Timer timer = new Timer();
 		GameTimerTask task = new GameTimerTask();
 		task.setUp();
-		timer.scheduleAtFixedRate(task, 10000, 2500); //TODO muss aktiviert sein!
+		timer.scheduleAtFixedRate(task, 0000, 2500); //TODO muss aktiviert sein!
 	}
 	
 	/**
