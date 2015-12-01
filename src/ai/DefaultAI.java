@@ -23,7 +23,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	{
 		super();
 		productionOfficer = new ProductionOfficer();
-		marketAnalyzer = new MarketAnalyzer();
+		marketAnalyzer = new MarketAnalyzer(this);
 	}
 	
 	public void tick()
@@ -59,7 +59,8 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	private static enum Character
 	{
 		Gewinnorientiert,
-		Umsatzorientiert;
+		Umsatzorientiert,
+		Kostendeckend;
 		
 		
 		
@@ -103,6 +104,11 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 			productionPlan.remove(product);
 		}
 		
+		public int getProductionCostOfProduct(ProductType product)
+		{
+			return 0; // TODO
+		}
+		
 		public Map<ProductType, Integer> getProductionPlans()
 		{
 			
@@ -112,12 +118,14 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	
 	private static class MarketAnalyzer extends Employee
 	{
+		DefaultAI company;
 		Market market = Market.getController();
 		GlobalMarketAnalyzer gma = GlobalMarketAnalyzer.getGlobalMarketAnalyzer();
 		
-		public MarketAnalyzer()
+		public MarketAnalyzer(DefaultAI company)
 		{
 			super();
+			this.company = company;
 		}
 		
 		public int getMarketPriceOfProduct(ProductType product)
@@ -149,6 +157,8 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 					return max;
 				case Umsatzorientiert:
 					return min;
+				case Kostendeckend:
+					return company.productionOfficer.getProductionCostOfProduct(product);
 				default:
 					break;
 				}
@@ -174,7 +184,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		
 		public int getRentability(ProductType product)
 		{
-			return gma.getAmountAskedFor(product, 10) - gma.getAmountProduced(product);
+			return gma.getAmountAskedFor(product, getMarketPriceOfProduct(product)) - gma.getAmountProduced(product);
 		}
 	}
 }

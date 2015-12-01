@@ -1,5 +1,6 @@
 package population;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import market.ProductType;
@@ -28,13 +29,15 @@ public class Consumer
 		
 		randomProductType = ProductType.values()[(int) (Math.random() * ProductType.values().length)];
 		
+		productValues = new HashMap<ProductType, int[]>();
 		for(ProductType pType : ProductType.values())
 		{
 			int minPrice = (int) (20);
 			int maxPrice = (int) (40);
 			int minNeed = (pType == randomProductType)? 8 : 0;
 			int maxNeed = (pType == randomProductType)? 10 : 5;
-			productValues.put(pType, new int[]{minPrice, maxPrice, minNeed, maxNeed});
+			int[] value = new int[]{minPrice, maxPrice, minNeed, maxNeed};
+			productValues.put(pType, value);
 		}
 	}
 	
