@@ -13,6 +13,7 @@ import market.ProductType;
 import interfaces.controller.ArtificialIntelligenceNPC;
 import interfaces.controller.GlobalMarketAnalyzer;
 import interfaces.controller.Market;
+import interfaces.controller.ProductionBuilding;
 
 public class DefaultAI extends ArtificialIntelligenceNPC
 {
@@ -22,7 +23,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	public DefaultAI()
 	{
 		super();
-		productionOfficer = new ProductionOfficer();
+		productionOfficer = new ProductionOfficer(this);
 		marketAnalyzer = new MarketAnalyzer(this);
 	}
 	
@@ -38,9 +39,9 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		}
 		
 		ProductType product = marketAnalyzer.getBestProductType();
-		productionOfficer.produce(product, 10); // TODO
+		productionOfficer.produce(product, 10000); // TODO
 		
-		System.out.println(this + " would like to produce " +productionOfficer.productionPlan);
+		System.out.println(this + " would like to produce " + productionOfficer.productionPlan);
 	}
 	
 	@Override
@@ -86,10 +87,14 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 	
 	private static class ProductionOfficer extends Employee
 	{
+		DefaultAI company;
 		private Map<ProductType, Integer> productionPlan;
-		public ProductionOfficer()
+		
+		
+		public ProductionOfficer(DefaultAI company)
 		{
 			super();
+			this.company = company;
 			productionPlan = new HashMap<ProductType, Integer>();
 		}
 		
@@ -106,7 +111,16 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		
 		public int getProductionCostOfProduct(ProductType product)
 		{
-			return 0; // TODO
+			int prodCost = 0;
+			for(ProductionBuilding prodBuilding : company.getProductionBuildings())
+			{
+				if(prodBuilding.getPossibleTypes().contains(product))
+				{
+					prodCost = prodBuilding.getProductionCost(product);
+					break;
+				}
+			}
+			return prodCost;
 		}
 		
 		public Map<ProductType, Integer> getProductionPlans()
@@ -184,7 +198,9 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		
 		public int getRentability(ProductType product)
 		{
-			return gma.getAmountAskedFor(product, getMarketPriceOfProduct(product)) - gma.getAmountProduced(product);
+			int price = getMarketPriceOfProduct(product);
+			int amountProduced = gma.getAmountProduced(product);
+			return gma.getAmountAskedFor(product, price) - amountProduced;
 		}
 	}
 }

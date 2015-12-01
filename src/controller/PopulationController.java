@@ -128,13 +128,13 @@ public class PopulationController extends Population
 		{
 			if(consumer.hasFamily())
 			{
-				break;
+				continue;
 			}
 			
 			if(consumer.getAge() < maximumChildAge)
 			{
 				underageAndHomeless.add(consumer);
-				break;
+				continue;
 			}
 			Household household = new Household();
 			
@@ -179,7 +179,7 @@ public class PopulationController extends Population
 		{
 			if(consumer.hasFamily())
 			{
-				break;
+				continue;
 			}
 			Household household = new Household();
 			household.addToHousehold(consumer);
@@ -191,7 +191,7 @@ public class PopulationController extends Population
 		{
 			if(consumer.hasFamily())
 			{
-				break;
+				continue;
 			}
 			Household household = new Household();
 			household.addToHousehold(consumer);
@@ -204,7 +204,7 @@ public class PopulationController extends Population
 		{
 			if(underagedHomeless.hasFamily())
 			{
-				break;
+				continue;
 			}
 			Household randomHousehold = allHouseHolds.get((int) (Math.random() * allHouseHolds.size()));
 			randomHousehold.addToHousehold(underagedHomeless);
