@@ -1,5 +1,7 @@
 package population;
 
+import java.util.Map;
+
 import market.ProductType;
 
 public class Consumer
@@ -11,6 +13,7 @@ public class Consumer
 	private boolean male;
 	private boolean working;
 	private Household household = null;
+	Map<ProductType, int[]> productValues;
 	
 	public ProductType randomProductType;
 	
@@ -24,8 +27,26 @@ public class Consumer
 		this.freeTimeUsagePerWeek = freeTimeUsagePerWeek;
 		
 		randomProductType = ProductType.values()[(int) (Math.random() * ProductType.values().length)];
+		
+		for(ProductType pType : ProductType.values())
+		{
+			int minPrice = (int) (20);
+			int maxPrice = (int) (40);
+			int minNeed = (pType == randomProductType)? 8 : 0;
+			int maxNeed = (pType == randomProductType)? 10 : 5;
+			productValues.put(pType, new int[]{minPrice, maxPrice, minNeed, maxNeed});
+		}
 	}
 	
+	
+	public int getAmountNeededOf(ProductType product, int price)
+	{
+		int[] values = productValues.get(product);
+		int priceSpan = values[1] - values[0];
+		int needSpan = values[3] - values[2];
+		int need = (int) (values[3] - ((priceSpan / needSpan) * (price - values[0])));
+		return need;
+	}
 	
 	public int getAge() {
 		return age;

@@ -21,7 +21,7 @@ public class GlobalMarketAnalyzerController extends GlobalMarketAnalyzer {
 	}
 
 	@Override
-	public int getAmountAskedFor(ProductType product)
+	public int getAmountAskedFor(ProductType product, int price)
 	{
 		int counter = 0;
 		for(Household household : pop.getHouseholds())
@@ -30,7 +30,7 @@ public class GlobalMarketAnalyzerController extends GlobalMarketAnalyzer {
 			{
 				if(productType == product)
 				{
-					counter++;
+					counter += household.getAmountAskedFor(productType, price);
 				}
 			}
 		}

@@ -38,4 +38,14 @@ public class Household
 		}
 		return products;
 	}
+	
+	public int getAmountAskedFor(ProductType product, int price)
+	{
+		int counter = 0;
+		for(Consumer consumer : familyMembers)
+		{
+			counter += consumer.getAmountNeededOf(product, price);
+		}
+		return counter;
+	}
 }

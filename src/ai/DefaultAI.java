@@ -174,7 +174,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		
 		public int getRentability(ProductType product)
 		{
-			return gma.getAmountAskedFor(product) - gma.getAmountProduced(product);
+			return gma.getAmountAskedFor(product, 10) - gma.getAmountProduced(product);
 		}
 	}
 }
