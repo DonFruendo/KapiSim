@@ -32,10 +32,10 @@ public class Consumer
 		productValues = new HashMap<ProductType, int[]>();
 		for(ProductType pType : ProductType.values())
 		{
-			int minPrice = (int) (20);
-			int maxPrice = (int) (40);
-			int minNeed = 10; //(pType == randomProductType)? 8 : 0;
-			int maxNeed = 15; //(pType == randomProductType)? 10 : 5;
+			int minPrice = (int) (Math.random() * 10) + 20;		//(20);
+			int maxPrice = (int) (Math.random() * 10) + 35;	//(40);
+			int minNeed = (pType == randomProductType)? 10 : 0;	// 10
+			int maxNeed = (pType == randomProductType)? 15 : 5;	// 15
 			int[] value = new int[]{minPrice, maxPrice, minNeed, maxNeed};
 			productValues.put(pType, value);
 		}
@@ -62,7 +62,7 @@ public class Consumer
 		{
 			int needSpan = maxNeed - minNeed;
 			int priceSpan = maxPrice - minPrice;
-			int need = (int) (maxNeed - ((needSpan / (priceSpan * 1.)) * (double)(price + minPrice)) + minNeed);
+			int need = (int) (maxNeed - ((needSpan / (priceSpan * 1.)) * (double)(price - minPrice)));
 			return need;
 		}
 	}
