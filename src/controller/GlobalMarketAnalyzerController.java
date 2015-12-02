@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Map;
 
+import population.Consumer;
 import population.Household;
 import market.ProductType;
 import interfaces.controller.ArtificialIntelligenceNPC;
@@ -24,15 +25,9 @@ public class GlobalMarketAnalyzerController extends GlobalMarketAnalyzer {
 	public int getAmountAskedFor(ProductType product, int price)
 	{
 		int counter = 0;
-		for(Household household : pop.getHouseholds())
+		for(Consumer consumer : pop.getConsumers())
 		{
-			for(ProductType productType : household.getNeededProducts())
-			{
-				if(productType == product)
-				{
-					counter += household.getAmountAskedFor(productType, price);
-				}
-			}
+			counter += consumer.getAmountNeededOf(product, price);
 		}
 		return counter;
 	}

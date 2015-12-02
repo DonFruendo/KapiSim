@@ -34,8 +34,8 @@ public class Consumer
 		{
 			int minPrice = (int) (20);
 			int maxPrice = (int) (40);
-			int minNeed = (pType == randomProductType)? 8 : 0;
-			int maxNeed = (pType == randomProductType)? 10 : 5;
+			int minNeed = 10; //(pType == randomProductType)? 8 : 0;
+			int maxNeed = 15; //(pType == randomProductType)? 10 : 5;
 			int[] value = new int[]{minPrice, maxPrice, minNeed, maxNeed};
 			productValues.put(pType, value);
 		}
@@ -45,10 +45,26 @@ public class Consumer
 	public int getAmountNeededOf(ProductType product, int price)
 	{
 		int[] values = productValues.get(product);
-		int priceSpan = values[1] - values[0];
-		int needSpan = values[3] - values[2];
-		int need = (int) (values[3] - ((priceSpan / needSpan) * (price - values[0])));
-		return need;
+		int minPrice = values[0];
+		int maxPrice = values[1];
+		int minNeed = values[2];
+		int maxNeed = values[3];
+		
+		if(price <= minPrice)
+		{
+			return maxNeed;
+		}
+		else if(price >= maxPrice)
+		{
+			return minNeed;
+		}
+		else
+		{
+			int needSpan = maxNeed - minNeed;
+			int priceSpan = maxPrice - minPrice;
+			int need = (int) (maxNeed - ((needSpan / (priceSpan * 1.)) * (double)(price + minPrice)) + minNeed);
+			return need;
+		}
 	}
 	
 	public int getAge() {

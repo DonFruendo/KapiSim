@@ -1,8 +1,6 @@
-/population
-/controller
-/ai
-/interfaces
-/debris/
-/game/
-/production/
+/controller/
 /views/
+/game/
+/ai/
+/population/
+/interfaces/

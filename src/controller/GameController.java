@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.jfree.ui.RefineryUtilities;
+
 import ai.DefaultAI;
 import language.DefaultLanguage;
 import language.Language;
@@ -25,6 +27,7 @@ import production.Plantage;
 import production.Quelle;
 import production.Viehzucht;
 import views.GameViewGUI;
+import views.GraphGUI;
 
 /**
  * The GameController class contains methods to control the game.
@@ -62,6 +65,8 @@ public class GameController extends Game
 	 * All the active players are mapped here
 	 */
 	private Map<Integer,Player> allPlayers = new HashMap<Integer,Player>();
+	
+	private ArrayList<Thread> allThreads = new ArrayList<Thread>();
 	/**
 	 * The player
 	 * <p>
@@ -161,7 +166,7 @@ public class GameController extends Game
 		Timer timer = new Timer();
 		GameTimerTask task = new GameTimerTask();
 		task.setUp();
-		timer.scheduleAtFixedRate(task, 0000, 2500); //TODO muss aktiviert sein!
+		timer.scheduleAtFixedRate(task, 0, 1); //TODO muss aktiviert sein!
 	}
 	
 	/**
@@ -172,22 +177,29 @@ public class GameController extends Game
 	private void tick()
 	{
 		// TODO
-		for(Map.Entry<Integer,Player> entry : allPlayers.entrySet())
+		for(Thread trd : allThreads)
 		{
-			Player player = entry.getValue();
-			if(player instanceof ArtificialIntelligenceNPC)
-			{
-				ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
-				ai.tick();
-			}
+			trd.run();
 		}
 
 	}
 	
 	// ** Player handling **
-	public void playerSignUp(Player player)
+	public void playerSignUp(final Player player)
 	{
 		allPlayers.put(player.getID(), player);
+		if(player instanceof ArtificialIntelligenceNPC)
+		{
+			Thread threadTmp = new Thread()
+			{
+				public void run()
+				{
+					ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
+					ai.tick();
+				}
+			};
+			allThreads.add(threadTmp);
+		}
 	}
 	
 	/**

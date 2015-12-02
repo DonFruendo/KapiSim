@@ -41,7 +41,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		ProductType product = marketAnalyzer.getBestProductType();
 		productionOfficer.produce(product, 10000); // TODO
 		
-		System.out.println(this + " would like to produce " + productionOfficer.productionPlan);
+		//System.out.println(this + " would like to produce " + productionOfficer.productionPlan);
 	}
 	
 	@Override

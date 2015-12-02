@@ -247,4 +247,9 @@ public class PopulationController extends Population
 	{
 		return allHouseHolds;
 	}
+	
+	public ArrayList<Consumer> getConsumers()
+	{
+		return allConsumers;
+	}
 }
