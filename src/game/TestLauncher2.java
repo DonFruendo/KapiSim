@@ -26,10 +26,10 @@ public class TestLauncher2 {
 			System.out.print(p + "\t");
 		}
 		
-		GraphGUI graph = new GraphGUI("Graph", "Strom");
-	    RefineryUtilities.centerFrameOnScreen( graph );
-		graph.setVisible(true);
-		graph.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		/* GraphGUI graph = new GraphGUI("Graph", ProductType.Strom);
+	     * RefineryUtilities.centerFrameOnScreen( graph );
+		 * graph.setVisible(true);
+		 */
 	}
 	
 }
