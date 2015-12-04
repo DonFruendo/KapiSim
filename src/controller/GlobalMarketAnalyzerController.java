@@ -3,14 +3,13 @@ package controller;
 import java.util.ArrayList;
 import java.util.Map;
 
-import population.Consumer;
-import population.Household;
-import market.ProductType;
 import interfaces.controller.ArtificialIntelligenceNPC;
 import interfaces.controller.Game;
 import interfaces.controller.GlobalMarketAnalyzer;
 import interfaces.controller.Player;
 import interfaces.controller.Population;
+import market.ProductType;
+import population.Consumer;
 
 public class GlobalMarketAnalyzerController extends GlobalMarketAnalyzer {
 
@@ -33,7 +32,7 @@ public class GlobalMarketAnalyzerController extends GlobalMarketAnalyzer {
 	}
 	
 	@Override
-	public int getAmountProduced(ProductType product)
+	public int getAmountProduced(ProductType product, int price)
 	{
 		int counter = 0;
 		ArrayList<Player> allPlayers = Game.getController().getPlayers();

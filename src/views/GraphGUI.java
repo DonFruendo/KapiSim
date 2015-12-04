@@ -83,7 +83,8 @@ public class GraphGUI extends JFrame {
 			GlobalMarketAnalyzer gma = GlobalMarketAnalyzer.getGlobalMarketAnalyzer();
 			int amount = gma.getAmountAskedFor(product, i);
 			dataset.addValue(amount, "Demand", i + "");
-			dataset.addValue(amount * 0.8, "Production", i + "");
+			int production = gma.getAmountProduced(product, i);
+			dataset.addValue(production * 0.8, "Production", i + "");
 			System.out.println("starting analysis of " + i);
 		}
 		return dataset;

@@ -1,20 +1,19 @@
 package controller;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import ai.DefaultAI;
 import interfaces.controller.ArtificialIntelligenceNPC;
 import interfaces.controller.Game;
 import interfaces.controller.Market;
 import interfaces.controller.Player;
 import interfaces.views.GameGUI;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.jfree.ui.RefineryUtilities;
-
-import ai.DefaultAI;
 import language.DefaultLanguage;
 import language.Language;
 import production.Eismanufaktur;
@@ -27,7 +26,6 @@ import production.Plantage;
 import production.Quelle;
 import production.Viehzucht;
 import views.GameViewGUI;
-import views.GraphGUI;
 
 /**
  * The GameController class contains methods to control the game.
@@ -55,6 +53,8 @@ public class GameController extends Game
 	 * Defines the starting money
 	 */
 	private static int startingKaps = 100000;
+	
+	private static int day = 0;
 	/**
 	 * The market
 	 * <p>
@@ -158,7 +158,7 @@ public class GameController extends Game
 		gui.start();
 		market.openMarket();
 		
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			ArtificialIntelligenceNPC ai = new DefaultAI();
 			playerSignUp(ai);
@@ -166,7 +166,7 @@ public class GameController extends Game
 		Timer timer = new Timer();
 		GameTimerTask task = new GameTimerTask();
 		task.setUp();
-		timer.scheduleAtFixedRate(task, 0, 1); //TODO muss aktiviert sein!
+		timer.scheduleAtFixedRate(task, 0, 15000); //TODO muss aktiviert sein!
 	}
 	
 	/**
@@ -176,30 +176,31 @@ public class GameController extends Game
 	 */
 	private void tick()
 	{
-		// TODO
-		for(Thread trd : allThreads)
+		day++;
+		message(MessageFormat.format("Day {0} started", day));
+		for(final Player player : allPlayers.values())
 		{
-			trd.run();
+			Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+			if(player instanceof ArtificialIntelligenceNPC && threadSet.size() <= 20)
+			{
+				Thread threadTmp = new Thread()
+				{
+					public void run()
+					{
+						ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
+						ai.tick();
+					}
+				};
+				allThreads.add(threadTmp);
+				threadTmp.start();
+			}
 		}
-
 	}
 	
 	// ** Player handling **
 	public void playerSignUp(final Player player)
 	{
 		allPlayers.put(player.getID(), player);
-		if(player instanceof ArtificialIntelligenceNPC)
-		{
-			Thread threadTmp = new Thread()
-			{
-				public void run()
-				{
-					ArtificialIntelligenceNPC ai = (ArtificialIntelligenceNPC) player;
-					ai.tick();
-				}
-			};
-			allThreads.add(threadTmp);
-		}
 	}
 	
 	/**
@@ -353,10 +354,11 @@ public class GameController extends Game
 	{
 		GameController gc;
 		MarketController mc;
+		int counter;
 		
 		public GameTimerTask()
 		{
-			
+			counter = 0;
 		}
 		
 		public void setUp()
@@ -367,8 +369,16 @@ public class GameController extends Game
 		
 		public void run()
 		{
-			gc.tick();
-			mc.tick();
+			if(counter == 0)
+			{
+				gc.tick();
+				mc.tick();
+				counter = 0;
+			}
+			else
+			{
+				counter++;
+			}
 		}
 	}
 }

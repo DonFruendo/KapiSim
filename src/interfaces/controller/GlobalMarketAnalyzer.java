@@ -11,6 +11,6 @@ public abstract class GlobalMarketAnalyzer {
 	}
 	
 	public abstract int getAmountAskedFor(ProductType product, int price);
-	public abstract int getAmountProduced(ProductType product);
+	public abstract int getAmountProduced(ProductType product, int price);
 	public abstract void signUp(Player player);
 }

@@ -17,14 +17,18 @@ import interfaces.controller.ProductionBuilding;
 
 public class DefaultAI extends ArtificialIntelligenceNPC
 {
+	CEO ceo;
 	ProductionOfficer productionOfficer;
 	MarketAnalyzer marketAnalyzer;
+	FinancialOfficer financialOfficer;
 	
 	public DefaultAI()
 	{
 		super();
+		ceo = new CEO(this);
 		productionOfficer = new ProductionOfficer(this);
 		marketAnalyzer = new MarketAnalyzer(this);
+		financialOfficer = new FinancialOfficer(this);
 	}
 	
 	public void tick()
@@ -32,16 +36,17 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		//System.out.println(getID() + "\t" + name + "\t" + marketAnalyzer.character + ": " + marketAnalyzer.getMarketPriceOfProduct(ProductType.Strom));
 		for(ProductType production : new ArrayList<ProductType>(productionOfficer.productionPlan.keySet()))
 		{
-			if(marketAnalyzer.getRentability(production) <= 0)
+			if(marketAnalyzer.getMarketDeficit(production) <= 0)
 			{
 				productionOfficer.dontProduce(production);
 			}
 		}
 		
 		ProductType product = marketAnalyzer.getBestProductType();
-		productionOfficer.produce(product, 10000); // TODO
+		int bestAmount = ceo.getBestAmountToProduce(product); // TODO
+		productionOfficer.produce(product, bestAmount); // TODO
 		
-		//System.out.println(this + " would like to produce " + productionOfficer.productionPlan);
+		System.out.println(this + " would like to produce " + productionOfficer.productionPlan);
 	}
 	
 	@Override
@@ -85,6 +90,33 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 		}
 	}
 	
+	private static class CEO
+	{
+		DefaultAI company;
+		
+		public CEO(DefaultAI company)
+		{
+			super();
+			this.company = company;
+		}
+		
+		public int getBestAmountToProduce(ProductType product)
+		{
+			int maxKaps = company.financialOfficer.getBudgetFor(product);
+			int maxAmountProducable = company.productionOfficer.getMaxAmountProducableOf(product, maxKaps);
+			int maxAmountNeededByConsumers = company.marketAnalyzer.getMarketDeficit(product);
+			
+			if(maxAmountNeededByConsumers > maxAmountProducable)
+			{
+				return maxAmountProducable;
+			}
+			else
+			{
+				return maxAmountNeededByConsumers;
+			}
+		}
+	}
+	
 	private static class ProductionOfficer extends Employee
 	{
 		DefaultAI company;
@@ -121,6 +153,13 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 				}
 			}
 			return prodCost;
+		}
+		
+		public int getMaxAmountProducableOf(ProductType product, int kaps)
+		{
+			int costPerPiece = getProductionCostOfProduct(product);
+			int result = (int) (kaps / (costPerPiece * 1.)); 
+			return result;
 		}
 		
 		public Map<ProductType, Integer> getProductionPlans()
@@ -186,7 +225,7 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 			ProductType bestProduct = ProductType.values()[0];
 			for(ProductType product : ProductType.values())
 			{
-				int gap = getRentability(product);
+				int gap = getMarketDeficit(product);
 				if(gap > maxGap)
 				{
 					maxGap = gap;
@@ -196,11 +235,27 @@ public class DefaultAI extends ArtificialIntelligenceNPC
 			return bestProduct;
 		}
 		
-		public int getRentability(ProductType product)
+		public int getMarketDeficit(ProductType product)
 		{
 			int price = getMarketPriceOfProduct(product);
-			int amountProduced = gma.getAmountProduced(product);
-			return gma.getAmountAskedFor(product, price) - amountProduced;
+			int amountAsked = gma.getAmountAskedFor(product, price);
+			int amountProduced = gma.getAmountProduced(product, price);
+			return amountAsked - amountProduced;
+		}
+	}
+	
+	private static class FinancialOfficer extends Employee
+	{
+		DefaultAI company;
+		public FinancialOfficer(DefaultAI company)
+		{
+			super();
+			this.company = company;
+		}
+		
+		public int getBudgetFor(ProductType product)
+		{
+			return (int) (company.getKaps() - (company.getKaps() * 0.1));
 		}
 	}
 }
